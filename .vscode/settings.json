@@ -9,6 +9,8 @@
   // "editor.lineNumbers": "off",
   // "files.eol": "\n", // Final de linha sempre será LF
 
+  "workbench.editor.enablePreview": false,
+
   "code-runner.clearPreviousOutput": true,
   "code-runner.runInTerminal": true,
   "code-runner.ignoreSelection": true,
