@@ -9,6 +9,17 @@
   // "editor.lineNumbers": "off",
   // "files.eol": "\n", // Final de linha sempre será LF
 
+  "code-runner.clearPreviousOutput": true,
+  "code-runner.runInTerminal": true,
+  "code-runner.ignoreSelection": true,
+  "code-runner.executorMap": {
+    "typescript": "clear ; echo limpando console ; npx tsx"
+  },
+
+  "tailwindCSS.experimental.classRegex": [
+    ["clsx\\(([^)]*)\\)", "(?:'|\"|`)([^']*)(?:'|\"|`)"]
+  ],
+
   "explorer.compactFolders": false,
 
   "workbench.editor.labelFormat": "short",
