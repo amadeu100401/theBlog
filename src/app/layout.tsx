@@ -2,6 +2,7 @@ import type { Metadata } from 'next';
 import './globals.css';
 import { Container } from '../components/Container';
 import { Header } from '../components/Header';
+import { Footer } from '@/components/Footer/inde';
 
 export const metadata: Metadata = {
   title: { default: 'The Blog', template: '%s | The Blog' },
@@ -22,11 +23,7 @@ export default function RootLayout({
 
           {children}
 
-          <footer>
-            <h1 className='text-6xl font-bold text-center py-8'>
-              Aqui é a FOOTER
-            </h1>
-          </footer>
+          <Footer />
         </Container>
       </body>
     </html>
