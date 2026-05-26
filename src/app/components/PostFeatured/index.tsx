@@ -19,12 +19,12 @@ export function PostFeatured() {
       />
       <PostSummary
         as='h1'
-        heading={'Lorem ipsum dolor sit amet.'}
-        content='Lorem ipsum dolor sit amet, consectetur adipisicing elit. Ducimus veniam,
+        title={'Lorem ipsum dolor sit amet.'}
+        excerpt='Lorem ipsum dolor sit amet, consectetur adipisicing elit. Ducimus veniam,
       ex officiis porro, nesciunt veritatis dolor quis molestiae cum assumenda
       iure magni quasi doloremque animi autem, et nam sit asperiores!'
         url='#'
-        dateTime='26/05/2026 10:00'
+        createdAt='26/05/2026 10:00'
       />
     </section>
   );

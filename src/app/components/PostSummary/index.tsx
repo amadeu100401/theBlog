@@ -1,29 +1,32 @@
+import { formatRelativeDateTime } from '@/util/format-datetime';
 import { PostHeading } from '../PostHeading';
 
 type PostFeaturedProps = {
-  dateTime?: string;
+  createdAt: string;
   url: string;
   as: 'h1' | 'h2';
-  heading: string;
-  content: string;
+  title: string;
+  excerpt: string;
 };
 
 export function PostSummary({
-  dateTime = '',
+  createdAt = '',
   url,
   as,
-  heading,
-  content,
+  title,
+  excerpt,
 }: PostFeaturedProps) {
   return (
     <div className='flex flex-col gap-4 sm:justify-center'>
-      <time className='text-slate-600 block text-sm' dateTime={dateTime}>
-        {dateTime}
-      </time>
+      {createdAt && (
+        <time className='text-slate-600 block text-sm' dateTime={createdAt}>
+          {formatRelativeDateTime(createdAt)}
+        </time>
+      )}
       <PostHeading url={url} as={as}>
-        {heading}
+        {title}
       </PostHeading>
-      <p>{content}</p>
+      <p>{excerpt}</p>
     </div>
   );
 }

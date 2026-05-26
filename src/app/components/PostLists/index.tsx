@@ -33,10 +33,10 @@ export async function PostsList() {
             />
             <PostSummary
               as='h2'
-              dateTime={post.createdAt}
+              createdAt={post.createdAt}
               url={postLink}
-              heading={post.title}
-              content={post.excerpt}
+              title={post.title}
+              excerpt={post.excerpt}
             />
           </div>
         );
