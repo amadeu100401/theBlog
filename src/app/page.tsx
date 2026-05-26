@@ -3,9 +3,8 @@ import { PostsList } from './components/PostLists';
 import { SpinLoader } from './components/SpinLoader';
 import { Container } from './components/Container';
 import { Header } from './components/Header';
-import Link from 'next/link';
-import Image from 'next/image';
 import { PostHeading } from './components/PostHeading';
+import { PostCoverImage } from './components/PostCoverImage';
 
 export default async function Home() {
   return (
@@ -13,16 +12,19 @@ export default async function Home() {
       <Header />
 
       <section className='grid grid-cols-1 gap-8 mb-16 sm:grid-cols-2 group'>
-        <Link href='#' className='w-full h-full overflow-hidden rounded-xl'>
-          <Image
-            className='w-full h-full group-hover:scale-105 transition object-cover object-center'
-            src='/Images/bryen_0.png'
-            width={1200}
-            height={768}
-            alt='Titulo do post'
-            priority
-          ></Image>
-        </Link>
+        <PostCoverImage
+          linkProps={{
+            href: '',
+            children: '',
+          }}
+          imageProps={{
+            width: 1200,
+            height: 82,
+            alt: 'Alt da imagem',
+            src: '/Images/bryen_0.png',
+            priority: true,
+          }}
+        />
         <div className='flex flex-col gap-4 sm:justify-center'>
           <time className='text-slate-600 block text-sm' dateTime='2026-05-26'>
             26/05/2026 10:00

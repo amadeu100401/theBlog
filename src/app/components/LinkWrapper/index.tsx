@@ -1,7 +1,7 @@
 import Link from 'next/link';
 
-type LinkWrapperProps = {
-  children: React.ReactNode;
+export type LinkWrapperProps = {
+  children?: React.ReactNode;
   href: string;
 } & React.ComponentProps<'a'>;
 
