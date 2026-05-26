@@ -13,16 +13,16 @@ export function PostHeading({
   as: Tag = 'h2',
 }: PostHeadingProps) {
   const headingClassesMap = {
-    h1: 'text-2xl/tight sm:text-4xl',
-    h2: 'text-2xl/tight  sm:text-4xl',
+    h1: 'text-2xl/tight font-extrabold sm:text-4xl',
+    h2: 'text-2xl/tight font-bold',
   };
-
-  const commonClasses = 'font-extrabold';
 
   return (
     <>
-      <Tag className={clsx(headingClassesMap[Tag], commonClasses)}>
-        <LinkWrapper href={url}>{children}</LinkWrapper>
+      <Tag className={clsx(headingClassesMap[Tag])}>
+        <LinkWrapper href={url} className='hover:text-slate-600 transition'>
+          {children}
+        </LinkWrapper>
       </Tag>
     </>
   );
