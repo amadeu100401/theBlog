@@ -13,9 +13,20 @@ const JSON_POST_FILES_PATH = resolve(
   'posts.json',
 );
 
-const SIMULATE_WAIT_IN_MD = 5000;
+const SIMULATE_WAIT_IN_MD = 2000;
 
 export class JsonPostRepository implements PostRepository {
+  async findBySlug(slug: string): Promise<PostModel> {
+    await this.simulateAwait();
+
+    const posts = await this.findAllPublished();
+    const post = posts.find(post => post.slug === slug && post.published);
+
+    if (!post) throw new Error('Post não encontrado');
+
+    return post;
+  }
+
   async findAllPublished(): Promise<PostModel[]> {
     await this.simulateAwait();
     const posts = await this.readFromDisk();
