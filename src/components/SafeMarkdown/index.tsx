@@ -25,6 +25,18 @@ export function SafeMarkdown({ markdown }: SafeMarkdownProps) {
       <ReactMarkdown
         rehypePlugins={[rehypeSanitize]}
         remarkPlugins={[remarkGfm]}
+        // Customizando as propriedades de table para sempre ser um uma div com rolagem em telas menores q 600px
+        components={{
+          table: ({ node, ...props }) => {
+            if (!node?.children) return '';
+
+            return (
+              <div className='overflow-x-auto'>
+                <table className={'w-full min-w-150'} {...props} />
+              </div>
+            );
+          },
+        }}
       >
         {markdown}
       </ReactMarkdown>
