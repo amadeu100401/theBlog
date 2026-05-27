@@ -1,4 +1,5 @@
-'use client';
+'use client'; // -> cuidado com o use client, porque qualquer component que você importar dentro de um use client ele sai de server component para um client component, podendo vazar dados.
+// Para contornar isso, podemos usar children ao invez de importar dentro do client component
 
 import { ErrorMessage } from '@/components/ErrorMessage';
 import { useEffect } from 'react';
