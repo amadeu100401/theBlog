@@ -14,7 +14,7 @@ export const PostsTable = pgTable('posts', {
   slug: varchar('slug', { length: 255 }).notNull().unique(),
   title: varchar('title', { length: 255 }).notNull(),
   author: varchar('author', { length: 255 }).notNull(),
-  excerto: varchar('excerto', { length: 500 }).notNull(),
+  excerpt: varchar('excerpt', { length: 500 }).notNull(),
   content: text('content').notNull(),
   coverImageUrl: varchar('cover_image_url', {
     length: 500,

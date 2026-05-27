@@ -3,7 +3,7 @@ CREATE TABLE "posts" (
 	"slug" varchar(255) NOT NULL,
 	"title" varchar(255) NOT NULL,
 	"author" varchar(255) NOT NULL,
-	"excerto" varchar(500) NOT NULL,
+	"excerpt" varchar(500) NOT NULL,
 	"content" text NOT NULL,
 	"cover_image_url" varchar(500) NOT NULL,
 	"published" boolean DEFAULT false NOT NULL,
