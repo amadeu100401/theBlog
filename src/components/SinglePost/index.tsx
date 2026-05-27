@@ -14,8 +14,6 @@ export async function SinglePost({ slug }: SinglePostProps) {
 
   if (!post) return notFound();
 
-  console.log(post);
-
   return (
     <article className='mb-16'>
       <header className='group flex flex-col gap-4 mb-4'>
