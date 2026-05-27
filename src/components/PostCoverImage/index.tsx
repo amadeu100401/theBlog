@@ -23,7 +23,6 @@ export function PostCoverImage({ imageProps, linkProps }: PostCoverImageProps) {
             'w-full h-full group-hover:scale-105 transition object-cover object-center',
             imageProps.className,
           )}
-          src='/Images/bryen_0.png'
           width={1200}
           height={768}
           alt={imageProps.alt}

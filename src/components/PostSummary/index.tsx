@@ -1,5 +1,5 @@
-import { formatRelativeDateTime } from '@/util/format-datetime';
 import { PostHeading } from '../PostHeading';
+import { PostDate } from '../PostDate';
 
 type PostFeaturedProps = {
   createdAt: string;
@@ -18,11 +18,7 @@ export function PostSummary({
 }: PostFeaturedProps) {
   return (
     <div className='flex flex-col gap-4 sm:justify-center'>
-      {createdAt && (
-        <time className='text-slate-600 block text-sm' dateTime={createdAt}>
-          {formatRelativeDateTime(createdAt)}
-        </time>
-      )}
+      {createdAt && <PostDate createdAt={createdAt} />}
       <PostHeading url={url} as={as}>
         {title}
       </PostHeading>
