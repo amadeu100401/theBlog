@@ -22,6 +22,12 @@ import { JsonPostRepository } from '@/repositories/post/json-post-repository';
     console.log('inserindo novos dados da tabela - ', new Date().toISOString());
     await drizzleDb.insert(PostsTable).values(formattedPosts as []);
     console.log('Finalizado - ', new Date().toISOString());
+
+    // const posts = await drizzleDb.select().from(PostsTable);
+
+    posts.forEach(post => {
+      console.log(post);
+    });
   } catch (e) {
     console.log('Erro ao inserir dados na base.');
     console.error(e);
