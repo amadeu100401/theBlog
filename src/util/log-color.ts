@@ -1,6 +1,15 @@
 import { styleText } from 'util';
 
+const environment = process.env.ENVIRONMENT;
+
+console.log(process.env.ENVIRONMENT);
+console.log(typeof process.env.ENVIRONMENT);
+
 export function logColor(...msg: (string | number)[]) {
+  if (environment !== 'DEV') {
+    return;
+  }
+
   const messages = msg
     .map(message => styleText(['bgGreen', 'whiteBright'], `${message}`))
     .join(' ');
