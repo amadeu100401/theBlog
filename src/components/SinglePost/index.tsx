@@ -1,4 +1,4 @@
-import { findBySlugCached } from '@/lib/post/queries';
+import { findPublicPostBySlugCached } from '@/lib/post/queries/public';
 import Image from 'next/image';
 import { notFound } from 'next/navigation';
 import { PostHeading } from '../PostHeading';
@@ -10,7 +10,7 @@ type SinglePostProps = {
 };
 
 export async function SinglePost({ slug }: SinglePostProps) {
-  const post = await findBySlugCached(slug).catch(() => undefined);
+  const post = await findPublicPostBySlugCached(slug).catch(() => undefined);
 
   if (!post) return notFound();
 

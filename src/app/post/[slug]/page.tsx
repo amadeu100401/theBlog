@@ -1,6 +1,6 @@
 import { SinglePost } from '@/components/SinglePost';
 import { SpinLoader } from '@/components/SpinLoader';
-import { findBySlugCached } from '@/lib/post/queries';
+import { findPublicPostBySlugCached } from '@/lib/post/queries/public';
 import { Metadata } from 'next';
 import { notFound } from 'next/navigation';
 import { Suspense } from 'react';
@@ -16,7 +16,7 @@ export async function generateMetadata({
   const resolvedParams = await params;
   const slug = resolvedParams.slug;
 
-  const post = await findBySlugCached(slug).catch(() => undefined);
+  const post = await findPublicPostBySlugCached(slug).catch(() => undefined);
 
   if (!post) notFound();
 

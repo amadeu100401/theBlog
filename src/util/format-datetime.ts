@@ -1,6 +1,5 @@
 import { format, formatDistanceToNow } from 'date-fns';
 import { ptBR } from 'date-fns/locale';
-import { cacheTag } from 'next/cache';
 
 export function formatDateTime(rawDate: string): string {
   const date = new Date(rawDate);
@@ -28,13 +27,13 @@ export function formatRelativeDateTime(rawDate: string): string {
 }
 
 //Usando cache
-export async function formatHourCached() {
-  'use cache';
-  // cacheLife('seconds');
-  cacheTag('PageContet');
+// export async function formatHourCached() {
+//   'use cache';
+//   // cacheLife('seconds');
+//   cacheTag('PageContet');
 
-  return formatDateTime(new Date().toISOString());
-}
+//   return formatDateTime(new Date().toISOString());
+// }
 
 // const rawDate = new Date().toISOString();
 // console.log('Raw Date: ', rawDate);
