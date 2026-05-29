@@ -6,13 +6,15 @@ import { notFound } from 'next/navigation';
 import { Suspense } from 'react';
 
 type postSlugPageProps = {
+  //O next 16 transforma isso em assincrono
   params: Promise<{ slug: string }>;
 };
 
 export async function generateMetadata({
   params,
 }: postSlugPageProps): Promise<Metadata> {
-  const { slug } = await params;
+  const resolvedParams = await params;
+  const slug = resolvedParams.slug;
 
   const post = await findBySlugCached(slug).catch(() => undefined);
 
@@ -24,12 +26,17 @@ export async function generateMetadata({
   };
 }
 
-export default async function PostSlugPage({ params }: postSlugPageProps) {
-  const { slug } = await params;
+async function PostContent({ params }: postSlugPageProps) {
+  const resolvedParams = await params;
+  const slug = resolvedParams.slug;
 
+  return <SinglePost slug={slug} />;
+}
+
+export default function PostSlugPage({ params }: postSlugPageProps) {
   return (
     <Suspense fallback={<SpinLoader className='min-h-20 mb-16' />}>
-      <SinglePost slug={slug} />
+      <PostContent params={params} />
     </Suspense>
   );
 }

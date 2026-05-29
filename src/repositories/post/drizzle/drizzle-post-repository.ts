@@ -60,17 +60,18 @@ export class DrizzlePostRepository implements PostRepository {
   }
 }
 
-try {
-  (async () => {
-    const repo = new DrizzlePostRepository();
-    const posts = await repo.findAllPublishedPublic();
+//Usar apenas para testes
+// try {
+//   (async () => {
+//     const repo = new DrizzlePostRepository();
+//     const posts = await repo.findAllPublishedPublic();
 
-    posts.forEach(post =>
-      console.log('Titulo: ' + post.title + ' | situação: ' + post.published),
-    );
-  })();
-} catch (e) {
-  console.log('Erro');
-  console.log('------------RAZÃO-----------');
-  console.log(e);
-}
+//     posts.forEach(post =>
+//       console.log('Titulo: ' + post.title + ' | situação: ' + post.published),
+//     );
+//   })();
+// } catch (e) {
+//   console.log('Erro');
+//   console.log('------------RAZÃO-----------');
+//   console.log(e);
+// }

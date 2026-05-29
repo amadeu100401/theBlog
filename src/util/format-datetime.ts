@@ -1,5 +1,6 @@
 import { format, formatDistanceToNow } from 'date-fns';
 import { ptBR } from 'date-fns/locale';
+import { cacheTag } from 'next/cache';
 
 export function formatDateTime(rawDate: string): string {
   const date = new Date(rawDate);
@@ -8,7 +9,7 @@ export function formatDateTime(rawDate: string): string {
     return '';
   }
 
-  return format(date, "dd/MM/yyyy 'às' HH'h'mm", {
+  return format(date, "dd/MM/yyyy 'às' HH'h'mm':'ss", {
     locale: ptBR,
   });
 }
@@ -24,6 +25,15 @@ export function formatRelativeDateTime(rawDate: string): string {
     locale: ptBR,
     addSuffix: true,
   });
+}
+
+//Usando cache
+export async function formatHourCached() {
+  'use cache';
+  // cacheLife('seconds');
+  cacheTag('PageContet');
+
+  return formatDateTime(new Date().toISOString());
 }
 
 // const rawDate = new Date().toISOString();
