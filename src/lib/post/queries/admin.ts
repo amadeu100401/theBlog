@@ -20,7 +20,7 @@ export const findAllPostsAdmin = async () => {
   cacheLife('seconds');
   cacheTag('ADMIN-POSTS');
 
-  return await postRepository.findAllPublishedPublic();
+  return await postRepository.findAll();
 };
 
 export const findPostBySlugAdmin = async (slug: string) => {

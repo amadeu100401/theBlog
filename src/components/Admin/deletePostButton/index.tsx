@@ -1,0 +1,60 @@
+'use client';
+
+import { deletePostAction } from '@/actions/post/delete-post-action';
+import { ButtonComponent } from '@/components/DefaultButton';
+import { Dialog } from '@/components/Dialog';
+import clsx from 'clsx';
+import { Trash2Icon } from 'lucide-react';
+import { useState, useTransition } from 'react';
+
+type DeleteButtonProps = {
+  id: string;
+  title: string;
+};
+
+export function DeletePostButton({ id, title }: DeleteButtonProps) {
+  const [isPending, startTransition] = useTransition();
+  const [showDialog, setShowDialog] = useState(false);
+
+  async function handleClick() {
+    setShowDialog(true);
+  }
+
+  function handleConfirm() {
+    startTransition(async () => {
+      const result = await deletePostAction(id);
+      alert(`O result é: ${result}`);
+      setShowDialog(false);
+    });
+  }
+
+  return (
+    <>
+      <ButtonComponent
+        icon={<Trash2Icon />}
+        className={clsx(
+          'text-red-500 cursor-pointer',
+          '[&_svg]:w-5 [&_svg]:h-5',
+          'hover:scale-125 transition hover:text-red-700',
+          'disabled:text-slate-600 disabled:cursor-default disabled:scale-100 disabled:transition',
+        )}
+        buttonType='default'
+        aria-label={`Apagar post: ${title}`}
+        title={`Apagar post: ${title}`}
+        onClick={handleClick}
+        disabled={isPending}
+      />
+      {showDialog && (
+        <Dialog
+          isVisible={showDialog}
+          title={'Apagar post?'}
+          content={`Tem certeza que deseja apagar o post ${title}`}
+          type='action'
+          onCancel={() => setShowDialog(false)}
+          onConfirm={handleConfirm}
+          isDisable={isPending}
+        />
+      )}
+    </>
+  );
+}
