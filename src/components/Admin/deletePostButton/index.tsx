@@ -7,6 +7,7 @@ import clsx from 'clsx';
 import { Trash2Icon } from 'lucide-react';
 import { useRouter } from 'next/navigation';
 import { useState, useTransition } from 'react';
+import { toast } from 'sonner';
 
 type DeleteButtonProps = {
   id: string;
@@ -28,9 +29,12 @@ export function DeletePostButton({ id, title }: DeleteButtonProps) {
       setShowDialog(false);
 
       if (result.error) {
-        alert(`Erro: ${result.error}`);
+        toast.error('Erro ao apagar post.', {
+          description: result.error,
+        });
       }
 
+      toast.success('Post apagado com sucesso');
       router.refresh();
     });
   }
