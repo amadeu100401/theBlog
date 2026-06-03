@@ -1,4 +1,5 @@
-import { ADMIN_POSTS_CACHE_TAG } from '@/lib/Consts/cache-tag';
+import { ALL_ADMIN_POSTS_CACHE_TAG } from '@/lib/cache/Consts/cache-tag';
+import { PostCacheTagBuilder } from '@/lib/cache/utils/cahce-tag-builder';
 import { postRepository } from '@/repositories/post';
 import { cacheLife, cacheTag } from 'next/cache';
 import { notFound } from 'next/navigation';
@@ -10,7 +11,7 @@ export const findPostByIdAdmin = async (id: string) => {
 
   if (!post || post === undefined) return notFound();
 
-  cacheTag(`${ADMIN_POSTS_CACHE_TAG}${post.id}`);
+  cacheTag(PostCacheTagBuilder(post.slug, true));
 
   return post;
 };
@@ -18,7 +19,7 @@ export const findPostByIdAdmin = async (id: string) => {
 export const findAllPostsAdmin = async () => {
   'use cache';
   cacheLife('seconds');
-  cacheTag('ADMIN-POSTS');
+  cacheTag(ALL_ADMIN_POSTS_CACHE_TAG);
 
   return await postRepository.findAll();
 };
@@ -33,7 +34,7 @@ export const findPostBySlugAdmin = async (slug: string) => {
 
   if (!post || post === undefined) notFound();
 
-  cacheTag(`${ADMIN_POSTS_CACHE_TAG}${post.id}`);
+  cacheTag(PostCacheTagBuilder(post.slug, true));
 
   return post;
 };

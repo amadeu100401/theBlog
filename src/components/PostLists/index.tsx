@@ -6,6 +6,7 @@ import { findAllPublishedPostsCached } from '@/lib/post/queries/public';
 export async function PostsList() {
   const posts = await findAllPublishedPostsCached();
 
+  if (posts.length <= 0) return null;
   return (
     <div
       className={clsx(

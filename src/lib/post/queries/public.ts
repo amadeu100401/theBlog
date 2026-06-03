@@ -1,4 +1,5 @@
-import { PUBLIC_POSTS_CACHE_TAG } from '@/lib/Consts/cache-tag';
+import { ALL_PUBLIC_POSTS_CACHE_TAG } from '@/lib/cache/Consts/cache-tag';
+import { PostCacheTagBuilder } from '@/lib/cache/utils/cahce-tag-builder';
 import { postRepository } from '@/repositories/post/index';
 import { cacheLife, cacheTag } from 'next/cache';
 import { notFound } from 'next/navigation';
@@ -6,7 +7,7 @@ import { notFound } from 'next/navigation';
 export const findAllPublishedPostsCached = async () => {
   'use cache';
   cacheLife('seconds');
-  cacheTag('posts');
+  cacheTag(ALL_PUBLIC_POSTS_CACHE_TAG);
 
   return await postRepository.findAllPublishedPublic();
 };
@@ -18,7 +19,7 @@ export const findPublicPostByIdCached = async (id: string) => {
 
   if (!post || post === undefined) return notFound();
 
-  cacheTag(`${PUBLIC_POSTS_CACHE_TAG}${post.id}`);
+  cacheTag(PostCacheTagBuilder(post.slug));
 
   return post;
 };
@@ -33,7 +34,7 @@ export const findPublicPostBySlugCached = async (slug: string) => {
 
   if (!post || post === undefined) notFound();
 
-  cacheTag(`${PUBLIC_POSTS_CACHE_TAG}${post.id}`);
+  cacheTag(PostCacheTagBuilder(post.slug));
 
   return post;
 };

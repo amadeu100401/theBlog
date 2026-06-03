@@ -5,6 +5,7 @@ import { ButtonComponent } from '@/components/DefaultButton';
 import { Dialog } from '@/components/Dialog';
 import clsx from 'clsx';
 import { Trash2Icon } from 'lucide-react';
+import { useRouter } from 'next/navigation';
 import { useState, useTransition } from 'react';
 
 type DeleteButtonProps = {
@@ -15,16 +16,22 @@ type DeleteButtonProps = {
 export function DeletePostButton({ id, title }: DeleteButtonProps) {
   const [isPending, startTransition] = useTransition();
   const [showDialog, setShowDialog] = useState(false);
+  const router = useRouter();
 
   async function handleClick() {
     setShowDialog(true);
   }
 
-  function handleConfirm() {
+  async function handleConfirm() {
     startTransition(async () => {
       const result = await deletePostAction(id);
-      alert(`O result é: ${result}`);
       setShowDialog(false);
+
+      if (result.error) {
+        alert(`Erro: ${result.error}`);
+      }
+
+      router.refresh();
     });
   }
 
@@ -48,7 +55,7 @@ export function DeletePostButton({ id, title }: DeleteButtonProps) {
         <Dialog
           isVisible={showDialog}
           title={'Apagar post?'}
-          content={`Tem certeza que deseja apagar o post ${title}`}
+          content={`Tem certeza que deseja apagar o post "${title}"?`}
           type='action'
           onCancel={() => setShowDialog(false)}
           onConfirm={handleConfirm}
