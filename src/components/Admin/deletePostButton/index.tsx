@@ -49,7 +49,7 @@ export function DeletePostButton({ id, title }: DeleteButtonProps) {
           'hover:scale-125 transition hover:text-red-700',
           'disabled:text-slate-600 disabled:cursor-default disabled:scale-100 disabled:transition',
         )}
-        buttonType='default'
+        buttonType='custom'
         aria-label={`Apagar post: ${title}`}
         title={`Apagar post: ${title}`}
         onClick={handleClick}
@@ -60,7 +60,9 @@ export function DeletePostButton({ id, title }: DeleteButtonProps) {
           isVisible={showDialog}
           title={'Apagar post?'}
           content={`Tem certeza que deseja apagar o post "${title}"?`}
+          buttonLabel='Apagar'
           type='action'
+          showXButton
           onCancel={() => setShowDialog(false)}
           onConfirm={handleConfirm}
           isDisable={isPending}

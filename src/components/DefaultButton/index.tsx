@@ -1,43 +1,79 @@
-import clsx from 'clsx';
+import { clsx } from 'clsx';
+
+type ButtonVariants = 'default' | 'danger' | 'custom' | 'ghost';
+type ButtonSize = 'sm' | 'md' | 'lg';
 
 export type ButtonComponentProps = {
   icon?: React.ReactNode;
-  buttonType?: 'confirm' | 'cancel' | 'default';
-  text?: string;
+  buttonType: ButtonVariants;
+  size?: ButtonSize;
 } & React.ComponentProps<'button'>;
 
 export function ButtonComponent({
   icon,
   buttonType = 'default',
-  text,
-  className,
-  children,
+  size = 'md',
   ...props
 }: ButtonComponentProps) {
   const commonStyle = clsx(
-    'flex items-center justify-center gap-2',
-    'py-2 px-4 rounded-lg cursor-pointer',
+    'flex items-center justify-center',
+    'transition, ',
+    'py-2 px-4 cursor-pointer',
     'disabled:bg-slate-200',
     'disabled:text-slate-400',
     'disabled:cursor-default',
   );
 
-  const style = {
-    confirm: 'bg-blue-500 text-blue-50 hover:bg-blue-600 transition-colors',
+  const style: Record<ButtonVariants, string> = {
+    default: clsx(
+      'bg-blue-500 text-blue-100 hover:bg-blue-600 transition',
+      commonStyle,
+    ),
 
-    cancel: 'bg-slate-300 text-slate-950 hover:bg-slate-400 transition-colors',
+    ghost: clsx(
+      'bg-slate-300 text-slate-900 hover:bg-slate-400 transition',
+      commonStyle,
+    ),
 
-    default: '',
+    danger: clsx(
+      'bg-red-600 hover:bg-red-800 text-red-100 transition',
+      commonStyle,
+    ),
+
+    custom: '',
   };
 
+  const buttonSizes: Record<ButtonSize, string> = {
+    sm: clsx(
+      'text-xs/tight py-1 px-1',
+      'rounde-sm',
+      '[&_svg]:w-3 [&_svg]:h-3',
+      'gap-1',
+    ),
+    md: clsx(
+      'text-base/tight py-2 px-4',
+      'rounded-md',
+      '[&_svg]:w-4 [&_svg]:h-4',
+      'gap-2',
+    ),
+    lg: clsx(
+      'text-lg/tight py-4 px-6',
+      'rounded-lg',
+      '[&_svg]:w-5 [&_svg]:h-5',
+      'gap-3',
+    ),
+  };
+
+  const buttonClasses = clsx(
+    style[buttonType],
+    buttonSizes[size],
+    props.className,
+  );
+
   return (
-    <button
-      className={clsx(commonStyle, style[buttonType], className)}
-      {...props}
-    >
+    <button className={buttonClasses} {...props}>
       {icon}
-      {text}
-      {children}
+      {props.children}
     </button>
   );
 }
