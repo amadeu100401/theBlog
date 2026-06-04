@@ -1,33 +1,77 @@
-import { LinkWrapper } from '@/components/LinkWrapper';
+'use client';
+
 import clsx from 'clsx';
-import { FileTextIcon, HomeIcon } from 'lucide-react';
+import {
+  CircleXIcon,
+  FileTextIcon,
+  HouseIcon,
+  MenuIcon,
+  PlusIcon,
+} from 'lucide-react';
+import Link from 'next/link';
+import { usePathname } from 'next/navigation';
+import { useEffect, useState } from 'react';
 
 export function MenuAdmin() {
+  const [isOpen, setIsOpen] = useState(false);
+  const pathname = usePathname();
+
   const navClasses = clsx(
     'bg-slate-900 text-slate-100 rounded-lg',
-    'flex flex-col overflow-hidden mb-8',
+    'flex flex-col  mb-8',
     'sm:flex-row sm:flex-wrap',
-    //'h-10',
+    !isOpen && 'h-10',
+    !isOpen && 'overflow-hidden',
+    'sm:overflow-visible sm:h-auto',
   );
   const linkClasses = clsx(
     '[&>svg]:w-4 [&>svg]:h-4 px-4',
-    'flex items-center justify-start gap-2',
-    'hover:bg-slate-800',
+    'flex items-center justify-start gap-2 cursor-pointer',
+    'transition hover:bg-slate-800 rounded-lg',
     'h-10',
     'shrink-0',
+  );
+  const openCloseBtnClasses = clsx(
+    linkClasses,
+    'text-blue-200 italic',
+    'sm:hidden',
   );
 
   return (
     <nav className={navClasses}>
+      <button
+        onClick={() => setIsOpen(s => !s)}
+        className={openCloseBtnClasses}
+      >
+        {!isOpen && (
+          <>
+            <MenuIcon />
+            Menu
+          </>
+        )}
+
+        {isOpen && (
+          <>
+            <CircleXIcon />
+            Fechar
+          </>
+        )}
+      </button>
+
       <a className={linkClasses} href='/' target='_blank'>
-        <HomeIcon />
+        <HouseIcon />
         Home
       </a>
 
-      <LinkWrapper href='/admin/post' about='Sobre' className={linkClasses}>
+      <Link className={linkClasses} href='/admin/posts'>
         <FileTextIcon />
         Posts
-      </LinkWrapper>
+      </Link>
+
+      <Link className={linkClasses} href='/admin/post/new'>
+        <PlusIcon />
+        Criar post
+      </Link>
     </nav>
   );
 }
