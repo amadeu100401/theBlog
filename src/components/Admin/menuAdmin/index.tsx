@@ -9,12 +9,10 @@ import {
   PlusIcon,
 } from 'lucide-react';
 import Link from 'next/link';
-import { usePathname } from 'next/navigation';
-import { useEffect, useState } from 'react';
+import { useState } from 'react';
 
 export function MenuAdmin() {
   const [isOpen, setIsOpen] = useState(false);
-  const pathname = usePathname();
 
   const navClasses = clsx(
     'bg-slate-900 text-slate-100 rounded-lg',
