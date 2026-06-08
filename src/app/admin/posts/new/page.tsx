@@ -1,4 +1,4 @@
-import { ManagePostForm } from '@/components/Admin/ManagePostForm';
+import { ManagePostForm } from '@/components/Admin/managePostForm';
 
 export default function NewPostPage() {
   return (

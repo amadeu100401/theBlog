@@ -5,6 +5,7 @@ import { InputCheckbox } from '@/components/InputCheckbox';
 import { InputText } from '@/components/InputText';
 import { MarkdownEditor } from '@/components/MarkdownEditor';
 import { useState } from 'react';
+import { ImageUploader } from '../imageManager';
 
 type ManagePostFormProps = {
   id?: string;
@@ -23,6 +24,9 @@ export function ManagePostForm({ id }: ManagePostFormProps) {
           readOnly
           defaultValue={'Teste'}
         />
+
+        <ImageUploader />
+
         <InputCheckbox labelText='Teste' />
 
         <MarkdownEditor
