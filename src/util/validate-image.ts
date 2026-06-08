@@ -1,6 +1,16 @@
 import fileTypeChecker from 'file-type-checker';
 
-export async function validateImageFile(file: File): Promise<boolean> {
+type validateImageFileResult = {
+  isValid: boolean;
+  extension: string | null;
+};
+
+export async function validateImageFile(
+  file: File,
+): Promise<validateImageFileResult> {
+  const isFileType = file instanceof File;
+  const isVlaidImageInputType = file.type.startsWith('image/');
+
   const buffer = await file.arrayBuffer();
 
   const bytes = new Uint8Array(buffer);
@@ -13,9 +23,14 @@ export async function validateImageFile(file: File): Promise<boolean> {
 
   const canDecode = await validateImage(file);
 
-  const isValidImage = isSignatureValid && canDecode;
+  const isValidImage =
+    isFileType && isVlaidImageInputType && isSignatureValid && canDecode;
 
-  return isValidImage;
+  const extension = file.name.split('.').pop()?.toLowerCase() ?? '';
+
+  console.log('A imagem é valida: ', isVlaidImageInputType);
+
+  return { isValid: isValidImage, extension: extension };
 }
 
 function validateImage(file: File): Promise<boolean> {

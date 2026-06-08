@@ -6,6 +6,7 @@ import { useRef, useTransition } from 'react';
 import { toast } from 'sonner';
 import { validateImageFile } from '@/util/validate-image';
 import { uploadImageAction } from '@/actions/upload/upload-image-action';
+import { logColor } from '@/util/log-color';
 
 const imgMaxSize = process.env.IMG_MAX_SIZE as unknown as number;
 
@@ -36,10 +37,12 @@ export function ImageUploader() {
       return;
     }
 
-    const isValid = await validateImageFile(file);
+    const result = await validateImageFile(file);
 
-    if (!isValid) {
+    if (!result.isValid) {
+      console.log(result);
       toast.error('Imagem inválida!');
+      cleanFileInputValue();
       return;
     }
 

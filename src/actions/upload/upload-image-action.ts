@@ -1,11 +1,17 @@
 'use server';
 
+import { SupabaseStorageAdapter } from '@/adapters/Supabase/supabase-storage.adapter';
+import { IImageStorage } from '@/interfaces/image-storage.interface';
+import { validateImageFile } from '@/util/validate-image';
+
 //diretiva para criar uma server action -> isso acaba virando um endpoint da minha aplicação
 
 type UploadImageActionResult = {
   url: string;
   error: string;
 };
+
+const imageStorage: IImageStorage = new SupabaseStorageAdapter();
 
 export async function uploadImageAction(
   formData: FormData,
@@ -29,14 +35,17 @@ export async function uploadImageAction(
     return makeResult({ error: 'Arquivo inválidos' });
   }
 
-  if (!file.type.startsWith('image/')) {
-    return makeResult({ error: 'Arquivo inválidos' });
-  }
-
   if (file.size > maxImgSize) {
     return makeResult({ error: 'Arquivo muito grande' });
   }
 
-  // TODO: Enviei o arquivo
-  return makeResult({ url: 'URL-TEST' });
+  const extension = file.name.split('.').pop()?.toLowerCase() ?? '';
+
+  const uploadResult = await imageStorage.upload(file, extension);
+
+  if (uploadResult.success) {
+    return makeResult({ url: uploadResult.path });
+  }
+
+  return makeResult({ error: uploadResult.error });
 }
