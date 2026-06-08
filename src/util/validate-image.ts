@@ -1,4 +1,5 @@
 import fileTypeChecker from 'file-type-checker';
+import sharp from 'sharp';
 
 type validateImageFileResult = {
   isValid: boolean;
@@ -21,33 +22,24 @@ export async function validateImageFile(
     'gif',
   ]);
 
-  const canDecode = await validateImage(file);
+  const canDecode = await isValidToDecode(buffer);
 
   const isValidImage =
     isFileType && isVlaidImageInputType && isSignatureValid && canDecode;
 
-  const extension = file.name.split('.').pop()?.toLowerCase() ?? '';
-
-  console.log('A imagem é valida: ', isVlaidImageInputType);
+  const extension = await sharp(buffer)
+    .metadata()
+    .then(m => m.format)
+    .catch(() => null);
 
   return { isValid: isValidImage, extension: extension };
 }
 
-function validateImage(file: File): Promise<boolean> {
-  return new Promise(resolve => {
-    const img = new Image();
-    const url = URL.createObjectURL(file);
-
-    img.onload = () => {
-      URL.revokeObjectURL(url);
-      resolve(true);
-    };
-
-    img.onerror = () => {
-      URL.revokeObjectURL(url);
-      resolve(false);
-    };
-
-    img.src = url;
-  });
+async function isValidToDecode(buffer: ArrayBuffer): Promise<boolean> {
+  try {
+    await sharp(Buffer.from(buffer)).metadata();
+    return true;
+  } catch {
+    return false;
+  }
 }

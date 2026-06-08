@@ -61,7 +61,6 @@ export function ImageUploader() {
       toast.info(result.url);
     });
 
-    //TODO: Criar a action para envio da imagem
     cleanFileInputValue();
   }
 
