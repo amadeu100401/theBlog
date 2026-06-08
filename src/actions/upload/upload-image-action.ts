@@ -1,7 +1,6 @@
 'use server';
 
-import { SupabaseStorageAdapter } from '@/adapters/Supabase/supabase-storage.adapter';
-import { IImageStorage } from '@/interfaces/image-storage.interface';
+import { StorageContext } from '@/db/storage/storage-context';
 import { validateAndGetOptimizedBuffer } from '@/util/validate-image';
 
 //diretiva para criar uma server action -> isso acaba virando um endpoint da minha aplicação
@@ -10,8 +9,6 @@ type UploadImageActionResult = {
   url: string;
   error: string;
 };
-
-const imageStorage: IImageStorage = new SupabaseStorageAdapter();
 
 export async function uploadImageAction(
   formData: FormData,
@@ -25,30 +22,22 @@ export async function uploadImageAction(
 
   const file = formData.get('file');
 
-  if (!file) {
-    return makeResult({ error: 'Arquivo inválidos' });
-  }
-
   if (!(file instanceof File)) {
-    return makeResult({ error: 'Arquivo inválidos' });
+    return makeResult({ error: 'Arquivo inválido' });
   }
 
   const { isValid, extension, optimizedBuffer } =
     await validateAndGetOptimizedBuffer(file);
 
   if (!isValid || !extension || !optimizedBuffer) {
-    return makeResult({ error: 'Arquivo inválido.' });
+    return { url: '', error: 'Arquivo inválido' };
   }
 
-  const uploadResult = await imageStorage.upload(
-    file,
-    optimizedBuffer,
-    extension,
-  );
+  const storage = new StorageContext();
 
-  if (uploadResult.success) {
-    return makeResult({ url: uploadResult.path });
-  }
+  const result = await storage.upload(file, optimizedBuffer, extension);
 
-  return makeResult({ error: uploadResult.error });
+  return result.success
+    ? { url: result.publicUrl, error: '' }
+    : { url: '', error: result.error };
 }

@@ -1,41 +1,98 @@
-# See https://help.github.com/articles/ignoring-files/ for more about ignoring files.
+# =========================
+# ENVIRONMENT VARIABLES
+# =========================
+.env
+.env.*
+!.env.example
 
-# dependencies
-/node_modules
-/.pnp
+# =========================
+# DEPENDENCIES
+# =========================
+node_modules/
+.pnp/
 .pnp.*
-.yarn/*
+.yarn/
 !.yarn/patches
 !.yarn/plugins
 !.yarn/releases
 !.yarn/versions
 
-# testing
-/coverage
+# =========================
+# NEXT.JS
+# =========================
+.next/
+out/
+build/
+dist/
 
-# next.js
-/.next/
-/out/
+# =========================
+# CACHE / BUILD ARTIFACTS
+# =========================
+.cache/
+.turbo/
+.vercel/
+.swc/
 
-# production
-/build
+# =========================
+# TESTS / COVERAGE
+# =========================
+coverage/
 
-# misc
-.DS_Store
-*.pem
-
-# debug
+# =========================
+# LOGS
+# =========================
 npm-debug.log*
 yarn-debug.log*
 yarn-error.log*
-.pnpm-debug.log*
+pnpm-debug.log*
+*.log
 
-# env files (can opt-in for committing if needed)
-.env*
+# =========================
+# OS FILES
+# =========================
+.DS_Store
+Thumbs.db
 
-# vercel
-.vercel
-
-# typescript
+# =========================
+# TYPESCRIPT
+# =========================
 *.tsbuildinfo
 next-env.d.ts
+
+# =========================
+# IDEs
+# =========================
+.vscode/
+.idea/
+
+# =========================
+# LOCAL UPLOADS / STORAGE
+# =========================
+uploads/
+public/uploads/
+storage/
+tmp/
+
+# =========================
+# SECURITY / KEYS
+# =========================
+*.pem
+*.key
+*.cert
+
+# =========================
+# DATABASE
+# =========================
+*.sqlite
+*.db
+
+# =========================
+# SUPABASE LOCAL (if used)
+# =========================
+supabase/.temp/
+supabase/.branches/
+
+# =========================
+# OPTIONAL: DEBUGGING
+# =========================
+debug/
