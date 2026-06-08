@@ -11,7 +11,7 @@ export async function validateImageFile(file: File): Promise<boolean> {
     'gif',
   ]);
 
-  const canDecode = validateImage(file);
+  const canDecode = await validateImage(file);
 
   const isValidImage = isSignatureValid && canDecode;
 

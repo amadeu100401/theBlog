@@ -21,6 +21,7 @@ export function ImageUploader() {
   }
 
   async function handleChange() {
+    toast.dismiss();
     if (!fileInputRef.current) return;
 
     const fileInput = fileInputRef.current;
@@ -31,8 +32,7 @@ export function ImageUploader() {
     if (file.size > imgMaxSize) {
       const readableMaxSize = imgMaxSize / 1024;
       toast.error(`Imagem muito grande. MÁx: ${readableMaxSize}Kb.`);
-
-      fileInput.value = '';
+      cleanFileInputValue();
       return;
     }
 
@@ -46,17 +46,34 @@ export function ImageUploader() {
     const formData = buildFormData(file);
 
     startTransition(async () => {
-      const result = await uploadImageAction();
+      const result = await uploadImageAction(formData);
+
+      if (result.error) {
+        toast.error(result.error);
+        cleanFileInputValue();
+        return;
+      }
+
+      //TODO: Continuar depois
+      toast.info(result.url);
     });
 
     //TODO: Criar a action para envio da imagem
-    fileInput.value = '';
+    cleanFileInputValue();
   }
 
   function buildFormData(file: File) {
     const formData = new FormData();
     formData.append('file', file);
     return formData;
+  }
+
+  function cleanFileInputValue() {
+    const fileInput = fileInputRef.current;
+
+    if (!fileInput) return;
+
+    fileInput.value = '';
   }
 
   return (
