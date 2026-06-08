@@ -1,45 +1,64 @@
 import fileTypeChecker from 'file-type-checker';
 import sharp from 'sharp';
 
-type validateImageFileResult = {
+type Result = {
   isValid: boolean;
   extension: string | null;
+  optimizedBuffer?: Buffer;
 };
 
-export async function validateImageFile(
+export async function validateAndGetOptimizedBuffer(
   file: File,
-): Promise<validateImageFileResult> {
-  const isFileType = file instanceof File;
-  const isVlaidImageInputType = file.type.startsWith('image/');
+): Promise<Result> {
+  if (!(file instanceof File)) {
+    return { isValid: false, extension: null };
+  }
 
-  const buffer = await file.arrayBuffer();
+  if (!file.type?.startsWith('image/')) {
+    return { isValid: false, extension: null };
+  }
 
+  const buffer = Buffer.from(await file.arrayBuffer());
   const bytes = new Uint8Array(buffer);
 
   const isSignatureValid = fileTypeChecker.validateFileType(bytes, [
     'png',
     'jpeg',
     'gif',
+    'webp',
   ]);
 
-  const canDecode = await isValidToDecode(buffer);
+  if (!isSignatureValid) {
+    return { isValid: false, extension: null };
+  }
 
-  const isValidImage =
-    isFileType && isVlaidImageInputType && isSignatureValid && canDecode;
-
-  const extension = await sharp(buffer)
-    .metadata()
-    .then(m => m.format)
-    .catch(() => null);
-
-  return { isValid: isValidImage, extension: extension };
-}
-
-async function isValidToDecode(buffer: ArrayBuffer): Promise<boolean> {
   try {
-    await sharp(Buffer.from(buffer)).metadata();
-    return true;
+    const image = sharp(buffer, { failOn: 'error' });
+
+    const metadata = await image.metadata();
+
+    if (!metadata.width || !metadata.height) {
+      return { isValid: false, extension: null };
+    }
+
+    const MAX_PIXELS = 25_000_000;
+
+    if (metadata.width * metadata.height > MAX_PIXELS) {
+      return { isValid: false, extension: null };
+    }
+
+    const optimizedBuffer = await image
+      .rotate()
+      .resize({ width: 2000, withoutEnlargement: true })
+      .webp({ quality: 80 })
+      .toBuffer();
+
+    return {
+      isValid: true,
+      extension: 'webp',
+      optimizedBuffer,
+    };
   } catch {
-    return false;
+    return { isValid: false, extension: null };
   }
 }

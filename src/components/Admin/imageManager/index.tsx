@@ -4,11 +4,7 @@ import { ButtonComponent } from '@/components/DefaultButton';
 import { ImageUpIcon } from 'lucide-react';
 import { useRef, useTransition } from 'react';
 import { toast } from 'sonner';
-import { validateImageFile } from '@/util/validate-image';
 import { uploadImageAction } from '@/actions/upload/upload-image-action';
-import { logColor } from '@/util/log-color';
-
-const imgMaxSize = process.env.IMG_MAX_SIZE as unknown as number;
 
 export function ImageUploader() {
   const fileInputRef = useRef<HTMLInputElement>(null);
@@ -20,33 +16,20 @@ export function ImageUploader() {
 
     fileInputRef.current.click();
   }
-
   async function handleChange() {
     toast.dismiss();
-    if (!fileInputRef.current) return;
 
-    const fileInput = fileInputRef.current;
-    const file = fileInput?.files?.[0];
-
+    const file = fileInputRef.current?.files?.[0];
     if (!file) return;
 
-    if (file.size > imgMaxSize) {
-      const readableMaxSize = imgMaxSize / 1024;
-      toast.error(`Imagem muito grande. MÁx: ${readableMaxSize}Kb.`);
+    if (!validateClientSide(file)) {
+      toast.error('Arquivo inválido ou muito grande');
       cleanFileInputValue();
       return;
     }
 
-    const result = await validateImageFile(file);
-
-    if (!result.isValid) {
-      console.log(result);
-      toast.error('Imagem inválida!');
-      cleanFileInputValue();
-      return;
-    }
-
-    const formData = buildFormData(file);
+    const formData = new FormData();
+    formData.append('file', file);
 
     startTransition(async () => {
       const result = await uploadImageAction(formData);
@@ -57,17 +40,21 @@ export function ImageUploader() {
         return;
       }
 
-      //TODO: Continuar depois
-      toast.info(result.url);
+      toast.success('Upload concluído!');
     });
 
     cleanFileInputValue();
   }
 
-  function buildFormData(file: File) {
-    const formData = new FormData();
-    formData.append('file', file);
-    return formData;
+  function validateClientSide(file: File) {
+    const MAX_SIZE = Number(
+      process.env.NEXT_PUBLIC_IMG_MAX_SIZE ?? 5 * 1024 * 1024,
+    );
+
+    const isImage = file.type.startsWith('image/');
+    const isAllowedSize = file.size <= MAX_SIZE;
+
+    return isImage && isAllowedSize;
   }
 
   function cleanFileInputValue() {

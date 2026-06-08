@@ -3,9 +3,13 @@ import { supabaseAdmin } from '@/lib/Supabase/supabase';
 import { UploadResult } from '@/types/upload-result';
 import { logColor } from '@/util/log-color';
 
+const bucketName = process.env.BUCKET_NAME!;
 export class SupabaseStorageAdapter implements IImageStorage {
-  async upload(file: File): Promise<UploadResult> {
-    const extension = file.name.split('.').pop();
+  async upload(
+    file: File,
+    buffer: Buffer,
+    extension: string,
+  ): Promise<UploadResult> {
     const fileName = `${crypto.randomUUID()}.${extension}`;
 
     console.log({
@@ -15,8 +19,9 @@ export class SupabaseStorageAdapter implements IImageStorage {
     });
 
     const { error } = await supabaseAdmin.storage
-      .from('images')
-      .upload(fileName, file, {
+      .from(bucketName)
+      .upload(fileName, buffer, {
+        contentType: file.type,
         cacheControl: '3600',
         upsert: false,
       });
@@ -28,8 +33,6 @@ export class SupabaseStorageAdapter implements IImageStorage {
         error: `${error?.message ?? error}`,
       };
     }
-
-    const bucketName = process.env.BUCKET_NAME!;
 
     const { data } = supabaseAdmin.storage
       .from(bucketName)
