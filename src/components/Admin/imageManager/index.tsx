@@ -2,10 +2,16 @@
 
 import { ButtonComponent } from '@/components/DefaultButton';
 import { ImageUpIcon } from 'lucide-react';
-import { useRef } from 'react';
+import { useRef, useTransition } from 'react';
+import { toast } from 'sonner';
+import { validateImageFile } from '@/util/validate-image';
+import { uploadImageAction } from '@/actions/upload/upload-image-action';
+
+const imgMaxSize = process.env.IMG_MAX_SIZE as unknown as number;
 
 export function ImageUploader() {
   const fileInputRef = useRef<HTMLInputElement>(null);
+  const [isUploading, startTransition] = useTransition(); //vai ajudar a controlar a action
 
   function handleChooseFile() {
     // .current garante o valor atual
@@ -14,7 +20,7 @@ export function ImageUploader() {
     fileInputRef.current.click();
   }
 
-  function handleChange() {
+  async function handleChange() {
     if (!fileInputRef.current) return;
 
     const fileInput = fileInputRef.current;
@@ -22,7 +28,35 @@ export function ImageUploader() {
 
     if (!file) return;
 
-    console.log(file);
+    if (file.size > imgMaxSize) {
+      const readableMaxSize = imgMaxSize / 1024;
+      toast.error(`Imagem muito grande. MÁx: ${readableMaxSize}Kb.`);
+
+      fileInput.value = '';
+      return;
+    }
+
+    const isValid = await validateImageFile(file);
+
+    if (!isValid) {
+      toast.error('Imagem inválida!');
+      return;
+    }
+
+    const formData = buildFormData(file);
+
+    startTransition(async () => {
+      const result = await uploadImageAction();
+    });
+
+    //TODO: Criar a action para envio da imagem
+    fileInput.value = '';
+  }
+
+  function buildFormData(file: File) {
+    const formData = new FormData();
+    formData.append('file', file);
+    return formData;
   }
 
   return (
