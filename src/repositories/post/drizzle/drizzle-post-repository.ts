@@ -1,7 +1,7 @@
 import { PostModel } from '@/models/posts/post-model';
-import { PostRepository } from '../post-repository';
-import { drizzleDb } from '@/db/drizzle';
-import { PostsTable } from '@/db/drizzle/schemas';
+import { PostRepository } from '../../../interfaces/post-repository.interface';
+import { drizzleDb } from '@/infrastructure/db/drizzle';
+import { PostsTable } from '@/infrastructure/db/drizzle/schemas';
 import { and, desc } from 'drizzle-orm';
 import { logColor } from '@/util/log-color';
 import { simulateAwait } from '@/util/async-delay';

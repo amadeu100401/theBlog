@@ -61,7 +61,7 @@ export function MenuAdmin() {
         Home
       </a>
 
-      <Link className={linkClasses} href='/admin/posts'>
+      <Link className={linkClasses} href='/admin/post'>
         <FileTextIcon />
         Posts
       </Link>

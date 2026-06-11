@@ -1,5 +1,5 @@
 import { PostModel } from '@/models/posts/post-model';
-import { PostRepository } from './post-repository';
+import { PostRepository } from '../../interfaces/post-repository.interface';
 import { resolve } from 'path';
 import { readFile } from 'fs/promises';
 import { simulateAwait } from '@/util/async-delay';

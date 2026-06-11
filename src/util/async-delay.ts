@@ -9,7 +9,7 @@ const ENV_VERBOSE = parseInt(process.env.VERBOSE_LOG || '0', 10);
 
 export async function simulateAwait(
   method: string | '',
-  verboseOverpass?: false,
+  verboseOverpass?: false | true,
   time?: number,
 ): Promise<void> {
   const delayTime = time ? time : SIMULATE_WAIT_IN_MS;

@@ -1,7 +1,7 @@
 'use server';
 
-import { drizzleDb } from '@/db/drizzle';
-import { PostsTable } from '@/db/drizzle/schemas';
+import { drizzleDb } from '@/infrastructure/db/drizzle';
+import { PostsTable } from '@/infrastructure/db/drizzle/schemas';
 import { RevalidateCache } from '@/lib/cache/utils/cache-revalidates';
 import { postRepository } from '@/repositories/post';
 import { simulateAwait } from '@/util/async-delay';
