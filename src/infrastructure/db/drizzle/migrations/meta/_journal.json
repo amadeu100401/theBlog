@@ -8,6 +8,13 @@
       "when": 1779905772374,
       "tag": "0000_brown_loa",
       "breakpoints": true
+    },
+    {
+      "idx": 1,
+      "version": "7",
+      "when": 1781145411263,
+      "tag": "0001_lean_warlock",
+      "breakpoints": true
     }
   ]
 }

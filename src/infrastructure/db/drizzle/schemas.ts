@@ -19,6 +19,7 @@ export const PostsTable = pgTable('posts', {
   coverImageUrl: varchar('cover_image_url', {
     length: 500,
   }).notNull(),
+  uploader: varchar('uploader', { length: 500 }),
   published: boolean('published').default(false).notNull(),
   createdAt: timestamp('created_at').defaultNow().notNull(),
   updatedAt: timestamp('updated_at').defaultNow().notNull(),

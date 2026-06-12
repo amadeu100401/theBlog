@@ -6,40 +6,92 @@ import { InputText } from '@/components/InputText';
 import { MarkdownEditor } from '@/components/MarkdownEditor';
 import { useState } from 'react';
 import { ImageUploader } from '../imageManager';
+import { PublicPost } from '@/DTOs/post/dtos';
+import { StickyNotePlus } from 'lucide-react';
 
 type ManagePostFormProps = {
-  id?: string;
+  publicPost?: PublicPost;
 };
 
-export function ManagePostForm({ id }: ManagePostFormProps) {
-  const [contentValue, setContentValue] = useState('');
+export function ManagePostForm({ publicPost }: ManagePostFormProps) {
+  console.log(publicPost?.content);
+  const [contentValue, setContentValue] = useState(publicPost?.content || '');
+  const hideIdAndSlug = publicPost !== null || publicPost !== undefined;
 
   return (
-    <form action={''} className='mb-16' id={id}>
+    <form action={''} className='mb-16' id={publicPost?.id}>
       <div className='flex flex-col gap-6'>
-        <InputText labelText='Name' placeholder='Seu nome aqui' />
         <InputText
-          labelText='Sobrenome'
-          placeholder='Seu sobrenome aqui'
+          labelText='ID'
+          name='id'
+          placeholder='Id gerado automaticamente'
+          type='text'
           readOnly
-          defaultValue={'Teste'}
+          defaultValue={publicPost?.id || ''}
+          hidden={hideIdAndSlug}
+        />
+        <InputText
+          labelText='Slug'
+          name='slug'
+          placeholder='Slug gerado automaticamente'
+          type='text'
+          readOnly
+          defaultValue={publicPost?.slug || ''}
+          hidden={hideIdAndSlug}
+        />
+        <InputText
+          labelText='Autor'
+          name='author'
+          placeholder='Digite o nome do autor'
+          type='text'
+          defaultValue={publicPost?.author || ''}
+        />
+        <InputText
+          labelText='Titulo'
+          name='title'
+          placeholder='Digite o título do post'
+          type='text'
+          defaultValue={publicPost?.title || ''}
+        />
+        <InputText
+          labelText='Excerto'
+          name='excerpt'
+          placeholder='Digite o resumo do post'
+          type='text'
+          defaultValue={publicPost?.excerpt || ''}
+        />
+        <MarkdownEditor
+          labelText='Conteúdo'
+          value={contentValue}
+          setValue={setContentValue}
+          textAreaName='content'
+          disabled={false}
         />
 
         <ImageUploader />
 
-        <InputCheckbox labelText='Teste' />
-
-        <MarkdownEditor
-          disabled={false}
-          textAreaName='content'
-          value={contentValue}
-          setValue={setContentValue}
-          labelText='Conteúdo'
+        <InputText
+          labelText='URL da imagem de capa'
+          name='coverImgURL'
+          placeholder='Digite a URL da imagem'
+          type='text'
+          defaultValue={publicPost?.coverImageUrl || ''}
         />
 
-        <div className='mt-4'>
-          <ButtonComponent buttonType='default' size='md'>
-            Enviar
+        <InputCheckbox
+          name='published'
+          labelText='deixar público?'
+          type='checkbox'
+          defaultChecked={publicPost?.published || false}
+        />
+
+        <div className='mt-4 flex flex-row justify-center'>
+          <ButtonComponent
+            buttonType='default'
+            size='lg'
+            icon={<StickyNotePlus />}
+          >
+            Enviar post
           </ButtonComponent>
         </div>
       </div>

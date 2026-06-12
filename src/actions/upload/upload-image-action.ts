@@ -1,7 +1,6 @@
 'use server';
 
 import { ImageStorageContext } from '@/infrastructure/db/storage/strategies/images/image-storage-factory';
-import { simulateAwait } from '@/util/async-delay';
 import { validateAndGetOptimizedBuffer } from '@/util/validate-image';
 
 //diretiva para criar uma server action -> isso acaba virando um endpoint da minha aplicação
@@ -15,8 +14,6 @@ export async function uploadImageAction(
   formData: FormData,
 ): Promise<UploadImageActionResult> {
   // 'use server' -> podpe ser criada a nivel de arquivo
-
-  await simulateAwait('uploadImageAction', true, 5000);
 
   const makeResult = ({ url = '', error = '' }) => ({ url, error });
 

@@ -5,6 +5,9 @@ import { ImageUpIcon } from 'lucide-react';
 import { useRef, useState, useTransition } from 'react';
 import { toast } from 'sonner';
 import { uploadImageAction } from '@/actions/upload/upload-image-action';
+import Image from 'next/image';
+import { clsx } from 'clsx';
+import { IsdevelopmentEnvironment } from '@/util/http-context';
 
 export function ImageUploader() {
   const fileInputRef = useRef<HTMLInputElement>(null);
@@ -48,7 +51,11 @@ export function ImageUploader() {
         return;
       }
 
-      setImgUrl(result.url);
+      const imageUrl = IsdevelopmentEnvironment()
+        ? new URL(result.url).pathname
+        : result.url;
+
+      setImgUrl(imageUrl);
       toast.success('Imagem enviada!');
     });
 
@@ -98,8 +105,15 @@ export function ImageUploader() {
             <b>URL:</b> {imgUrl}
           </p>
 
-          {/* eslint-disable-next-line */}
-          <img className='rounded-lg' src={imgUrl} alt='' />
+          <div
+            className={clsx(
+              'relative w-full max-w-xl',
+              'aspect-video overflow-hidden',
+              'rounded-lg border',
+            )}
+          >
+            <Image src={imgUrl} alt='preview' fill className='object-contain' />
+          </div>
         </div>
       )}
 

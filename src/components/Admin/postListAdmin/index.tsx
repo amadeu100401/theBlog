@@ -27,7 +27,7 @@ export default async function PostListAdmin() {
           )}
           key={post.id}
         >
-          <LinkWrapper href={`/admin/posts/${post.id}`}>
+          <LinkWrapper href={`/admin/post/${post.id}`}>
             {post.title}
           </LinkWrapper>
           {!post.published && (
