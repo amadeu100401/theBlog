@@ -6,7 +6,7 @@ export const metadata: Metadata = { title: 'Criar post' };
 
 export default function NewPostPage() {
   return (
-    <div className={clsx('flex flex-colgap-6')}>
+    <div className={clsx('flex flex-col gap-6')}>
       <h1 className='text-xl font-extrabold'>Criar post</h1>
       <ManagePostForm />
     </div>

@@ -39,7 +39,7 @@ export function InputText({ labelText = '', ...props }: InputTextProps) {
   const showLabel = labelText && !props.hidden;
 
   return (
-    <div className='flex flex-col gap-1'>
+    <div className='flex flex-col gap-2'>
       {showLabel && (
         <label className='text-sm' htmlFor={id}>
           {labelText}

@@ -1,6 +1,6 @@
 import { ManagePostForm } from '@/components/Admin/managePostForm';
 import { SpinLoader } from '@/components/SpinLoader';
-import { makePublicPost } from '@/DTOs/post/dtos';
+import { makePartialPublicPost } from '@/DTOs/post/dtos';
 import { findPostByIdAdmin } from '@/lib/post/queries/admin';
 import { Metadata } from 'next';
 import { notFound } from 'next/navigation';
@@ -21,7 +21,7 @@ async function PageContent({ params }: AdminPostIdPageProps) {
 
   if (!post) return notFound();
 
-  const publicPost = makePublicPost(post);
+  const publicPost = makePartialPublicPost(post);
 
   return (
     <div className='flex flex-col gap-6'>
