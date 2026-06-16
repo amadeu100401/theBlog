@@ -1,17 +1,14 @@
 import { revalidadeExemploAction } from '@/actions/revalidate-exemple';
 import { SpinLoader } from '@/components/SpinLoader';
-import { formatHourCached } from '@/util/format-datetime';
 import { Suspense } from 'react';
 
 async function PageContet({ params }: { params: Promise<{ id: string }> }) {
   const { id } = await params;
-  const hour = await formatHourCached();
+  // const hour = await formatHourCached();
 
   return (
     <>
-      <div>
-        Name: {hour} (ID: {id})
-      </div>
+      <div>{/* Name: {hour} (ID: {id}) */}</div>
 
       <form className='py-16' action={revalidadeExemploAction}>
         <input type='hidden' name='path' defaultValue={`/exemplo/${id}`} />
