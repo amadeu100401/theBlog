@@ -30,7 +30,6 @@ export default function RootLayout({
 
           <Footer />
           <Toaster
-            richColors
             position='top-center'
             swipeDirections={['left', 'right']}
             toastOptions={{

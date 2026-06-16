@@ -3,9 +3,14 @@ import { useId } from 'react';
 
 type InputTextProps = {
   labelText?: string;
+  hasError?: boolean;
 } & React.ComponentProps<'input'>;
 
-export function InputText({ labelText = '', ...props }: InputTextProps) {
+export function InputText({
+  labelText = '',
+  hasError = false,
+  ...props
+}: InputTextProps) {
   const id = useId();
 
   const validInputTypes = [
@@ -20,12 +25,14 @@ export function InputText({ labelText = '', ...props }: InputTextProps) {
 
   const inputFieldClasses = clsx(
     'bg-white outline-none text-base/tight',
-    'ring-2 ring-slate-400 rounded',
-    'p-2 transition focus:ring-blue-600',
+    'rounded p-2 transition',
     'placeholder:text-slate-300',
     'disabled:bg-slate-200 disabled:text-slate-400 disabled:placeholder-slate-300',
     'read-only:bg-slate-100',
     props.className,
+    hasError
+      ? 'ring-2 ring-red-500 focus:ring-red-600'
+      : 'ring-2 ring-slate-400 focus:ring-blue-600',
   );
 
   type InputType = (typeof validInputTypes)[number];

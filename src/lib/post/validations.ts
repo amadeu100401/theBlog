@@ -11,7 +11,7 @@ const PostBaseSchema = z.object({
   content: z
     .string()
     .trim()
-    .min(3, 'Contúdo obrigatório')
+    .min(3, 'Contúdo é obrigatório')
     .transform(val => sanitizeHtml(val)),
   author: z
     .string()
@@ -21,23 +21,24 @@ const PostBaseSchema = z.object({
   excerpt: z
     .string()
     .trim()
-    .min(3, 'Autor precisa ter um mínimo de 3 caractéries')
+    .min(3, 'Excerto precisa ter um mínimo de 3 caractéries')
     .max(200, 'Nome do autor não deve passar de 200 caracteries'),
-  coverImgURL: z.string().trim().refine(isUrlOrRelativaPath, {
+  coverImageUrl: z.string().trim().refine(isUrlOrRelativaPath, {
     message: 'URL da capa deve ser uma URL ou um caminho para imagem',
   }),
-  published: z
-    .union([
-      z.literal('on'),
-      z.literal('true'),
-      z.literal('false'),
-      z.literal(true),
-      z.literal(false),
-      z.literal(null),
-      z.literal(undefined),
-    ])
-    .default(false)
-    .transform(val => val === 'on' || val === 'true' || val === true),
+  // published: z
+  //   .union([
+  //     z.literal('on'),
+  //     z.literal('true'),
+  //     z.literal('false'),
+  //     z.literal(true),
+  //     z.literal(false),
+  //     z.literal(null),
+  //     z.literal(undefined),
+  //   ])
+  //   .default(false)
+  //   .transform(val => val === 'on' || val === 'true' || val === true),
+  published: z.coerce.boolean().default(false),
 });
 
 export const PostCreateSchema = PostBaseSchema;
