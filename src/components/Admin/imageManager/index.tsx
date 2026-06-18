@@ -9,7 +9,11 @@ import Image from 'next/image';
 import { clsx } from 'clsx';
 import { IsdevelopmentEnvironment } from '@/util/http-context';
 
-export function ImageUploader() {
+type ImageUploaderProps = {
+  disable?: boolean;
+};
+
+export function ImageUploader({ disable = false }: ImageUploaderProps) {
   const fileInputRef = useRef<HTMLInputElement>(null);
   const [isUploading, startTransition] = useTransition(); //vai ajudar a controlar a action
   const [imgUrl, setImgUrl] = useState('');
@@ -94,7 +98,7 @@ export function ImageUploader() {
         className='self-start'
         icon={<ImageUpIcon />}
         onClick={handleChooseFile}
-        disabled={isUploading}
+        disabled={isUploading || disable}
       >
         Enviar uma imagem
       </ButtonComponent>
@@ -124,6 +128,7 @@ export function ImageUploader() {
         className='hidden'
         accept='image/*'
         onChange={handleChange}
+        disabled={isUploading || disable}
       />
     </div>
   );

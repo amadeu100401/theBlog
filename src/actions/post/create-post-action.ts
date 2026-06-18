@@ -12,9 +12,10 @@ import { v4 as uuid } from 'uuid';
 type CreatePostActionState = {
   formState: PublicPost;
   errors: string[];
+  success?: boolean;
 };
 
-export async function createPostAction(
+export async function CreatePostAction(
   prevState: CreatePostActionState,
   formData: FormData,
 ): Promise<CreatePostActionState> {
@@ -24,6 +25,7 @@ export async function createPostAction(
     return {
       formState: prevState.formState,
       errors: ['Dados inválidos'],
+      success: false,
     };
   }
 
@@ -35,6 +37,7 @@ export async function createPostAction(
     return {
       errors,
       formState: makePartialPublicPost(formDataToObj),
+      success: false,
     };
   }
 
@@ -54,12 +57,14 @@ export async function createPostAction(
       return {
         formState: newPost,
         errors: [e.message],
+        success: false,
       };
     }
 
     return {
       formState: newPost,
       errors: ['Erro desconhecido, tente novamente mais tarde'],
+      success: false,
     };
   }
 

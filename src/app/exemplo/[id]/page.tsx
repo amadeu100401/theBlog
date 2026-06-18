@@ -1,4 +1,4 @@
-import { revalidadeExemploAction } from '@/actions/revalidate-exemple';
+import { revalidadeExemploAction } from '@/actions/cache/revalidate-exemple';
 import { SpinLoader } from '@/components/SpinLoader';
 import { Suspense } from 'react';
 
