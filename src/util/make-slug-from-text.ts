@@ -8,5 +8,5 @@ export const makeSlugFromText = (text: string) => {
     trim: true,
   });
 
-  return `${slug}-${makeRandomString}`;
+  return `${slug}-${makeRandomString()}`;
 };

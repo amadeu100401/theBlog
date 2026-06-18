@@ -9,7 +9,7 @@ import { PostCacheTagBuilder } from './cahce-tag-builder';
 
 type CacheType = 'public' | 'admin' | 'all';
 
-export function RevalidateCache(slug: string, cacheType: CacheType): void {
+export function revalidateCache(slug: string, cacheType: CacheType): void {
   const tags = getTagsToRevalidate(slug, cacheType);
 
   tags.forEach(tag => {

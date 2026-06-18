@@ -5,12 +5,11 @@ import { PostsTable } from '@/infrastructure/db/drizzle/schemas';
 import { and, desc } from 'drizzle-orm';
 import { logColor } from '@/util/log-color';
 import { simulateAwait } from '@/util/async-delay';
+import { eq } from 'drizzle-orm';
 
 export class DrizzlePostRepository implements PostRepository {
   async findBySlugPublic(slug: string): Promise<PostModel | null> {
     simulateAwait('findBySlugPublic');
-
-    logColor('findBySlugPublic', Date.now());
     const post = await drizzleDb.query.posts.findFirst({
       where: (post, { eq }) =>
         and(eq(post.slug, slug), eq(post.published, true)),
@@ -27,8 +26,6 @@ export class DrizzlePostRepository implements PostRepository {
 
   async findAllPublishedPublic(): Promise<PostModel[]> {
     simulateAwait('findAllPublishedPublic', true);
-
-    logColor('findAllPublishedPublic', Date.now());
     const posts = await drizzleDb.query.posts.findMany({
       orderBy: desc(PostsTable.createdAt),
       where: (post, { eq }) => eq(post.published, true),
@@ -43,8 +40,6 @@ export class DrizzlePostRepository implements PostRepository {
 
   async findAll(): Promise<PostModel[]> {
     simulateAwait('findAll');
-
-    logColor('findAll', Date.now());
     const posts = await drizzleDb.query.posts.findMany({
       orderBy: desc(PostsTable.createdAt),
     });
@@ -58,8 +53,6 @@ export class DrizzlePostRepository implements PostRepository {
 
   async findById(id: string): Promise<PostModel | null> {
     simulateAwait('findById');
-
-    logColor('findById', Date.now());
     const post = await drizzleDb.query.posts.findFirst({
       where: (post, { eq }) => eq(post?.id, id),
     });
@@ -71,6 +64,29 @@ export class DrizzlePostRepository implements PostRepository {
       createdAt: post?.createdAt.toISOString(),
       updatedAt: post?.updatedAt.toDateString(),
     };
+  }
+
+  async insertPost(entity: PostModel): Promise<boolean> {
+    if (!entity) return false;
+
+    const result = await drizzleDb.insert(PostsTable).values({
+      ...entity,
+      createdAt: new Date(entity.createdAt),
+      updatedAt: new Date(entity.updatedAt),
+    });
+
+    return result.oid !== null;
+  }
+
+  async deletePost(id: string): Promise<boolean> {
+    if (!id || id === undefined) return false;
+
+    const result = await drizzleDb
+      .delete(PostsTable)
+      .where(eq(PostsTable.id, id));
+    const rowsCount = result.rowCount;
+
+    return rowsCount !== null && rowsCount >= 1;
   }
 }
 

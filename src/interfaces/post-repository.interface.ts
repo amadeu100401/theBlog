@@ -5,4 +5,8 @@ export interface PostRepository {
   findAllPublishedPublic(): Promise<PostModel[]>;
   findById(id: string): Promise<PostModel | null>;
   findBySlugPublic(slug: string): Promise<PostModel | null>;
+
+  insertPost(entity: PostModel): Promise<boolean>;
+
+  deletePost(entity: string): Promise<boolean>;
 }
