@@ -9,12 +9,21 @@ const ROOT_DIR = process.cwd();
 const JSON_POST_FILES_PATH = resolve(
   ROOT_DIR,
   'src',
+  'infrastructure',
   'db',
   'seed',
   'posts.json',
 );
 
 export class JsonPostRepository implements PostRepository {
+  insertPost(entity: PostModel): Promise<PostModel> {
+    throw new Error('Method not implemented.');
+  }
+
+  deletePost(entity: string): Promise<boolean> {
+    throw new Error('Method not implemented.');
+  }
+
   async findAll(): Promise<PostModel[]> {
     const posts = await this.readFromDisk();
 

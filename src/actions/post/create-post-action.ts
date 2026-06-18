@@ -47,14 +47,19 @@ export async function createPostAction(
     slug: makeSlugFromText(validPostData.title),
   };
 
-  const result = await postRepository.insertPost(newPost);
+  try {
+    await postRepository.insertPost(newPost);
+  } catch (e: unknown) {
+    if (e instanceof Error) {
+      return {
+        formState: newPost,
+        errors: [e.message],
+      };
+    }
 
-  if (!result) {
     return {
       formState: newPost,
-      errors: [
-        'Ocorreu um erro ao persistir na base de dados. Por favor, tente novamente mais tarde.',
-      ],
+      errors: ['Erro desconhecido, tente novamente mais tarde'],
     };
   }
 

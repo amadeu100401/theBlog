@@ -12,17 +12,27 @@ export async function deletePostAction(id: string) {
     };
   }
 
-  const post = await postRepository.findById(id).catch(() => undefined);
+  try {
+    const post = await postRepository.findById(id).catch(() => undefined);
 
-  if (!post || post === undefined) {
+    if (!post || post === undefined) {
+      throw new Error('Post não encontrado na base de dados');
+    }
+
+    postRepository.deletePost(id);
+
+    revalidateCache(post.slug, 'all');
+  } catch (e: unknown) {
+    if (e instanceof Error) {
+      return {
+        error: e.message,
+      };
+    }
+
     return {
-      error: 'Post não encontrado na base de dados',
+      error: 'Erro ao excluir post. Tente mais tarde.',
     };
   }
-
-  postRepository.deletePost(id);
-
-  revalidateCache(post.slug, 'all');
 
   return {
     error: '',

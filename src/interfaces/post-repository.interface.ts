@@ -6,7 +6,10 @@ export interface PostRepository {
   findById(id: string): Promise<PostModel | null>;
   findBySlugPublic(slug: string): Promise<PostModel | null>;
 
-  insertPost(entity: PostModel): Promise<boolean>;
-
+  insertPost(entity: PostModel): Promise<PostModel>;
   deletePost(entity: string): Promise<boolean>;
+  updatePost(
+    id: string,
+    newPost: Omit<PostModel, 'id' | 'slug' | 'createdAt'>,
+  ): Promise<PostModel>;
 }

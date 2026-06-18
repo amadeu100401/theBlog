@@ -66,16 +66,18 @@ export class DrizzlePostRepository implements PostRepository {
     };
   }
 
-  async insertPost(entity: PostModel): Promise<boolean> {
-    if (!entity) return false;
+  async insertPost(entity: PostModel): Promise<PostModel> {
+    try {
+      await drizzleDb.insert(PostsTable).values({
+        ...entity,
+        createdAt: new Date(entity.createdAt),
+        updatedAt: new Date(entity.updatedAt),
+      });
 
-    const result = await drizzleDb.insert(PostsTable).values({
-      ...entity,
-      createdAt: new Date(entity.createdAt),
-      updatedAt: new Date(entity.updatedAt),
-    });
-
-    return result.oid !== null;
+      return entity;
+    } catch {
+      throw new Error('Erro ao persistir post na base de dados.');
+    }
   }
 
   async deletePost(id: string): Promise<boolean> {
@@ -87,6 +89,39 @@ export class DrizzlePostRepository implements PostRepository {
     const rowsCount = result.rowCount;
 
     return rowsCount !== null && rowsCount >= 1;
+  }
+
+  async updatePost(
+    id: string,
+    newPost: Omit<PostModel, 'id' | 'slug' | 'createdAt'>,
+  ): Promise<PostModel> {
+    const oldPost = await this.findById(id);
+
+    if (!oldPost) {
+      throw new Error('Post não existe na base de dados');
+    }
+
+    const updatedAtDate = new Date();
+    const postData = {
+      author: newPost.author,
+      content: newPost.content,
+      coverImageUrl: newPost.coverImageUrl,
+      excerpt: newPost.excerpt,
+      published: newPost.published,
+      title: newPost.title,
+      updatedAt: updatedAtDate,
+    };
+
+    await drizzleDb
+      .update(PostsTable)
+      .set(postData)
+      .where(eq(PostsTable.id, id));
+
+    return {
+      ...oldPost,
+      ...postData,
+      updatedAt: updatedAtDate.toISOString(),
+    };
   }
 }
 
