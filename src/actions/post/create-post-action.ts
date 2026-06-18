@@ -1,26 +1,51 @@
 'use server';
+import { makePartialPublicPost, PublicPost } from '@/DTOs/post/dtos';
 import { PostCreateSchema } from '@/lib/post/validations';
-import { ActionResult } from '@/types/action-result';
-import { logColor } from '@/util/log-color';
+import { PostModel } from '@/models/posts/post-model';
+import { getZodErrorMessages } from '@/util/get-zod-error-messages';
+import { makeSlugFromText } from '@/util/make-slug-from-text';
+import { v4 as uuid } from 'uuid';
+
+type CreatePostActionState = {
+  formState: PublicPost;
+  errors: string[];
+};
 
 export async function createPostAction(
-  prevState: ActionResult<void>,
+  prevState: CreatePostActionState,
   formData: FormData,
-): Promise<ActionResult<void>> {
-  //TODO: verificar se o usuario está logado
-  const raw = Object.fromEntries(formData.entries());
-  logColor(JSON.stringify(raw));
-  const parsed = await PostCreateSchema.safeParseAsync(raw);
+): Promise<CreatePostActionState> {
+  // TODO: verificar se o usuário tá logado
 
-  if (!parsed.success) {
+  if (!(formData instanceof FormData)) {
     return {
-      success: false,
-      errors: parsed.error.flatten().fieldErrors,
+      formState: prevState.formState,
+      errors: ['Dados inválidos'],
     };
   }
 
+  const formDataToObj = Object.fromEntries(formData.entries());
+  const zodParsedObj = PostCreateSchema.safeParse(formDataToObj);
+
+  if (!zodParsedObj.success) {
+    const errors = getZodErrorMessages(zodParsedObj.error.format());
+    return {
+      errors,
+      formState: makePartialPublicPost(formDataToObj),
+    };
+  }
+
+  const validPostData = zodParsedObj.data;
+  const newPost: PostModel = {
+    ...validPostData,
+    createdAt: new Date().toISOString(),
+    updatedAt: new Date().toISOString(),
+    id: uuid(),
+    slug: makeSlugFromText(validPostData.title),
+  };
+
   return {
-    success: true,
-    message: 'Post criado com sucesso',
+    formState: newPost,
+    errors: [],
   };
 }

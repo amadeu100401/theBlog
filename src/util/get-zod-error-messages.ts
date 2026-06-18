@@ -1,27 +1,13 @@
-import { $ZodErrorTree } from 'zod/v4/core';
+import { ZodFormattedError } from 'zod';
 
-export function getZodErrorMessages<T>(tree: $ZodErrorTree<T>): string[] {
-  const messages = [...tree.errors];
+function hasErrors(value: unknown): value is { _errors: string[] } {
+  return typeof value === 'object' && value !== null && '_errors' in value;
+}
 
-  const visit = (node: unknown): void => {
-    if (!node || typeof node !== 'object') {
-      return;
-    }
-
-    if ('errors' in node && Array.isArray(node.errors)) {
-      messages.push(...node.errors);
-    }
-
-    if ('properties' in node && node.properties) {
-      Object.values(node.properties).forEach(visit);
-    }
-
-    if ('items' in node && Array.isArray(node.items)) {
-      node.items.forEach(visit);
-    }
-  };
-
-  visit(tree);
-
-  return messages;
+export function getZodErrorMessages<T>(error: ZodFormattedError<T>): string[] {
+  return Object.values(error).flatMap(field => {
+    if (Array.isArray(field)) return field;
+    if (hasErrors(field)) return field._errors;
+    return [];
+  });
 }
