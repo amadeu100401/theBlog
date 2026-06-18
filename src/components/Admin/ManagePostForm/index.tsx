@@ -7,10 +7,11 @@ import { MarkdownEditor } from '@/components/MarkdownEditor';
 import { useActionState, useEffect, useState } from 'react';
 import { ImageUploader } from '../imageManager';
 import { makePartialPublicPost, PublicPost } from '@/DTOs/post/dtos';
-import { StickyNotePlus } from 'lucide-react';
+import { FilesIcon, StickyNotePlus } from 'lucide-react';
 import { CreatePostAction } from '@/actions/post/create-post-action';
 import { toast } from 'sonner';
 import { UpdatePostAction } from '@/actions/post/update-post-action';
+import { useRouter, useSearchParams } from 'next/navigation';
 
 type ManagePostFormUpdateProps = {
   mode: 'update';
@@ -27,6 +28,9 @@ type ManagePostFormProps =
 
 export function ManagePostForm(props: ManagePostFormProps) {
   const { mode } = props;
+  const searchParams = useSearchParams();
+  const created = searchParams.get('created');
+  const router = useRouter();
 
   let publicPost;
 
@@ -48,6 +52,16 @@ export function ManagePostForm(props: ManagePostFormProps) {
     serverAction[mode],
     initialState,
   );
+
+  useEffect(() => {
+    if (created === '1') {
+      toast.dismiss();
+      toast.success('Post criado com sucesso');
+      const url = new URL(window.location.href);
+      url.searchParams.delete('created');
+      router.replace(url.toString());
+    }
+  }, [created, router]);
 
   useEffect(() => {
     if (state.success) {
@@ -120,9 +134,7 @@ export function ManagePostForm(props: ManagePostFormProps) {
           textAreaName='content'
           disabled={isPending}
         />
-
         <ImageUploader disable={isPending} />
-
         <InputText
           labelText='URL da imagem de capa'
           name='coverImageUrl'
@@ -131,7 +143,6 @@ export function ManagePostForm(props: ManagePostFormProps) {
           defaultValue={formState.coverImageUrl}
           disabled={isPending}
         />
-
         <InputCheckbox
           name='published'
           labelText='deixar público?'
@@ -143,10 +154,10 @@ export function ManagePostForm(props: ManagePostFormProps) {
           <ButtonComponent
             buttonType='default'
             size='lg'
-            icon={<StickyNotePlus />}
+            icon={mode === 'update' ? <FilesIcon /> : <StickyNotePlus />}
             disabled={isPending}
           >
-            Enviar
+            {mode === 'update' ? 'Atualizar' : 'Enviar post'}
           </ButtonComponent>
         </div>
       </div>

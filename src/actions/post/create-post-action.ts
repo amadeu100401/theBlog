@@ -70,5 +70,5 @@ export async function CreatePostAction(
 
   revalidateCache(newPost.slug, 'all');
 
-  redirect(`${newPost.id}`);
+  redirect(`${newPost.id}?created=1`);
 }
