@@ -60,7 +60,7 @@ export function Dialog({
         {showXButton && (
           <div className='flex flex-row justify-end'>
             <ButtonComponent
-              buttonType='custom'
+              styleType='custom'
               className={clsx(
                 'insert-0 cursor-pointer',
                 'text-slate-500',
@@ -81,7 +81,7 @@ export function Dialog({
           <div className={clsx('flex items-center justify-around')}>
             {type === 'action' && (
               <ButtonComponent
-                buttonType='ghost'
+                styleType='ghost'
                 autoFocus
                 onClick={handleCancel}
                 disabled={isDisable}
@@ -90,7 +90,7 @@ export function Dialog({
               </ButtonComponent>
             )}
             <ButtonComponent
-              buttonType='danger'
+              styleType='danger'
               onClick={onConfirm}
               disabled={isDisable}
             >

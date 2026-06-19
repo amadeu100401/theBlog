@@ -148,7 +148,7 @@ export function ManagePostForm(props: ManagePostFormProps) {
         />
         <div className='mt-4 flex flex-row justify-center'>
           <ButtonComponent
-            buttonType='default'
+            styleType='default'
             size='lg'
             icon={mode === 'update' ? <FilesIcon /> : <StickyNotePlus />}
             disabled={isPending}

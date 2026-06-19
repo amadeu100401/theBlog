@@ -5,13 +5,13 @@ type ButtonSize = 'sm' | 'md' | 'lg';
 
 export type ButtonComponentProps = {
   icon?: React.ReactNode;
-  buttonType: ButtonVariants;
+  styleType: ButtonVariants;
   size?: ButtonSize;
 } & React.ComponentProps<'button'>;
 
 export function ButtonComponent({
   icon,
-  buttonType = 'default',
+  styleType: buttonType = 'default',
   size = 'md',
   ...props
 }: ButtonComponentProps) {
@@ -71,7 +71,7 @@ export function ButtonComponent({
   );
 
   return (
-    <button {...props} className={buttonClasses}>
+    <button className={buttonClasses} {...props}>
       {icon}
       {props.children}
     </button>

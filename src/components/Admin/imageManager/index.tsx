@@ -93,7 +93,7 @@ export function ImageUploader({ disable = false }: ImageUploaderProps) {
   return (
     <div className='flex flex-col gap-2 py-4'>
       <ButtonComponent
-        buttonType={'default'}
+        styleType={'default'}
         type='button'
         className='self-start'
         icon={<ImageUpIcon />}

@@ -49,7 +49,7 @@ export function DeletePostButton({ id, title }: DeleteButtonProps) {
           'hover:scale-125 transition hover:text-red-700',
           'disabled:text-slate-600 disabled:cursor-default disabled:scale-100 disabled:transition',
         )}
-        buttonType='custom'
+        styleType='custom'
         aria-label={`Apagar post: ${title}`}
         title={`Apagar post: ${title}`}
         onClick={handleClick}
