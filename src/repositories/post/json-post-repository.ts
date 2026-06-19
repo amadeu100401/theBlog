@@ -2,7 +2,6 @@ import { PostModel } from '@/models/posts/post-model';
 import { PostRepository } from '../../interfaces/post-repository.interface';
 import { resolve } from 'path';
 import { readFile } from 'fs/promises';
-import { simulateAwait } from '@/util/async-delay';
 
 const ROOT_DIR = process.cwd();
 
@@ -16,6 +15,12 @@ const JSON_POST_FILES_PATH = resolve(
 );
 
 export class JsonPostRepository implements PostRepository {
+  updatePost(
+    id: string,
+    newPost: Omit<PostModel, 'id' | 'slug' | 'createdAt'>,
+  ): Promise<PostModel> {
+    throw new Error('Method not implemented.');
+  }
   insertPost(entity: PostModel): Promise<PostModel> {
     throw new Error('Method not implemented.');
   }
@@ -27,14 +32,10 @@ export class JsonPostRepository implements PostRepository {
   async findAll(): Promise<PostModel[]> {
     const posts = await this.readFromDisk();
 
-    simulateAwait('findAll');
-
     return posts;
   }
 
   async findBySlugPublic(slug: string): Promise<PostModel> {
-    await simulateAwait('findBySlugPublic');
-
     const posts = await this.findAllPublishedPublic();
     const post = posts.find(post => post.slug === slug && post.published);
 
@@ -44,16 +45,12 @@ export class JsonPostRepository implements PostRepository {
   }
 
   async findAllPublishedPublic(): Promise<PostModel[]> {
-    simulateAwait('findAllPublishedPublic');
-
     const posts = await this.readFromDisk();
 
     return posts.filter(post => post.published === true);
   }
 
   async findById(id: string): Promise<PostModel> {
-    simulateAwait('findById');
-
     const posts = await this.findAllPublishedPublic();
     const post = posts.find(post => post.id === id);
 

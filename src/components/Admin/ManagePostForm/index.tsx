@@ -11,11 +11,11 @@ import { FilesIcon, StickyNotePlus } from 'lucide-react';
 import { CreatePostAction } from '@/actions/post/create-post-action';
 import { toast } from 'sonner';
 import { UpdatePostAction } from '@/actions/post/update-post-action';
-import { useRouter, useSearchParams } from 'next/navigation';
 
 type ManagePostFormUpdateProps = {
   mode: 'update';
   publicPost: PublicPost;
+  created: boolean;
 };
 
 type ManagePostFormCreateProps = {
@@ -28,14 +28,13 @@ type ManagePostFormProps =
 
 export function ManagePostForm(props: ManagePostFormProps) {
   const { mode } = props;
-  const searchParams = useSearchParams();
-  const created = searchParams.get('created');
-  const router = useRouter();
 
   let publicPost;
+  let created = false;
 
   if (mode === 'update') {
     publicPost = props.publicPost;
+    created = props.created;
   }
 
   const serverAction = {
@@ -54,14 +53,11 @@ export function ManagePostForm(props: ManagePostFormProps) {
   );
 
   useEffect(() => {
-    if (created === '1') {
+    if (mode === 'create' && created) {
       toast.dismiss();
       toast.success('Post criado com sucesso');
-      const url = new URL(window.location.href);
-      url.searchParams.delete('created');
-      router.replace(url.toString());
     }
-  }, [created, router]);
+  }, [created, mode]);
 
   useEffect(() => {
     if (state.success) {

@@ -12,29 +12,41 @@ export const metadata: Metadata = {
 
 type AdminPostIdPageProps = {
   params: Promise<{ id: string }>;
+  searchParams: Promise<{
+    created?: string;
+  }>;
 };
 
-async function PageContent({ params }: AdminPostIdPageProps) {
+async function PageContent({ params, searchParams }: AdminPostIdPageProps) {
   const { id } = await params;
 
-  const post = await findPostByIdAdmin(id).catch();
+  const { created } = await searchParams;
 
-  if (!post) return notFound();
+  const post = await findPostByIdAdmin(id);
+
+  if (!post) notFound();
 
   const publicPost = makePartialPublicPost(post);
 
   return (
     <div className='flex flex-col gap-6'>
       <h1 className='text-xl font-extrabold'>Editar posts</h1>
-      <ManagePostForm mode={'update'} publicPost={publicPost} />
+      <ManagePostForm
+        created={created === '1'}
+        mode={'update'}
+        publicPost={publicPost}
+      />
     </div>
   );
 }
 
-export default function AdminPostIdPage({ params }: AdminPostIdPageProps) {
+export default function AdminPostIdPage({
+  params,
+  searchParams,
+}: AdminPostIdPageProps) {
   return (
     <Suspense fallback={<SpinLoader />}>
-      <PageContent params={params} />
+      <PageContent params={params} searchParams={searchParams} />
     </Suspense>
   );
 }

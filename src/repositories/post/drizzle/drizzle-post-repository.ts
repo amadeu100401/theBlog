@@ -3,13 +3,10 @@ import { PostRepository } from '../../../interfaces/post-repository.interface';
 import { drizzleDb } from '@/infrastructure/db/drizzle';
 import { PostsTable } from '@/infrastructure/db/drizzle/schemas';
 import { and, desc } from 'drizzle-orm';
-import { logColor } from '@/util/log-color';
-import { simulateAwait } from '@/util/async-delay';
 import { eq } from 'drizzle-orm';
 
 export class DrizzlePostRepository implements PostRepository {
   async findBySlugPublic(slug: string): Promise<PostModel | null> {
-    simulateAwait('findBySlugPublic');
     const post = await drizzleDb.query.posts.findFirst({
       where: (post, { eq }) =>
         and(eq(post.slug, slug), eq(post.published, true)),
@@ -25,7 +22,6 @@ export class DrizzlePostRepository implements PostRepository {
   }
 
   async findAllPublishedPublic(): Promise<PostModel[]> {
-    simulateAwait('findAllPublishedPublic', true);
     const posts = await drizzleDb.query.posts.findMany({
       orderBy: desc(PostsTable.createdAt),
       where: (post, { eq }) => eq(post.published, true),
@@ -39,7 +35,6 @@ export class DrizzlePostRepository implements PostRepository {
   }
 
   async findAll(): Promise<PostModel[]> {
-    simulateAwait('findAll');
     const posts = await drizzleDb.query.posts.findMany({
       orderBy: desc(PostsTable.createdAt),
     });
@@ -52,7 +47,6 @@ export class DrizzlePostRepository implements PostRepository {
   }
 
   async findById(id: string): Promise<PostModel | null> {
-    simulateAwait('findById');
     const post = await drizzleDb.query.posts.findFirst({
       where: (post, { eq }) => eq(post?.id, id),
     });
