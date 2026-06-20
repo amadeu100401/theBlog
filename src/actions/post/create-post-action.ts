@@ -1,7 +1,7 @@
 'use server';
 import { makePartialPublicPost, PublicPost } from '@/DTOs/post/dtos';
 import { revalidateCache } from '@/lib/cache/utils/cache-revalidates';
-import { PostCreateSchema } from '@/lib/post/validations';
+import { PostCreateSchema } from '@/lib/validates/validations';
 import { PostModel } from '@/models/posts/post-model';
 import { postRepository } from '@/repositories/post';
 import { getZodErrorMessages } from '@/util/get-zod-error-messages';

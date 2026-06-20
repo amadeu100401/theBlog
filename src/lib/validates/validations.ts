@@ -26,18 +26,6 @@ const PostBaseSchema = z.object({
   coverImageUrl: z.string().trim().refine(isUrlOrRelativaPath, {
     message: 'URL da capa deve ser uma URL ou um caminho para imagem',
   }),
-  // published: z
-  //   .union([
-  //     z.literal('on'),
-  //     z.literal('true'),
-  //     z.literal('false'),
-  //     z.literal(true),
-  //     z.literal(false),
-  //     z.literal(null),
-  //     z.literal(undefined),
-  //   ])
-  //   .default(false)
-  //   .transform(val => val === 'on' || val === 'true' || val === true),
   published: z.coerce.boolean().default(false),
 });
 

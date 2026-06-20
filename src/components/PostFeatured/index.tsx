@@ -1,4 +1,4 @@
-import { findAllPublishedPostsCached } from '@/lib/post/queries/public';
+import { findAllPublishedPostsCached } from '@/lib/data/sql/post/queries/public';
 import { PostCoverImage } from '../PostCoverImage';
 import { PostSummary } from '../PostSummary';
 import { ErrorMessage } from '../ErrorMessage';

@@ -1,4 +1,4 @@
-import { findAllPostsAdmin } from '@/lib/post/queries/admin';
+import { findAllPostsAdmin } from '@/lib/data/sql/post/queries/admin';
 import { LinkWrapper } from '../../LinkWrapper';
 import clsx from 'clsx';
 import { DeletePostButton } from '../deletePostButton';
