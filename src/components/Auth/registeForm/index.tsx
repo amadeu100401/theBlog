@@ -3,16 +3,21 @@
 import { InputText } from '@/components/InputText';
 import { ArrowRightIcon, LockIcon, MailIcon, UserIcon } from 'lucide-react';
 import { PasswordStrength } from '../passwordStrength';
-import { useMemo, useState } from 'react';
+import { useActionState, useMemo, useState } from 'react';
 import { ButtonComponent } from '@/components/DefaultButton';
 import clsx from 'clsx';
 import { InputCheckbox } from '@/components/InputCheckbox';
 import Link from 'next/link';
+import { CreateUserAction } from '@/actions/auth/user/create-user-action';
+import { makePublicUser } from '@/DTOs/user/dtos';
 
 export type PasswordRule = { label: string; test: (v: string) => boolean };
 
 export function RegisterUserForm() {
+  const [name, setName] = useState('');
+  const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
+  const [acceptTerms, setAcceptTerms] = useState(false);
 
   const passwordRules: PasswordRule[] = useMemo(
     () => [
@@ -34,36 +39,53 @@ export function RegisterUserForm() {
     'hover:underline hover:underline-offset-3 font-medium',
   );
 
+  const initialState = {
+    formState: makePublicUser(),
+    errors: [],
+  };
+
+  const [state, action, isPending] = useActionState(
+    CreateUserAction,
+    initialState,
+  );
+
+  const { formState } = state;
+
+  const isPasswordValid = strength === passwordRules.length;
+
+  const canSendRequest =
+    !isPending && name && email && isPasswordValid && acceptTerms;
+
   return (
-    <form className='w-full mb-8'>
+    <form action={action} className='w-full mb-8'>
       <div className='flex w-full flex-col gap-6'>
         <InputText
           labelText='Nome completo'
           name='name'
           placeholder='Como devemos te chamar?'
           type='text'
-          // defaultValue={formState.title}
-          // disabled={isPending}
+          defaultValue={formState.name}
+          disabled={isPending}
           icon={UserIcon}
           className={textInputClasses}
+          onChange={e => setName(e.target.value)}
         />
         <InputText
           labelText='Email completo'
           name='email'
           placeholder='voce@exemplo.com'
           type='email'
-          // defaultValue={formState.title}
-          // disabled={isPending}
+          disabled={isPending}
           icon={MailIcon}
           className={textInputClasses}
+          onChange={e => setEmail(e.target.value)}
         />
         <InputText
           labelText='Senha'
           name='password'
           placeholder='Crie uma senha segura'
           type='password'
-          // defaultValue={formState.title}
-          // disabled={isPending}
+          disabled={isPending}
           icon={LockIcon}
           onChange={e => setPassword(e.target.value)}
           className={textInputClasses}
@@ -90,7 +112,8 @@ export function RegisterUserForm() {
             name='acceptTerms'
             type='checkbox'
             // defaultChecked={}
-            disabled={false}
+            disabled={isPending}
+            onChange={e => setAcceptTerms(e.target.checked)}
           />
           <span className='text-sm/tight font-light'>
             Eu li e concordo os{' '}
@@ -123,6 +146,7 @@ export function RegisterUserForm() {
               )}
             />
           }
+          disabled={!canSendRequest}
         >
           Cria conta
         </ButtonComponent>

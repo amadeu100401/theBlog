@@ -4,7 +4,7 @@ import { ButtonComponent } from '@/components/DefaultButton';
 import { ImageUpIcon } from 'lucide-react';
 import { useRef, useState, useTransition } from 'react';
 import { toast } from 'sonner';
-import { uploadImageAction } from '@/actions/upload/upload-image-action';
+import { uploadImageAction } from '@/actions/images/upload-image-action';
 import Image from 'next/image';
 import { clsx } from 'clsx';
 import { IsdevelopmentEnvironment } from '@/util/http-context';
