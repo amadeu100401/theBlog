@@ -1,18 +1,26 @@
+import { AuthHeading } from '@/components/Auth/authHeading';
 import { RegisterUserForm } from '@/components/Auth/registeForm';
-import clsx from 'clsx';
-import { Metadata } from 'next';
+import { SocialButton } from '@/components/Auth/socialButton';
 
-export const metadata: Metadata = {
-  title: 'Criar usuário',
-};
-
-export default async function Register() {
+export default function Register() {
   return (
-    <div
-      className={clsx('flex flex-col justify-center items-center gap-6 p-2')}
-    >
-      <h1 className='text-xl font-bold'>Criar sua conta</h1>
-      <RegisterUserForm />
-    </div>
+    <main className='flex min-h-screen justify-center'>
+      <div className='w-full max-w-md'>
+        <AuthHeading type='create' />
+
+        {/* <div className='mt-6 flex gap-3'>
+          <SocialButton provider='google' />
+          <SocialButton provider='github' />
+        </div>
+
+        <div className='my-4 flex items-center gap-3 text-xs text-slate-400'>
+          <div className='h-px flex-1 bg-slate-300' />
+          <span className='whitespace-nowrap'>ou continue com e-mail</span>
+          <div className='h-px flex-1 bg-slate-300' />
+        </div> */}
+
+        <RegisterUserForm />
+      </div>
+    </main>
   );
 }

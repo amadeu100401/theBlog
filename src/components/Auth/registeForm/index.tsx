@@ -29,12 +29,14 @@ export function RegisterUserForm() {
     [password, passwordRules],
   );
 
-  const textInputClasses = clsx('bg-white');
-  const linkClasses = clsx('hover:underline font-medium');
+  const textInputClasses = clsx('bg-white h-11 rounded-xl');
+  const linkClasses = clsx(
+    'hover:underline hover:underline-offset-3 font-medium',
+  );
 
   return (
-    <form className='mb-16'>
-      <div className='flex flex-col gap-6'>
+    <form className='w-full mb-16'>
+      <div className='flex w-full flex-col gap-6'>
         <InputText
           labelText='Nome completo'
           name='name'
@@ -77,7 +79,7 @@ export function RegisterUserForm() {
       <div className='mt-5 flex flex-col justify-center'>
         <label
           className={clsx(
-            'flex items-start cursor-pointer transition',
+            'flex w-full items-start cursor-pointer transition',
             'border border-slate-200',
             'bg-white ring-slate-300',
             'p-3 gap-3 ',
@@ -102,12 +104,12 @@ export function RegisterUserForm() {
           </span>
         </label>
       </div>
-      <div className='mt-6 flex flex-row justify-center'>
+      <div className='mt-6'>
         <ButtonComponent
           styleType='custom'
           className={clsx(
             'flex justify-center items-center group',
-            'h-11 w-full gap-2 px-4 py-2 overflow-hidden',
+            'flex-1 h-11 w-full gap-2 px-4 py-2 overflow-hidden',
             '[&_svg]:w-5 [&_svg]:h-5 rounded-xl',
             'text-white font-medium transition',
             'boder border-slate-200 bg-slate-950 shadow-sm',

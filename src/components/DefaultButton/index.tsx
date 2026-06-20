@@ -42,7 +42,7 @@ export function ButtonComponent({
       commonStyle,
     ),
 
-    custom: '',
+    custom: clsx(''),
   };
 
   const buttonSizes: Record<ButtonSize, string> = {
