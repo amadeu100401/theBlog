@@ -8,7 +8,10 @@ export const metadata: Metadata = {
 
 export default async function Register() {
   return (
-    <div className={clsx('')}>
+    <div
+      className={clsx('flex flex-col justify-center items-center gap-6 p-2')}
+    >
+      <h1 className='text-xl font-bold'>Criar sua conta</h1>
       <RegisterUserForm />
     </div>
   );

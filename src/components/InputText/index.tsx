@@ -29,7 +29,6 @@ export function InputText({
 
   type InputType = (typeof validInputTypes)[number];
 
-  // Identifica o tipo original enviado por prop
   const isPasswordType = props.type === 'password';
 
   const inputType: InputType =
@@ -45,9 +44,9 @@ export function InputText({
   const id = useId();
 
   const inputFieldClasses = clsx(
-    'flex h-9 w-full border border-input bg-transparent outline-none text-base/tight',
+    'flex h-9 w-full border border-slate-200 bg-transparent outline-none text-base/tight',
     'rounded-md p-2 shadow-sm transition-colors',
-    'ring-offset-background focus-visible:outline-none focus-visible:ring-1 focus-visible:ring-ring',
+    'ring-offset-background focus-visible:outline-none focus-visible:ring-[1.5px] focus-visible:ring-ring',
     'placeholder:text-slate-400',
     'disabled:bg-slate-200 disabled:text-slate-400 disabled:placeholder-slate-300 disabled:cursor-not-allowed',
     'read-only:bg-slate-100 read-only:text-slate-400 md:text-sm',
@@ -58,8 +57,8 @@ export function InputText({
 
     props.className,
     hasError
-      ? 'ring-2 ring-red-500 focus:ring-red-600'
-      : 'ring-1 ring-slate-300 focus:ring-2 focus:ring-[oklch(0.704_0.04_256.788)]',
+      ? ' ring-red-500 focus:ring-red-600'
+      : ' ring-slate-300 focus:ring-[1.5px] focus:ring-[oklch(0.704_0.04_256.788)]',
   );
 
   const showLabel = labelText && !props.hidden;
@@ -67,7 +66,7 @@ export function InputText({
   return (
     <div className='flex flex-col gap-2'>
       {showLabel && (
-        <label className='text-sm font-medium' htmlFor={id}>
+        <label className='text-sm font-normal' htmlFor={id}>
           {labelText}
         </label>
       )}

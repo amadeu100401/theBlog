@@ -18,8 +18,9 @@ export function InputCheckbox({
         id={id}
         {...props}
         className={clsx(
-          'w-4 h-4',
-          'outline-none rounded-lg focus:ring-2 focus: ring-blue-500',
+          'w-4 h-4 accent-slate-900 rounded',
+          'outline-none rounded-lg focus:ring-0 focus:ring-offset-0 focus:outline-none',
+          'hover:cursor-pointer',
         )}
         type='checkbox'
       />

@@ -4,20 +4,22 @@ type ButtonVariants = 'default' | 'danger' | 'custom' | 'ghost';
 type ButtonSize = 'sm' | 'md' | 'lg';
 
 export type ButtonComponentProps = {
-  icon?: React.ReactNode;
+  leftIcon?: React.ReactNode;
+  rightIcon?: React.ReactNode;
   styleType: ButtonVariants;
   size?: ButtonSize;
 } & React.ComponentProps<'button'>;
 
 export function ButtonComponent({
-  icon,
+  leftIcon,
+  rightIcon,
   styleType: buttonType = 'default',
   size = 'md',
   ...props
 }: ButtonComponentProps) {
   const commonStyle = clsx(
     'flex items-center justify-center',
-    'transition, ',
+    'transition',
     'py-2 px-4 cursor-pointer',
     'disabled:bg-slate-200',
     'disabled:text-slate-400',
@@ -46,7 +48,7 @@ export function ButtonComponent({
   const buttonSizes: Record<ButtonSize, string> = {
     sm: clsx(
       'text-xs/tight py-1 px-1',
-      'rounde-sm',
+      'rounded-sm',
       '[&_svg]:w-3 [&_svg]:h-3',
       'gap-1',
     ),
@@ -72,8 +74,9 @@ export function ButtonComponent({
 
   return (
     <button className={buttonClasses} {...props}>
-      {icon}
+      {leftIcon}
       {props.children}
+      {rightIcon}
     </button>
   );
 }

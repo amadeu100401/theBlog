@@ -150,7 +150,7 @@ export function ManagePostForm(props: ManagePostFormProps) {
           <ButtonComponent
             styleType='default'
             size='lg'
-            icon={mode === 'update' ? <FilesIcon /> : <StickyNotePlus />}
+            leftIcon={mode === 'update' ? <FilesIcon /> : <StickyNotePlus />}
             disabled={isPending}
           >
             {mode === 'update' ? 'Atualizar' : 'Enviar post'}
