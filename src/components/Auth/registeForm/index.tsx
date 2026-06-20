@@ -35,7 +35,7 @@ export function RegisterUserForm() {
   );
 
   return (
-    <form className='w-full mb-16'>
+    <form className='w-full mb-8'>
       <div className='flex w-full flex-col gap-6'>
         <InputText
           labelText='Nome completo'

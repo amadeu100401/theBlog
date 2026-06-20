@@ -73,7 +73,7 @@ export function ButtonComponent({
   );
 
   return (
-    <button className={buttonClasses} {...props}>
+    <button {...props} className={buttonClasses}>
       {leftIcon}
       {props.children}
       {rightIcon}

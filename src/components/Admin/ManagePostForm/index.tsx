@@ -11,6 +11,7 @@ import { FilesIcon, StickyNotePlus } from 'lucide-react';
 import { CreatePostAction } from '@/actions/post/create-post-action';
 import { toast } from 'sonner';
 import { UpdatePostAction } from '@/actions/post/update-post-action';
+import clsx from 'clsx';
 
 type ManagePostFormUpdateProps = {
   mode: 'update';
@@ -77,6 +78,8 @@ export function ManagePostForm(props: ManagePostFormProps) {
   const [contentValue, setContentValue] = useState(publicPost?.content || '');
   const hideIdAndSlug = !formState.id || !formState.slug;
 
+  const inputClasses = clsx('bg-white');
+
   return (
     <form action={action} className='mb-16'>
       <div className='flex flex-col gap-6'>
@@ -89,6 +92,7 @@ export function ManagePostForm(props: ManagePostFormProps) {
           defaultValue={formState?.id}
           hidden={hideIdAndSlug}
           disabled={isPending}
+          className={inputClasses}
         />
         <InputText
           labelText='Slug'
@@ -99,6 +103,7 @@ export function ManagePostForm(props: ManagePostFormProps) {
           defaultValue={formState?.slug}
           hidden={hideIdAndSlug}
           disabled={isPending}
+          className={inputClasses}
         />
         <InputText
           labelText='Titulo'
@@ -107,6 +112,7 @@ export function ManagePostForm(props: ManagePostFormProps) {
           type='text'
           defaultValue={formState.title}
           disabled={isPending}
+          className={inputClasses}
         />
         <InputText
           labelText='Autor'
@@ -114,6 +120,7 @@ export function ManagePostForm(props: ManagePostFormProps) {
           defaultValue={formState.author}
           placeholder='Digite o nome do autor'
           disabled={isPending}
+          className={inputClasses}
         />
         <InputText
           labelText='Excerto'
@@ -122,6 +129,7 @@ export function ManagePostForm(props: ManagePostFormProps) {
           type='text'
           defaultValue={formState.excerpt}
           disabled={isPending}
+          className={inputClasses}
         />
         <MarkdownEditor
           labelText='Conteúdo'
@@ -138,6 +146,7 @@ export function ManagePostForm(props: ManagePostFormProps) {
           type='text'
           defaultValue={formState.coverImageUrl}
           disabled={isPending}
+          className={inputClasses}
         />
         <InputCheckbox
           name='published'

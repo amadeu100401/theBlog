@@ -96,7 +96,7 @@ export function ImageUploader({ disable = false }: ImageUploaderProps) {
         styleType={'default'}
         type='button'
         className='self-start'
-        icon={<ImageUpIcon />}
+        leftIcon={<ImageUpIcon />}
         onClick={handleChooseFile}
         disabled={isUploading || disable}
       >

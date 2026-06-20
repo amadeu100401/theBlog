@@ -20,6 +20,11 @@ export default function Register() {
         </div> */}
 
         <RegisterUserForm />
+        <div className='flex items-center justify-center '>
+          <span className='text-sm text-slate-600 font-light'>
+            Protegido por criptografia de ponta a ponta.
+          </span>
+        </div>
       </div>
     </main>
   );
