@@ -1,4 +1,4 @@
-import { UserModel } from '@/domain/entities/user/user.entity';
+import { UserModel } from '@/domain/entities/user/user.model';
 
 export type PublicUser = Pick<
   UserModel,

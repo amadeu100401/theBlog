@@ -1,6 +1,6 @@
 import { CreateUserDTO } from '@/application/DTOs/user/dtos';
 import { UserFactory } from '@/domain/entities/user/user.factory';
-import { userRepository } from '@/infrastructure/db/repositories/user';
+import { userRepository } from '@/infrastructure/dependencyInjection/container';
 import { hashPassword } from '@/lib/auth/auth-manual';
 
 export class CreateUserUseCase {
@@ -17,10 +17,11 @@ export class CreateUserUseCase {
       passwordHash,
     });
 
-    await userRepository.insertNewUser(user);
+    const entity = await userRepository.insertNewUser(user);
 
     return {
       success: true,
+      userId: entity.id,
     };
   }
 }

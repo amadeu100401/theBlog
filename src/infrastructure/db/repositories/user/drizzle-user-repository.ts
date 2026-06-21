@@ -1,7 +1,7 @@
 import { drizzleDb } from '@/infrastructure/db/drizzle';
 import { UserTable } from '@/infrastructure/db/drizzle/schemas';
 import { UserRepository } from '@/domain/repositories/user-repository.interface';
-import { UserModel } from '@/domain/entities/user/user.entity';
+import { UserModel } from '@/domain/entities/user/user.model';
 import { UserMapper } from '../../mappers/user.mapper';
 import { logColor } from '@/util/log-color';
 
@@ -10,9 +10,9 @@ export class DrizzleUserRepository implements UserRepository {
     throw new Error('Method not implemented.');
   }
 
-  async insertNewUser(entity: UserModel): Promise<UserModel> {
+  async insertNewUser(userModel: UserModel): Promise<UserModel> {
     try {
-      const toPersisty = UserMapper.toPersistence(entity);
+      const toPersisty = UserMapper.toPersistence(userModel);
       const [user] = await drizzleDb
         .insert(UserTable)
         .values(toPersisty)
@@ -20,9 +20,9 @@ export class DrizzleUserRepository implements UserRepository {
 
       return UserMapper.toDomain(user);
     } catch (error) {
-      console.log('=== DETALHES DO ERRO DO POSTGRES ===');
+      logColor('=== DETALHES DO ERRO DO POSTGRES ===');
       console.dir(error);
-      console.log('====================================');
+      logColor('====================================');
 
       if (error instanceof Error) {
         throw new Error(`Erro no banco: ${error.message}`);

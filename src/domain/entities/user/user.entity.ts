@@ -1,33 +1,96 @@
-import { userRoleEnum } from '@/infrastructure/db/drizzle/schemas';
+import { UserModel, UserRole } from './user.model';
 
-export type UserRole = (typeof userRoleEnum.enumValues)[number];
+export class User implements UserModel {
+  constructor(private props: UserModel) {
+    this.props = { ...props };
+  }
 
-export interface UserModel {
-  id: string;
+  get id(): string {
+    return this.props.id;
+  }
+  get name(): string {
+    return this.props.name;
+  }
+  get username(): string {
+    return this.props.username;
+  }
+  get email(): string {
+    return this.props.email;
+  }
+  get passwordHash(): string {
+    return this.props.passwordHash;
+  }
+  get role(): UserRole {
+    return this.props.role;
+  }
+  get isActive(): boolean {
+    return this.props.isActive;
+  }
+  get bio(): string | null {
+    return this.props.bio;
+  }
+  get avatarUrl(): string | null {
+    return this.props.avatarUrl;
+  }
+  get emailVerifiedAt(): Date | null {
+    return this.props.emailVerifiedAt;
+  }
+  get resetPasswordToken(): string | null {
+    return this.props.resetPasswordToken;
+  }
+  get resetPasswordExpiresAt(): Date | null {
+    return this.props.resetPasswordExpiresAt;
+  }
+  get createdAt(): Date {
+    return this.props.createdAt;
+  }
+  get updatedAt(): Date {
+    return this.props.updatedAt;
+  }
 
-  name: string;
+  public isAdmin(): boolean {
+    return this.role === 'admin';
+  }
 
-  username: string;
+  public canCreatePost() {
+    return this.role === 'author' || this.role === 'admin';
+  }
 
-  email: string;
+  public changeRole(newRole: UserRole): void {
+    this.props.role = newRole;
+    this.props.updatedAt = this.getNow();
+  }
 
-  passwordHash: string;
+  public updateProfile(data: {
+    newName: string;
+    newBio?: string | null;
+    avatarUrl?: string | null;
+  }) {
+    if (!data.newName.trim()) {
+      throw new Error('O nome do perfil não pode ficar vazio');
+    }
+    this.props.name = data.newName;
+    if (data.newBio !== undefined) this.props.bio = data.newBio;
+    if (data.avatarUrl !== undefined) this.props.avatarUrl = data.avatarUrl;
+    this.props.updatedAt = this.getNow();
+  }
 
-  role: UserRole;
+  public deactivateUser(): void {
+    this.props.isActive = false;
+    this.props.updatedAt = this.getNow();
+  }
 
-  isActive: boolean;
+  public reactivateUser(): void {
+    this.props.isActive = true;
+    this.props.updatedAt = this.getNow();
+  }
 
-  bio: string | null;
+  public confirmEmail(): void {
+    this.props.emailVerifiedAt = this.getNow();
+    this.props.updatedAt = this.getNow();
+  }
 
-  avatarUrl: string | null;
-
-  emailVerifiedAt: Date | null;
-
-  resetPasswordToken: string | null;
-
-  resetPasswordExpiresAt: Date | null;
-
-  createdAt: Date;
-
-  updatedAt: Date;
+  private getNow(): Date {
+    return new Date();
+  }
 }

@@ -1,7 +1,8 @@
 'use server';
 
 import { makePublicUser, PublicUser } from '@/application/DTOs/user/dtos';
-import { CreateUserUseCase } from '@/application/UseCase/user/create-user.use-case';
+import { createUserUseCase as useCase } from '@/infrastructure/dependencyInjection/container';
+import { createSession } from '@/lib/auth/auth-manual';
 import { UserCreateSchema } from '@/lib/validates/user-validations';
 import { getZodErrorMessages } from '@/util/get-zod-error-messages';
 import { redirect } from 'next/navigation';
@@ -28,17 +29,38 @@ export async function CreateUserAction(
     };
   }
 
-  const useCase = new CreateUserUseCase();
+  let isSuccess = false;
+  let userIdToLog = '';
 
-  const result = await useCase.execute(parsed.data);
+  try {
+    const result = await useCase.execute(parsed.data);
 
-  if (!result.success) {
+    if (!result.success) {
+      return {
+        success: false,
+        formState: prevState.formState,
+        errors: ['Erro ao criar usuario'],
+      };
+    }
+
+    isSuccess = result.success;
+    userIdToLog = result.userId;
+  } catch {
     return {
       success: false,
       formState: prevState.formState,
-      errors: ['Erro ao criar usuario'],
+      errors: ['Erro interno no servidor ao processar o cadastro.'],
     };
   }
 
-  redirect('/');
+  if (isSuccess && userIdToLog) {
+    await createSession(userIdToLog);
+    redirect('/');
+  }
+
+  return {
+    success: false,
+    formState: prevState.formState,
+    errors: ['Erro inesperado.'],
+  };
 }

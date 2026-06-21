@@ -7,11 +7,11 @@ import {
 import { revalidateCache } from '@/lib/cache/utils/cache-revalidates';
 import { PostCreateSchema } from '@/lib/validates/post-validations';
 import { PostModel } from '@/domain/entities/posts/post-model';
-import { postRepository } from '@/infrastructure/db/repositories/post';
 import { getZodErrorMessages } from '@/util/get-zod-error-messages';
 import { makeSlugFromText } from '@/util/make-slug-from-text';
 import { redirect } from 'next/navigation';
 import { v4 as uuid } from 'uuid';
+import { postRepository } from '@/infrastructure/dependencyInjection/container';
 
 type CreatePostActionState = {
   formState: PublicPost;

@@ -6,9 +6,8 @@ import {
 import { revalidateCache } from '@/lib/cache/utils/cache-revalidates';
 import { PostUpdateSchema } from '@/lib/validates/post-validations';
 import { PostModel } from '@/domain/entities/posts/post-model';
-import { postRepository } from '@/infrastructure/db/repositories/post';
 import { getZodErrorMessages } from '@/util/get-zod-error-messages';
-import { logColor } from '@/util/log-color';
+import { postRepository } from '@/infrastructure/dependencyInjection/container';
 
 type UpdatePostActionState = {
   formState: PublicPost;

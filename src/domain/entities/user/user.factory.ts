@@ -1,5 +1,6 @@
 import { v4 as uuid } from 'uuid';
-import { UserModel } from './user.entity';
+import { UserModel } from './user.model';
+import { User } from './user.entity';
 
 interface CreateUserProps {
   name: string;
@@ -9,11 +10,11 @@ interface CreateUserProps {
 }
 
 export class UserFactory {
-  static create(props: CreateUserProps): UserModel {
+  static create(props: CreateUserProps): User {
     const now = new Date();
 
-    return {
-      id: uuid().toString(),
+    const rawUser: UserModel = {
+      id: uuid(),
 
       name: props.name,
       username: props.username,
@@ -36,5 +37,7 @@ export class UserFactory {
       createdAt: now,
       updatedAt: now,
     };
+
+    return new User(rawUser);
   }
 }
