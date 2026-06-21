@@ -11,9 +11,9 @@ import {
   PublicPost,
 } from '@/application/DTOs/post/dtos';
 import { FilesIcon, StickyNotePlus } from 'lucide-react';
-import { CreatePostAction } from '@/actions/post/create-post-action';
+import { CreatePostAction } from '@/actions/post/create-post.action';
 import { toast } from 'sonner';
-import { UpdatePostAction } from '@/actions/post/update-post-action';
+import { UpdatePostAction } from '@/actions/post/update-post.action';
 import clsx from 'clsx';
 
 type ManagePostFormUpdateProps = {

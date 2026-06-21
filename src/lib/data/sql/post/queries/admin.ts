@@ -1,6 +1,6 @@
+import { postRepository } from '@/infrastructure/dependencyInjection/container';
 import { ALL_ADMIN_POSTS_CACHE_TAG } from '@/lib/cache/Consts/cache-tag';
 import { PostCacheTagBuilder } from '@/lib/cache/utils/cahce-tag-builder';
-import { postRepository } from '@/infrastructure/db/repositories/post';
 import { cacheLife, cacheTag } from 'next/cache';
 import { notFound } from 'next/navigation';
 

@@ -1,13 +1,13 @@
 'use client';
 
-import { deletePostAction } from '@/actions/post/delete-post-action';
+import { deletePostAction } from '@/actions/post/delete-post.action';
 import { ButtonComponent } from '@/components/DefaultButton';
 import { Dialog } from '@/components/Dialog';
-import clsx from 'clsx';
 import { Trash2Icon } from 'lucide-react';
 import { useRouter } from 'next/navigation';
 import { useState, useTransition } from 'react';
 import { toast } from 'sonner';
+import clsx from 'clsx';
 
 type DeleteButtonProps = {
   id: string;
@@ -42,7 +42,6 @@ export function DeletePostButton({ id, title }: DeleteButtonProps) {
   return (
     <>
       <ButtonComponent
-        icon={<Trash2Icon />}
         className={clsx(
           'text-red-500 cursor-pointer',
           '[&_svg]:w-5 [&_svg]:h-5',
@@ -54,7 +53,9 @@ export function DeletePostButton({ id, title }: DeleteButtonProps) {
         title={`Apagar post: ${title}`}
         onClick={handleClick}
         disabled={isPending}
-      />
+      >
+        <Trash2Icon />
+      </ButtonComponent>
       {showDialog && (
         <Dialog
           isVisible={showDialog}
