@@ -9,7 +9,7 @@ import clsx from 'clsx';
 import { InputCheckbox } from '@/components/InputCheckbox';
 import Link from 'next/link';
 import { CreateUserAction } from '@/actions/auth/user/create-user-action';
-import { makePublicUser } from '@/DTOs/user/dtos';
+import { makePublicUser } from '@/application/DTOs/user/dtos';
 
 export type PasswordRule = { label: string; test: (v: string) => boolean };
 

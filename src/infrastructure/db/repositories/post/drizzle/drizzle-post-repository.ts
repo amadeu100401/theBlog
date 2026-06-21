@@ -1,5 +1,5 @@
-import { PostModel } from '@/models/posts/post-model';
-import { PostRepository } from '../../../interfaces/post-repository.interface';
+import { PostModel } from '@/domain/entities/posts/post-model';
+import { PostRepository } from '../../../../../domain/repositories/post-repository.interface';
 import { drizzleDb } from '@/infrastructure/db/drizzle';
 import { PostsTable } from '@/infrastructure/db/drizzle/schemas';
 import { and, desc } from 'drizzle-orm';

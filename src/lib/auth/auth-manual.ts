@@ -1,0 +1,25 @@
+import { hash, compare } from 'bcrypt-ts';
+import { cookies } from 'next/headers';
+
+export async function hashPassword(password: string): Promise<string> {
+  return await hash(password, 12);
+}
+
+export async function verifyPassword(
+  password: string,
+  hash: string,
+): Promise<boolean> {
+  return await compare(password, hash);
+}
+
+export async function createSession(userId: string) {
+  const cookieStore = await cookies();
+
+  cookieStore.set('session_token', userId, {
+    httpOnly: true,
+    secure: process.env.NODE_ENV === 'production',
+    sameSite: 'lax',
+    path: '/',
+    maxAge: 60 * 60 * 24 * 7, //7 dias
+  });
+}

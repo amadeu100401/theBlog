@@ -1,8 +1,9 @@
 'use server';
 
-import { PublicUser } from '@/DTOs/user/dtos';
-import { UserModel } from '@/models/user/user-model';
-import { logColor } from '@/util/log-color';
+import { makePublicUser, PublicUser } from '@/application/DTOs/user/dtos';
+import { CreateUserUseCase } from '@/application/UseCase/user/create-user.use-case';
+import { UserCreateSchema } from '@/lib/validates/user-validations';
+import { getZodErrorMessages } from '@/util/get-zod-error-messages';
 import { redirect } from 'next/navigation';
 
 type CreateUserActionState = {
@@ -15,15 +16,29 @@ export async function CreateUserAction(
   prevState: CreateUserActionState,
   formData: FormData,
 ): Promise<CreateUserActionState> {
-  if (!(formData instanceof FormData)) {
+  const parsed = UserCreateSchema.safeParse(
+    Object.fromEntries(formData.entries()),
+  );
+
+  if (!parsed.success) {
     return {
-      formState: prevState.formState,
-      errors: ['Dados inválidos'],
       success: false,
+      errors: getZodErrorMessages(parsed.error.format()),
+      formState: makePublicUser(Object.fromEntries(formData.entries())),
     };
   }
 
-  const formDataObj = Object.fromEntries(formData.entries());
-  logColor('Chegou até a action', JSON.stringify(formDataObj));
+  const useCase = new CreateUserUseCase();
+
+  const result = await useCase.execute(parsed.data);
+
+  if (!result.success) {
+    return {
+      success: false,
+      formState: prevState.formState,
+      errors: ['Erro ao criar usuario'],
+    };
+  }
+
   redirect('/');
 }

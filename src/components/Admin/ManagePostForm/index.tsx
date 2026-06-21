@@ -6,7 +6,10 @@ import { InputText } from '@/components/InputText';
 import { MarkdownEditor } from '@/components/MarkdownEditor';
 import { useActionState, useEffect, useState } from 'react';
 import { ImageUploader } from '../imageManager';
-import { makePartialPublicPost, PublicPost } from '@/DTOs/post/dtos';
+import {
+  makePartialPublicPost,
+  PublicPost,
+} from '@/application/DTOs/post/dtos';
 import { FilesIcon, StickyNotePlus } from 'lucide-react';
 import { CreatePostAction } from '@/actions/post/create-post-action';
 import { toast } from 'sonner';

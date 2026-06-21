@@ -1,9 +1,13 @@
 'use server';
-import { makePartialPublicPost, PublicPost } from '@/DTOs/post/dtos';
+
+import {
+  makePartialPublicPost,
+  PublicPost,
+} from '@/application/DTOs/post/dtos';
 import { revalidateCache } from '@/lib/cache/utils/cache-revalidates';
-import { PostCreateSchema } from '@/lib/validates/validations';
-import { PostModel } from '@/models/posts/post-model';
-import { postRepository } from '@/repositories/post';
+import { PostCreateSchema } from '@/lib/validates/post-validations';
+import { PostModel } from '@/domain/entities/posts/post-model';
+import { postRepository } from '@/infrastructure/db/repositories/post';
 import { getZodErrorMessages } from '@/util/get-zod-error-messages';
 import { makeSlugFromText } from '@/util/make-slug-from-text';
 import { redirect } from 'next/navigation';
