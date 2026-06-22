@@ -19,6 +19,7 @@ export async function deletePostAction(id: string) {
       throw new Error('Post não encontrado na base de dados');
     }
 
+    //TODO: Colocar isso em uma useCase
     postRepository.deletePost(id);
 
     revalidateCache(post.slug, 'all');

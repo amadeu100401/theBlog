@@ -11,6 +11,7 @@ import { getZodErrorMessages } from '@/util/get-zod-error-messages';
 import { redirect } from 'next/navigation';
 import { createPostUseCase } from '@/infrastructure/dependencyInjection/container';
 import { cookies } from 'next/headers';
+import { logColor } from '@/util/log-color';
 
 type CreatePostActionState = {
   formState: PublicPost;
@@ -59,6 +60,8 @@ export async function CreatePostAction(
       post = result.post;
     }
   } catch (e: unknown) {
+    logColor('Erro na criação do post: ', JSON.stringify(e));
+
     if (e instanceof Error) {
       return throwError(prevState.formState, e.message);
     }
@@ -66,9 +69,9 @@ export async function CreatePostAction(
     return throwError(prevState.formState);
   }
 
-  if (isSuccess) {
-    revalidateCache(post!.slug, 'all');
-    redirect(`${post!.id}?created=1`);
+  if (isSuccess && post) {
+    revalidateCache(post.slug, 'all');
+    redirect(`${post.id}?created=1`);
   }
 
   return throwError(prevState.formState, 'Erro ao salvar post');

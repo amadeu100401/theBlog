@@ -72,8 +72,13 @@ export function ButtonComponent({
     props.className,
   );
 
+  const styleType = buttonType;
+
   return (
-    <button {...props} className={buttonClasses}>
+    <button
+      {...props}
+      className={`${styleType === 'custom' ? props.className : buttonClasses}`}
+    >
       {leftIcon}
       {props.children}
       {rightIcon}

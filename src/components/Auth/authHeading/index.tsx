@@ -35,7 +35,7 @@ export function AuthHeading({ type }: AuthHeading) {
         <Link
           href={content.href}
           className={clsx(
-            'font-medium text-slate-500',
+            'font-medium text-slate-700',
             'hover:underline hover:underline-offset-3 hover:text-slate-900',
           )}
         >
