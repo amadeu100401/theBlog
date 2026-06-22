@@ -29,11 +29,7 @@ export class DrizzlePostRepository implements PostRepository {
       where: (post, { eq }) => eq(post.published, true),
     });
 
-    return posts.map(post => ({
-      ...post,
-      createdAt: post.createdAt.toISOString(),
-      updatedAt: post.updatedAt.toISOString(),
-    }));
+    return posts.map(post => PostMapper.toDTO(post));
   }
 
   async findAll(): Promise<PostModel[]> {
@@ -128,19 +124,3 @@ export class DrizzlePostRepository implements PostRepository {
     };
   }
 }
-
-//Usar apenas para testes
-// try {
-//   (async () => {
-//     const repo = new DrizzlePostRepository();
-//     const posts = await repo.findAllPublishedPublic();
-
-//     posts.forEach(post =>
-//       console.log('Titulo: ' + post.title + ' | situação: ' + post.published),
-//     );
-//   })();
-// } catch (e) {
-//   console.log('Erro');
-//   console.log('------------RAZÃO-----------');
-//   console.log(e);
-// }

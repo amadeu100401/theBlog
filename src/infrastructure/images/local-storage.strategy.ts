@@ -22,14 +22,6 @@ export class LocalStorageStrategy implements ImageStorageStrategy {
 
       await fs.writeFile(filePath, buffer);
 
-      const result = {
-        success: true,
-        path: `/uploads/${fileName}`,
-        publicUrl: `/uploads/${fileName}`,
-      };
-
-      logColor(JSON.stringify(result));
-
       return {
         success: true,
         path: `/uploads/${fileName}`,

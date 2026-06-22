@@ -36,4 +36,20 @@ export class PostMapper {
 
     return new Post(rawDomainData);
   }
+
+  static toDTO(post: PostSelectModel) {
+    return {
+      id: post.id,
+      title: post.title,
+      slug: post.slug,
+      excerpt: post.excerpt,
+      content: post.content,
+      coverImageUrl: post.coverImageUrl,
+      published: post.published,
+      createdAt: post.createdAt.toISOString(),
+      updatedAt: post.updatedAt.toISOString(),
+      author: post.author,
+      authorId: post.authorId,
+    };
+  }
 }

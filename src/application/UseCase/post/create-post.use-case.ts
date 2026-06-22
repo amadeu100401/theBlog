@@ -34,8 +34,6 @@ export class CreatePostUseCase {
 
     entity.setAuthorId(user.id);
 
-    logColor('Entidade aqui: ', JSON.stringify(entity));
-
     const newPost = await postRepository.insertPost(entity);
 
     return {
