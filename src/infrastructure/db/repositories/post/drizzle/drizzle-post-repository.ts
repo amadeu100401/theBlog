@@ -1,9 +1,11 @@
-import { PostModel } from '@/domain/entities/posts/post-model';
+import { PostModel } from '@/domain/entities/posts/post.model';
 import { PostRepository } from '../../../../../domain/repositories/post-repository.interface';
 import { drizzleDb } from '@/infrastructure/db/drizzle';
 import { PostsTable } from '@/infrastructure/db/drizzle/schemas';
 import { and, desc } from 'drizzle-orm';
 import { eq } from 'drizzle-orm';
+import { PostMapper } from '@/infrastructure/db/mappers/post.mapper';
+import { logColor } from '@/util/log-color';
 
 export class DrizzlePostRepository implements PostRepository {
   async findBySlugPublic(slug: string): Promise<PostModel | null> {
@@ -62,15 +64,23 @@ export class DrizzlePostRepository implements PostRepository {
 
   async insertPost(entity: PostModel): Promise<PostModel> {
     try {
-      await drizzleDb.insert(PostsTable).values({
-        ...entity,
-        createdAt: new Date(entity.createdAt),
-        updatedAt: new Date(entity.updatedAt),
-      });
+      const toPersistence = PostMapper.toPersistence(entity);
+      const [post] = await drizzleDb
+        .insert(PostsTable)
+        .values(toPersistence)
+        .returning();
 
-      return entity;
-    } catch {
-      throw new Error('Erro ao persistir post na base de dados.');
+      return PostMapper.toDomain(post);
+    } catch (error) {
+      logColor('=== DETALHES DO ERRO DO POSTGRES ===');
+      console.dir(error);
+      logColor('====================================');
+
+      if (error instanceof Error) {
+        throw new Error(`Erro no banco de dados: ${error.message}`);
+      }
+
+      throw new Error('Erro desconhecido ao criar post na base de dados');
     }
   }
 

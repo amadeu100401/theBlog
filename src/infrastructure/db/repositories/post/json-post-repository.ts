@@ -1,4 +1,4 @@
-import { PostModel } from '@/domain/entities/posts/post-model';
+import { PostModel } from '@/domain/entities/posts/post.model';
 import { PostRepository } from '../../../../domain/repositories/post-repository.interface';
 import { resolve } from 'path';
 import { readFile } from 'fs/promises';

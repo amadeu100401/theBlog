@@ -1,6 +1,6 @@
 'use server';
 
-import { ImageStorageContext } from '@/infrastructure/db/storage/strategies/images/image-storage-factory';
+import { storageProvider } from '@/infrastructure/images/image-storage-factory';
 import { validateAndGetOptimizedBuffer } from '@/util/validate-image';
 
 //diretiva para criar uma server action -> isso acaba virando um endpoint da minha aplicação
@@ -34,9 +34,11 @@ export async function uploadImageAction(
     return { url: '', error: 'Arquivo inválido' };
   }
 
-  const storage = new ImageStorageContext();
-
-  const result = await storage.upload(file, optimizedBuffer, extension);
+  const result = await storageProvider.uploadFile(
+    file,
+    optimizedBuffer,
+    extension,
+  );
 
   return result.success
     ? { url: result.publicUrl, error: '' }

@@ -1,17 +1,16 @@
 'use server';
 
 import {
+  CreatePostDTO,
   makePartialPublicPost,
   PublicPost,
 } from '@/application/DTOs/post/dtos';
 import { revalidateCache } from '@/lib/cache/utils/cache-revalidates';
 import { PostCreateSchema } from '@/lib/validates/post-validations';
-import { PostModel } from '@/domain/entities/posts/post-model';
 import { getZodErrorMessages } from '@/util/get-zod-error-messages';
-import { makeSlugFromText } from '@/util/make-slug-from-text';
 import { redirect } from 'next/navigation';
-import { v4 as uuid } from 'uuid';
-import { postRepository } from '@/infrastructure/dependencyInjection/container';
+import { createPostUseCase } from '@/infrastructure/dependencyInjection/container';
+import { cookies } from 'next/headers';
 
 type CreatePostActionState = {
   formState: PublicPost;
@@ -24,55 +23,63 @@ export async function CreatePostAction(
   formData: FormData,
 ): Promise<CreatePostActionState> {
   // TODO: verificar se o usuário tá logado
+  const cookieToken = await cookies();
+  const token = cookieToken.get('session_token')?.value;
 
-  if (!(formData instanceof FormData)) {
-    return {
-      formState: prevState.formState,
-      errors: ['Dados inválidos'],
-      success: false,
-    };
+  if (!token) {
+    const message = 'Usuário não autenticado';
+    return throwError(prevState.formState, message);
   }
 
-  const formDataToObj = Object.fromEntries(formData.entries());
-  const zodParsedObj = PostCreateSchema.safeParse(formDataToObj);
+  const rawFormObj = Object.fromEntries(formData.entries());
+  const zodParsedObj = PostCreateSchema.safeParse(rawFormObj);
 
   if (!zodParsedObj.success) {
     const errors = getZodErrorMessages(zodParsedObj.error.format());
     return {
       errors,
-      formState: makePartialPublicPost(formDataToObj),
+      formState: makePartialPublicPost(rawFormObj),
       success: false,
     };
   }
 
   const validPostData = zodParsedObj.data;
-  const newPost: PostModel = {
+  const newPost: CreatePostDTO = {
+    token: token,
     ...validPostData,
-    createdAt: new Date().toISOString(),
-    updatedAt: new Date().toISOString(),
-    id: uuid(),
-    slug: makeSlugFromText(validPostData.title),
   };
 
+  let isSuccess = false;
+  let post;
+
   try {
-    await postRepository.insertPost(newPost);
+    const result = await createPostUseCase.execute(newPost);
+    if (result.success) {
+      isSuccess = true;
+      post = result.post;
+    }
   } catch (e: unknown) {
     if (e instanceof Error) {
-      return {
-        formState: newPost,
-        errors: [e.message],
-        success: false,
-      };
+      return throwError(prevState.formState, e.message);
     }
 
-    return {
-      formState: newPost,
-      errors: ['Erro desconhecido, tente novamente mais tarde'],
-      success: false,
-    };
+    return throwError(prevState.formState);
   }
 
-  revalidateCache(newPost.slug, 'all');
+  if (isSuccess) {
+    revalidateCache(post!.slug, 'all');
+    redirect(`${post!.id}?created=1`);
+  }
 
-  redirect(`${newPost.id}?created=1`);
+  return throwError(prevState.formState, 'Erro ao salvar post');
+}
+
+function throwError(post: PublicPost, message?: string) {
+  return {
+    formState: post,
+    errors: [
+      message ? message : 'Erro desconhecido, tente novamente mais tarde',
+    ],
+    success: false,
+  };
 }

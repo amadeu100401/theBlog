@@ -41,16 +41,17 @@ export const PostsTable = pgTable('posts', {
   id: uuid('id').defaultRandom().primaryKey(),
   slug: varchar('slug', { length: 255 }).notNull().unique(),
   title: varchar('title', { length: 255 }).notNull(),
-  authorId: uuid('author_id').references(() => UserTable.id, {
-    onDelete: 'cascade',
-  }),
+  authorId: uuid('author_id')
+    .references(() => UserTable.id, {
+      onDelete: 'cascade',
+    })
+    .notNull(),
   author: varchar('author', { length: 255 }).notNull(),
   excerpt: varchar('excerpt', { length: 500 }).notNull(),
   content: text('content').notNull(),
   coverImageUrl: varchar('cover_image_url', {
     length: 500,
   }).notNull(),
-  uploader: varchar('uploader', { length: 500 }),
   published: boolean('published').default(false).notNull(),
   createdAt: timestamp('created_at').defaultNow().notNull(),
   updatedAt: timestamp('updated_at').defaultNow().notNull(),
@@ -67,8 +68,8 @@ export const PostsTable = pgTable('posts', {
 //   posts: many(PostsTable),
 // }));
 
-export type PostsTableSelectModel = InferSelectModel<typeof PostsTable>;
-export type PostsTableInsertModel = InferInsertModel<typeof PostsTable>;
+export type PostSelectModel = InferSelectModel<typeof PostsTable>;
+export type PostInsertModel = InferInsertModel<typeof PostsTable>;
 
 export type UserSelectModel = InferSelectModel<typeof UserTable>;
 export type UserInsertModel = InferInsertModel<typeof UserTable>;

@@ -8,6 +8,7 @@ import { uploadImageAction } from '@/actions/images/upload-image-action';
 import Image from 'next/image';
 import { clsx } from 'clsx';
 import { IsdevelopmentEnvironment } from '@/util/http-context';
+import { logColor } from '@/util/log-color';
 
 type ImageUploaderProps = {
   disable?: boolean;
@@ -55,9 +56,7 @@ export function ImageUploader({ disable = false }: ImageUploaderProps) {
         return;
       }
 
-      const imageUrl = IsdevelopmentEnvironment()
-        ? new URL(result.url).pathname
-        : result.url;
+      const imageUrl = result.url;
 
       setImgUrl(imageUrl);
       toast.success('Imagem enviada!');

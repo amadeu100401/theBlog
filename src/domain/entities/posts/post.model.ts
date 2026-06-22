@@ -1,4 +1,4 @@
-export type PostModel = {
+export interface PostModel {
   id: string;
   title: string;
   slug: string;
@@ -9,4 +9,5 @@ export type PostModel = {
   createdAt: string;
   updatedAt: string;
   author: string;
-};
+  authorId: string;
+}

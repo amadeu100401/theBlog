@@ -2,13 +2,10 @@
 
 import { User } from '@/domain/entities/user/user.entity';
 import { UserInsertModel, UserSelectModel } from '../drizzle/schemas';
-import {
-  UserModel as UserEntity,
-  UserModel,
-} from '@/domain/entities/user/user.model';
+import { UserModel } from '@/domain/entities/user/user.model';
 
 export class UserMapper {
-  static toPersistence(user: UserEntity): UserInsertModel {
+  static toPersistence(user: UserModel): UserInsertModel {
     return {
       id: user.id,
 
@@ -41,10 +38,10 @@ export class UserMapper {
   }
 
   static toDomain(user: UserSelectModel): UserModel {
-    const rawDomainData: UserEntity = {
+    const rawDomainData: UserModel = {
       id: user.id,
       name: user.name,
-      username: user.userName, // Traduz maiúsculo para minúsculo
+      username: user.userName,
       email: user.email,
       passwordHash: user.passwordHash,
       role: user.role,
@@ -58,7 +55,6 @@ export class UserMapper {
       updatedAt: user.updatedAt,
     };
 
-    // 2. Retornamos a classe viva passando os dados pro construtor
     return new User(rawDomainData);
   }
 }
