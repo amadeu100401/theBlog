@@ -1,6 +1,5 @@
 'use server';
-
-import { postRepository } from '@/infrastructure/dependencyInjection/container';
+import { postRepository } from '@/infrastructure/dependencyInjection/post.container';
 import { revalidateCache } from '@/lib/cache/utils/cache-revalidates';
 
 export async function deletePostAction(id: string) {

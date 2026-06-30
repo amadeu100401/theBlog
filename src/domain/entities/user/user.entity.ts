@@ -75,6 +75,14 @@ export class User implements UserModel {
     this.props.updatedAt = this.getNow();
   }
 
+  public changePassword(newHash: string) {
+    if (newHash === null || newHash === undefined) {
+      throw new Error('Erro ao atualizar a senha do usuário');
+    }
+
+    this.props.passwordHash = newHash;
+  }
+
   public deactivateUser(): void {
     this.props.isActive = false;
     this.props.updatedAt = this.getNow();
@@ -88,6 +96,10 @@ export class User implements UserModel {
   public confirmEmail(): void {
     this.props.emailVerifiedAt = this.getNow();
     this.props.updatedAt = this.getNow();
+  }
+
+  public generateResetToken() {
+    throw new Error('Função ainda não desenvolvida');
   }
 
   private getNow(): Date {

@@ -1,11 +1,6 @@
 import { CreatePostDTO } from '@/application/DTOs/post/dtos';
 import { PostFactory } from '@/domain/entities/posts/post.factory';
-import {
-  postRepository,
-  userRepository,
-} from '@/infrastructure/dependencyInjection/container';
-import { logColor } from '@/util/log-color';
-
+import { postRepository } from '@/infrastructure/dependencyInjection/post.container';
 export class CreatePostUseCase {
   async execute(data: CreatePostDTO) {
     //TODO: criar a função depois

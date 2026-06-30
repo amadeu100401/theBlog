@@ -7,7 +7,7 @@ import { revalidateCache } from '@/lib/cache/utils/cache-revalidates';
 import { PostUpdateSchema } from '@/lib/validates/post-validations';
 import { PostModel } from '@/domain/entities/posts/post.model';
 import { getZodErrorMessages } from '@/util/get-zod-error-messages';
-import { postRepository } from '@/infrastructure/dependencyInjection/container';
+import { postRepository } from '@/infrastructure/dependencyInjection/post.container';
 
 type UpdatePostActionState = {
   formState: PublicPost;
@@ -45,6 +45,7 @@ export async function UpdatePostAction(
     ...validPostData,
     createdAt: prevState.formState.createdAt,
     updatedAt: '',
+    authorId: '',
   };
 
   let post;

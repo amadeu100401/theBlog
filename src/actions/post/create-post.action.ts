@@ -9,9 +9,9 @@ import { revalidateCache } from '@/lib/cache/utils/cache-revalidates';
 import { PostCreateSchema } from '@/lib/validates/post-validations';
 import { getZodErrorMessages } from '@/util/get-zod-error-messages';
 import { redirect } from 'next/navigation';
-import { createPostUseCase } from '@/infrastructure/dependencyInjection/container';
 import { cookies } from 'next/headers';
 import { logColor } from '@/util/log-color';
+import { createPostUseCase } from '@/infrastructure/dependencyInjection/post.container';
 
 type CreatePostActionState = {
   formState: PublicPost;

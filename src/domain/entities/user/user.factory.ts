@@ -1,23 +1,26 @@
 import { v4 as uuid } from 'uuid';
 import { UserModel } from './user.model';
 import { User } from './user.entity';
+import { UsernameService } from '@/domain/services/UsernameService';
 
 interface CreateUserProps {
   name: string;
-  username: string;
   email: string;
   passwordHash: string;
 }
 
 export class UserFactory {
-  static create(props: CreateUserProps): User {
+  constructor(private usernameService: UsernameService) {}
+
+  public create(props: CreateUserProps): User {
     const now = new Date();
+    const generatedUsername = this.usernameService.generate(props.name);
 
     const rawUser: UserModel = {
       id: uuid(),
 
       name: props.name,
-      username: props.username,
+      username: generatedUsername,
       email: props.email,
 
       passwordHash: props.passwordHash,

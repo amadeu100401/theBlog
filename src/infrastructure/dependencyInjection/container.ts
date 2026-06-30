@@ -1,14 +1,20 @@
 import { UserRepository } from '@/domain/repositories/user-repository.interface';
 import { DrizzleUserRepository } from '../db/repositories/user/drizzle-user-repository';
-import { DrizzlePostRepository } from '../db/repositories/post/drizzle/drizzle-post-repository';
-import { PostRepository } from '@/domain/repositories/post-repository.interface';
 import { CreateUserUseCase } from '@/application/UseCase/user/create-user.use-case';
-import { CreatePostUseCase } from '@/application/UseCase/post/create-post.use-case';
+import { UserFactory } from '@/domain/entities/user/user.factory';
+import { UsernameService } from '@/domain/services/UsernameService';
 
-// UseCases
-export const createUserUseCase: CreateUserUseCase = new CreateUserUseCase();
-export const createPostUseCase: CreatePostUseCase = new CreatePostUseCase();
+//Services
+const usernameService = new UsernameService();
+
+//Factories
+const userFactory = new UserFactory(usernameService);
 
 // Repositories
 export const userRepository: UserRepository = new DrizzleUserRepository();
-export const postRepository: PostRepository = new DrizzlePostRepository();
+
+// UseCases
+export const createUserUseCase: CreateUserUseCase = new CreateUserUseCase(
+  userFactory,
+  userRepository,
+);

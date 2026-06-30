@@ -57,13 +57,15 @@ export function LoginForm() {
             )}
           >
             <InputCheckbox name='stillConnected' type='checkbox' />
-            <span className='text-xs text-slate-600'>Manter-me conectado</span>
+            <span className='text-xs text-slate-600 cursor-pointer'>
+              Manter-me conectado
+            </span>
           </label>
 
           <ButtonComponent
             styleType={'custom'}
             className={clsx(
-              'flex flex-row items-center p-0 gap-1.5',
+              'flex flex-row items-center p-0 gap-1.5 cursor-pointer',
               'text-xs font-medium text-slate-500 transition hover:text-slate-900',
             )}
           >
