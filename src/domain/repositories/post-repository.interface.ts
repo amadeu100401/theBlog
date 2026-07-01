@@ -1,15 +1,13 @@
 import { PostModel } from '@/domain/entities/posts/post.model';
+import { PostSelectModel } from '@/infrastructure/db/drizzle/schemas';
 
 export interface PostRepository {
   findAll(): Promise<PostModel[]>;
   findAllPublishedPublic(): Promise<PostModel[]>;
-  findById(id: string): Promise<PostModel | null>;
+  findById(id: string): Promise<PostSelectModel>;
   findBySlugPublic(slug: string): Promise<PostModel | null>;
 
   insertPost(entity: PostModel): Promise<PostModel>;
   deletePost(entity: string): Promise<boolean>;
-  updatePost(
-    id: string,
-    newPost: Omit<PostModel, 'id' | 'slug' | 'createdAt'>,
-  ): Promise<PostModel>;
+  updatePost(postModel: PostModel): Promise<void>;
 }

@@ -1,5 +1,5 @@
 {
-  "id": "63660b92-1e41-4132-b84e-3f5842cc965f",
+  "id": "e8d79572-ad90-4d1c-8625-2c5514b35faf",
   "prevId": "00000000-0000-0000-0000-000000000000",
   "version": "7",
   "dialect": "postgresql",
@@ -31,7 +31,7 @@
           "name": "author_id",
           "type": "uuid",
           "primaryKey": false,
-          "notNull": false
+          "notNull": true
         },
         "author": {
           "name": "author",
@@ -56,12 +56,6 @@
           "type": "varchar(500)",
           "primaryKey": false,
           "notNull": true
-        },
-        "uploader": {
-          "name": "uploader",
-          "type": "varchar(500)",
-          "primaryKey": false,
-          "notNull": false
         },
         "published": {
           "name": "published",

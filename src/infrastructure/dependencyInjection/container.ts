@@ -2,7 +2,7 @@ import { UserRepository } from '@/domain/repositories/user-repository.interface'
 import { DrizzleUserRepository } from '../db/repositories/user/drizzle-user-repository';
 import { CreateUserUseCase } from '@/application/UseCase/user/create-user.use-case';
 import { UserFactory } from '@/domain/entities/user/user.factory';
-import { UsernameService } from '@/domain/services/UsernameService';
+import { UsernameService } from '@/domain/services/userServices/UsernameService';
 
 //Services
 const usernameService = new UsernameService();

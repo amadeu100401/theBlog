@@ -1,6 +1,5 @@
 import { UpdatePostDTO } from '@/application/DTOs/post/dtos';
 import { PostModel } from './post.model';
-import { makeSlugFromText } from '@/util/make-slug-from-text';
 
 export class Post implements PostModel {
   constructor(private props: PostModel) {
@@ -47,13 +46,17 @@ export class Post implements PostModel {
   }
 
   public updatePost(data: UpdatePostDTO): void {
-    if (this.props.title !== data.title) {
+    if (data.title !== null && data.title.trim().length > 0) {
       this.props.title = data.title;
-      this.props.slug = makeSlugFromText(data.title);
+      this.props.slug = data.slug;
     }
     this.props.excerpt = data.excerpt;
-    this.props.content = data.content;
-    this.props.coverImageUrl = data.coverImageUrl;
+    if (data.content && data.content.trim().length > 0) {
+      this.props.content = data.content;
+    }
+    if (data.coverImageUrl && data.coverImageUrl.trim().length > 0) {
+      this.props.coverImageUrl = data.coverImageUrl;
+    }
     this.props.published = data.published;
     this.changeUpdatedAtDate();
   }

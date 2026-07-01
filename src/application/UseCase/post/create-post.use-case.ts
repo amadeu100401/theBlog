@@ -1,10 +1,14 @@
 import { CreatePostDTO } from '@/application/DTOs/post/dtos';
 import { PostFactory } from '@/domain/entities/posts/post.factory';
-import { postRepository } from '@/infrastructure/dependencyInjection/post.container';
+import { DrizzlePostRepository } from '@/infrastructure/db/repositories/post/drizzle/drizzle-post-repository';
 export class CreatePostUseCase {
+  constructor(
+    private readonly postFactory: PostFactory,
+    private readonly postRepository: DrizzlePostRepository,
+  ) {}
+
   async execute(data: CreatePostDTO) {
-    //TODO: criar a função depois
-    // const user = await userRepository.findUserById(data.token);
+    //TODO: buscar o usurio logado para passar para a entidade de post
 
     const user = {
       id: '6db4f744-a188-43e7-9bee-48e5b834bb07',
@@ -18,7 +22,7 @@ export class CreatePostUseCase {
       };
     }
 
-    const entity = PostFactory.create({
+    const entity = this.postFactory.create({
       title: data.title,
       author: user.name,
       excerpt: data.excerpt,
@@ -29,7 +33,7 @@ export class CreatePostUseCase {
 
     entity.setAuthorId(user.id);
 
-    const newPost = await postRepository.insertPost(entity);
+    const newPost = await this.postRepository.insertPost(entity);
 
     return {
       success: true,

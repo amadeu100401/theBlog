@@ -1,7 +1,7 @@
 import { v4 as uuid } from 'uuid';
 import { UserModel } from './user.model';
 import { User } from './user.entity';
-import { UsernameService } from '@/domain/services/UsernameService';
+import { UsernameService } from '@/domain/services/userServices/UsernameService';
 
 interface CreateUserProps {
   name: string;

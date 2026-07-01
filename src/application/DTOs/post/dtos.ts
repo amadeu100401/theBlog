@@ -1,6 +1,6 @@
 import { PostModel } from '@/domain/entities/posts/post.model';
 
-export type PublicPost = Omit<PostModel, 'updatedAt'>;
+export type PublicPost = Omit<PostModel, 'updatedAt' | 'authorId'>;
 
 export const makePartialPublicPost = (
   post?: Partial<PostModel>,
@@ -34,6 +34,7 @@ export interface CreatePostDTO {
 export interface UpdatePostDTO {
   postId: string;
   title: string;
+  slug: string | '';
   excerpt: string;
   content: string;
   coverImageUrl: string;

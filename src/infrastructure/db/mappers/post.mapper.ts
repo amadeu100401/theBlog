@@ -19,7 +19,7 @@ export class PostMapper {
     };
   }
 
-  static toDomain(post: PostSelectModel): PostModel {
+  static toDomain(post: PostSelectModel): Post {
     const rawDomainData: PostModel = {
       id: post.id,
       title: post.title,

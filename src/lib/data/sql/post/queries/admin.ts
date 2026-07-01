@@ -1,3 +1,4 @@
+import { PostMapper } from '@/infrastructure/db/mappers/post.mapper';
 import { postRepository } from '@/infrastructure/dependencyInjection/post.container';
 import { ALL_ADMIN_POSTS_CACHE_TAG } from '@/lib/cache/Consts/cache-tag';
 import { PostCacheTagBuilder } from '@/lib/cache/utils/cahce-tag-builder';
@@ -13,7 +14,7 @@ export const findPostByIdAdmin = async (id: string) => {
 
   cacheTag(PostCacheTagBuilder(post.slug, true));
 
-  return post;
+  return PostMapper.toDTO(post);
 };
 
 export const findAllPostsAdmin = async () => {

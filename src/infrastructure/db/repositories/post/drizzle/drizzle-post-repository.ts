@@ -1,11 +1,15 @@
 import { PostModel } from '@/domain/entities/posts/post.model';
 import { PostRepository } from '../../../../../domain/repositories/post-repository.interface';
 import { drizzleDb } from '@/infrastructure/db/drizzle';
-import { PostsTable } from '@/infrastructure/db/drizzle/schemas';
+import {
+  PostSelectModel,
+  PostsTable,
+} from '@/infrastructure/db/drizzle/schemas';
 import { and, desc } from 'drizzle-orm';
 import { eq } from 'drizzle-orm';
 import { PostMapper } from '@/infrastructure/db/mappers/post.mapper';
 import { logColor } from '@/util/log-color';
+import { Post } from '@/domain/entities/posts/post.entity';
 
 export class DrizzlePostRepository implements PostRepository {
   async findBySlugPublic(slug: string): Promise<PostModel | null> {
@@ -44,18 +48,14 @@ export class DrizzlePostRepository implements PostRepository {
     }));
   }
 
-  async findById(id: string): Promise<PostModel | null> {
+  async findById(id: string): Promise<PostSelectModel> {
     const post = await drizzleDb.query.posts.findFirst({
       where: (post, { eq }) => eq(post?.id, id),
     });
 
     if (!post) throw new Error('Post não encontroado para slug');
 
-    return {
-      ...post,
-      createdAt: post?.createdAt.toISOString(),
-      updatedAt: post?.updatedAt.toDateString(),
-    };
+    return post;
   }
 
   async insertPost(entity: PostModel): Promise<PostModel> {
@@ -91,36 +91,22 @@ export class DrizzlePostRepository implements PostRepository {
     return rowsCount !== null && rowsCount >= 1;
   }
 
-  async updatePost(
-    id: string,
-    newPost: Omit<PostModel, 'id' | 'slug' | 'createdAt'>,
-  ): Promise<PostModel> {
-    const oldPost = await this.findById(id);
+  async updatePost(postModel: PostModel): Promise<void> {
+    try {
+      await drizzleDb
+        .update(PostsTable)
+        .set(PostMapper.toPersistence(postModel))
+        .where(eq(PostsTable.id, postModel.id));
+    } catch (error) {
+      logColor('=== DETALHES DO ERRO DO POSTGRES ===');
+      console.dir(error);
+      logColor('====================================');
 
-    if (!oldPost) {
-      throw new Error('Post não existe na base de dados');
+      if (error instanceof Error) {
+        throw new Error(`Erro no banco: ${error.message}`);
+      }
+
+      throw new Error('Erro desconhecido ao atualizar o post na base de dados');
     }
-
-    const updatedAtDate = new Date();
-    const postData = {
-      author: newPost.author,
-      content: newPost.content,
-      coverImageUrl: newPost.coverImageUrl,
-      excerpt: newPost.excerpt,
-      published: newPost.published,
-      title: newPost.title,
-      updatedAt: updatedAtDate,
-    };
-
-    await drizzleDb
-      .update(PostsTable)
-      .set(postData)
-      .where(eq(PostsTable.id, id));
-
-    return {
-      ...oldPost,
-      ...postData,
-      updatedAt: updatedAtDate.toISOString(),
-    };
   }
 }

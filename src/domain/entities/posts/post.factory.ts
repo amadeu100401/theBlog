@@ -1,7 +1,7 @@
-import { makeSlugFromText } from '@/util/make-slug-from-text';
 import { Post } from './post.entity';
 import { PostModel } from './post.model';
 import { v4 as uuid } from 'uuid';
+import { SlugService } from '@/domain/services/postServices/SlugService';
 
 interface CreatePostProps {
   title: string;
@@ -13,12 +13,15 @@ interface CreatePostProps {
 }
 
 export class PostFactory {
-  static create(props: CreatePostProps): Post {
+  constructor(private readonly slugServices: SlugService) {}
+
+  public create(props: CreatePostProps): Post {
     const now = new Date().toString();
+    const newSlug = this.slugServices.makeSlugFromText(props.title);
 
     const rawPost: PostModel = {
       id: uuid(),
-      slug: makeSlugFromText(props.title),
+      slug: newSlug,
       excerpt: props.excerpt,
       author: props.author,
       authorId: '',

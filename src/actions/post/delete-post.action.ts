@@ -1,5 +1,6 @@
 'use server';
-import { postRepository } from '@/infrastructure/dependencyInjection/post.container';
+
+import { deletePostUseCase } from '@/infrastructure/dependencyInjection/post.container';
 import { revalidateCache } from '@/lib/cache/utils/cache-revalidates';
 
 export async function deletePostAction(id: string) {
@@ -12,16 +13,12 @@ export async function deletePostAction(id: string) {
   }
 
   try {
-    const post = await postRepository.findById(id).catch(() => undefined);
+    const result = await deletePostUseCase.execute(id);
 
-    if (!post || post === undefined) {
-      throw new Error('Post não encontrado na base de dados');
+    if (result.success) {
+      const slug = result.slug;
+      revalidateCache(slug, 'all');
     }
-
-    //TODO: Colocar isso em uma useCase
-    postRepository.deletePost(id);
-
-    revalidateCache(post.slug, 'all');
   } catch (e: unknown) {
     if (e instanceof Error) {
       return {

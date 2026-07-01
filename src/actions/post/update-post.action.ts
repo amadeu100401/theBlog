@@ -1,13 +1,14 @@
 'use server';
+
 import {
   makePartialPublicPost,
   PublicPost,
+  UpdatePostDTO,
 } from '@/application/DTOs/post/dtos';
+import { updatePostUseCase as usecase } from '@/infrastructure/dependencyInjection/post.container';
 import { revalidateCache } from '@/lib/cache/utils/cache-revalidates';
 import { PostUpdateSchema } from '@/lib/validates/post-validations';
-import { PostModel } from '@/domain/entities/posts/post.model';
 import { getZodErrorMessages } from '@/util/get-zod-error-messages';
-import { postRepository } from '@/infrastructure/dependencyInjection/post.container';
 
 type UpdatePostActionState = {
   formState: PublicPost;
@@ -41,16 +42,32 @@ export async function UpdatePostAction(
 
   const validPostData = zodFormated.data;
   //TODO: Criar o UpdatePostModel
-  const safePost: PostModel = {
-    ...validPostData,
-    createdAt: prevState.formState.createdAt,
-    updatedAt: '',
-    authorId: '',
+  const safePost: UpdatePostDTO = {
+    postId: validPostData.id,
+    title: validPostData.title,
+    slug: '',
+    content: validPostData.content,
+    excerpt: validPostData.excerpt,
+    coverImageUrl: validPostData.coverImageUrl,
+    published: validPostData.published,
   };
 
-  let post;
   try {
-    post = await postRepository.updatePost(safePost.id, safePost);
+    const response = await usecase.execute(safePost);
+
+    if (response.success) {
+      const post = response.post;
+      revalidateCache(prevState.formState.slug, 'all');
+      return {
+        formState: makePartialPublicPost(post),
+        errors: [],
+        success: true,
+      };
+    } else {
+      return BuildGenericResultError(prevState.formState, [
+        'Erro desconhecido',
+      ]);
+    }
   } catch (e: unknown) {
     if (e instanceof Error) {
       return BuildGenericResultError(prevState.formState, [`${e.message}`]);
@@ -58,14 +75,6 @@ export async function UpdatePostAction(
 
     return BuildGenericResultError(prevState.formState, ['Erro desconhecido']);
   }
-
-  revalidateCache(post.slug, 'all');
-
-  return {
-    formState: makePartialPublicPost(post),
-    errors: [],
-    success: true,
-  };
 }
 
 function BuildGenericResultError(
