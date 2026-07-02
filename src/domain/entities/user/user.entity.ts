@@ -1,6 +1,6 @@
 import { Email } from '@/domain/value-objects/Email.value-object';
 import { UserModel, UserRole } from './user.model';
-import { AvatarUrl } from '@/domain/value-objects/Avatar-url.value-objects';
+import { ImageUrl } from '@/domain/value-objects/Image-url.value-objects';
 import { Password } from '@/domain/value-objects/Password-hash.value-object';
 
 export class User implements UserModel {
@@ -32,7 +32,7 @@ export class User implements UserModel {
   get bio(): string | null {
     return this.props.bio;
   }
-  get avatarUrl(): AvatarUrl | null {
+  get avatarUrl(): ImageUrl | null {
     return this.props.avatarUrl;
   }
   get emailVerifiedAt(): Date | null {
@@ -67,7 +67,7 @@ export class User implements UserModel {
   public updateProfile(data: {
     newName: string;
     newBio?: string | null;
-    avatarUrl?: AvatarUrl | null;
+    avatarUrl?: ImageUrl | null;
   }) {
     if (!data.newName.trim()) {
       throw new Error('O nome do perfil não pode ficar vazio');

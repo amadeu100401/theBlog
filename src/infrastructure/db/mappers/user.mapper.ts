@@ -5,7 +5,7 @@ import { UserInsertModel, UserSelectModel } from '../drizzle/schemas';
 import { UserModel } from '@/domain/entities/user/user.model';
 import { Email } from '@/domain/value-objects/Email.value-object';
 import { Password } from '@/domain/value-objects/Password-hash.value-object';
-import { AvatarUrl } from '@/domain/value-objects/Avatar-url.value-objects';
+import { ImageUrl } from '@/domain/value-objects/Image-url.value-objects';
 
 export class UserMapper {
   static toPersistence(user: UserModel): UserInsertModel {
@@ -45,7 +45,7 @@ export class UserMapper {
     const passwordHash = Password.createFromHash(user.passwordHash);
 
     if (user.avatarUrl) {
-      avatarUrl = AvatarUrl.createLocal(user.avatarUrl);
+      avatarUrl = ImageUrl.createLocal(user.avatarUrl);
     }
 
     const rawDomainData: UserModel = {

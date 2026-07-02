@@ -1,4 +1,4 @@
-import { AvatarUrl } from '@/domain/value-objects/Avatar-url.value-objects';
+import { ImageUrl } from '@/domain/value-objects/Image-url.value-objects';
 import { Email } from '@/domain/value-objects/Email.value-object';
 import { Password } from '@/domain/value-objects/Password-hash.value-object';
 import { userRoleEnum } from '@/infrastructure/db/drizzle/schemas';
@@ -22,7 +22,7 @@ export interface UserModel {
 
   bio: string | null;
 
-  avatarUrl: AvatarUrl | null;
+  avatarUrl: ImageUrl | null;
 
   emailVerifiedAt: Date | null;
 
