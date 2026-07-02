@@ -1,8 +1,8 @@
 import { CreateUserDTO } from '@/application/DTOs/user/dtos';
 import { UserFactory } from '@/domain/entities/user/user.factory';
 import { DrizzleUserRepository } from '@/infrastructure/db/repositories/user/drizzle-user-repository';
-import { userRepository } from '@/infrastructure/dependencyInjection/container';
-import { hashPassword } from '@/lib/auth/auth-manual';
+import { hashPassword } from '@/auth/auth-manual';
+import { Email } from '@/domain/value-objects/Email.value-object';
 
 export class CreateUserUseCase {
   constructor(
@@ -13,9 +13,11 @@ export class CreateUserUseCase {
   async execute(data: CreateUserDTO) {
     const passwordHash = await hashPassword(data.password);
 
+    const email = new Email(data.email);
+
     const user = this.userFactory.create({
       name: data.name,
-      email: data.email,
+      email: email,
       passwordHash,
     });
 

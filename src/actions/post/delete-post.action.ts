@@ -1,7 +1,7 @@
 'use server';
 
 import { deletePostUseCase } from '@/infrastructure/dependencyInjection/post.container';
-import { revalidateCache } from '@/lib/cache/utils/cache-revalidates';
+import { revalidateCache } from '@/cache/utils/cache-revalidates';
 
 export async function deletePostAction(id: string) {
   // TODO: confirmar login do usuario

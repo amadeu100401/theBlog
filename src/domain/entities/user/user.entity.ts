@@ -1,4 +1,6 @@
+import { Email } from '@/domain/value-objects/Email.value-object';
 import { UserModel, UserRole } from './user.model';
+import { AvatarUrl } from '@/domain/value-objects/Avatar-url.value-objects';
 
 export class User implements UserModel {
   constructor(private props: UserModel) {
@@ -14,7 +16,7 @@ export class User implements UserModel {
   get username(): string {
     return this.props.username;
   }
-  get email(): string {
+  get email(): Email {
     return this.props.email;
   }
   get passwordHash(): string {
@@ -29,7 +31,7 @@ export class User implements UserModel {
   get bio(): string | null {
     return this.props.bio;
   }
-  get avatarUrl(): string | null {
+  get avatarUrl(): AvatarUrl | null {
     return this.props.avatarUrl;
   }
   get emailVerifiedAt(): Date | null {
@@ -64,14 +66,15 @@ export class User implements UserModel {
   public updateProfile(data: {
     newName: string;
     newBio?: string | null;
-    avatarUrl?: string | null;
+    avatarUrl?: AvatarUrl | null;
   }) {
     if (!data.newName.trim()) {
       throw new Error('O nome do perfil não pode ficar vazio');
     }
     this.props.name = data.newName;
     if (data.newBio !== undefined) this.props.bio = data.newBio;
-    if (data.avatarUrl !== undefined) this.props.avatarUrl = data.avatarUrl;
+    if (data.avatarUrl && data.avatarUrl !== undefined)
+      this.props.avatarUrl = data.avatarUrl;
     this.props.updatedAt = this.getNow();
   }
 

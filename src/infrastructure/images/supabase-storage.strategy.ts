@@ -1,5 +1,5 @@
 import { ImageStorageStrategy } from '@/interfaces/image-storage.interface';
-import { supabasePublicClient } from '@/lib/data/external/Supabase/client';
+import { supabasePublicClient } from '@/infrastructure/db/database/external/Supabase/client';
 import { UploadResult } from '@/types/upload-result';
 import { SupabaseClient } from '@supabase/supabase-js';
 

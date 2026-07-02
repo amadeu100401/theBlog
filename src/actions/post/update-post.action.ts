@@ -6,8 +6,8 @@ import {
   UpdatePostDTO,
 } from '@/application/DTOs/post/dtos';
 import { updatePostUseCase as usecase } from '@/infrastructure/dependencyInjection/post.container';
-import { revalidateCache } from '@/lib/cache/utils/cache-revalidates';
-import { PostUpdateSchema } from '@/lib/validates/post-validations';
+import { revalidateCache } from '@/cache/utils/cache-revalidates';
+import { PostUpdateSchema } from '@/validates/post-validations';
 import { getZodErrorMessages } from '@/util/get-zod-error-messages';
 
 type UpdatePostActionState = {

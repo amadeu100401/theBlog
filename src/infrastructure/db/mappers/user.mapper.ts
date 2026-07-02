@@ -3,6 +3,7 @@
 import { User } from '@/domain/entities/user/user.entity';
 import { UserInsertModel, UserSelectModel } from '../drizzle/schemas';
 import { UserModel } from '@/domain/entities/user/user.model';
+import { Email } from '@/domain/value-objects/Email.value-object';
 
 export class UserMapper {
   static toPersistence(user: UserModel): UserInsertModel {
@@ -13,7 +14,7 @@ export class UserMapper {
 
       userName: user.username,
 
-      email: user.email,
+      email: user.email.getValue(),
 
       passwordHash: user.passwordHash,
 
@@ -42,7 +43,7 @@ export class UserMapper {
       id: user.id,
       name: user.name,
       username: user.userName,
-      email: user.email,
+      email: new Email(user.email),
       passwordHash: user.passwordHash,
       role: user.role,
       isActive: user.isActive,

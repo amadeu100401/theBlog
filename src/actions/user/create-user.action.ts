@@ -2,8 +2,8 @@
 
 import { makePublicUser, PublicUser } from '@/application/DTOs/user/dtos';
 import { createUserUseCase as useCase } from '@/infrastructure/dependencyInjection/container';
-import { createSession } from '@/lib/auth/auth-manual';
-import { UserCreateSchema } from '@/lib/validates/user-validations';
+import { createSession } from '@/auth/auth-manual';
+import { UserCreateSchema } from '@/validates/user-validations';
 import { getZodErrorMessages } from '@/util/get-zod-error-messages';
 import { redirect } from 'next/navigation';
 
@@ -45,7 +45,15 @@ export async function CreateUserAction(
 
     isSuccess = result.success;
     userIdToLog = result.userId;
-  } catch {
+  } catch (error: unknown) {
+    if (error instanceof Error) {
+      return {
+        success: false,
+        formState: prevState.formState,
+        errors: [error.message],
+      };
+    }
+
     return {
       success: false,
       formState: prevState.formState,
