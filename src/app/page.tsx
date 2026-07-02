@@ -1,7 +1,7 @@
 import { Suspense } from 'react';
-import { PostsList } from '../components/PostLists';
-import { SpinLoader } from '../components/SpinLoader';
-import { PostFeatured } from '../components/PostFeatured';
+import { PostsList } from '../presentation/components/PostLists';
+import { SpinLoader } from '../presentation/components/SpinLoader';
+import { PostFeatured } from '../presentation/components/PostFeatured';
 
 export default async function Home() {
   return (

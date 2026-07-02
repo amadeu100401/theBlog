@@ -1,7 +1,7 @@
-import { Email } from '@/domain/value-objects/Email.value-object';
+import { Email } from '@/domain/value-objects/Email';
 import { UserModel, UserRole } from './user.model';
-import { ImageUrl } from '@/domain/value-objects/Image-url.value-objects';
-import { Password } from '@/domain/value-objects/Password-hash.value-object';
+import { ImageUrl } from '@/domain/value-objects/Image-url';
+import { Password } from '@/domain/value-objects/Password-hash';
 
 export class User implements UserModel {
   constructor(private props: UserModel) {

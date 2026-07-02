@@ -1,5 +1,5 @@
-import { AuthHeading } from '@/components/Auth/authHeading';
-import { LoginForm } from '@/components/Auth/loginForm';
+import { AuthHeading } from '@/presentation/components/Auth/authHeading';
+import { LoginForm } from '@/presentation/components/Auth/loginForm';
 
 export default async function AdminLoginPage() {
   return (

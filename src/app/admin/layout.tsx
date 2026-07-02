@@ -1,4 +1,4 @@
-import { MenuAdmin } from '@/components/Admin/menuAdmin';
+import { MenuAdmin } from '@/presentation/components/Admin/menuAdmin';
 
 type AdminPostLayoutProps = {
   children: React.ReactNode;

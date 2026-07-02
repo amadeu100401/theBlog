@@ -1,6 +1,6 @@
-import { AuthHeading } from '@/components/Auth/authHeading';
-import { RegisterUserForm } from '@/components/Auth/registeForm';
-import { SocialButton } from '@/components/Auth/socialButton';
+import { AuthHeading } from '@/presentation/components/Auth/authHeading';
+import { RegisterUserForm } from '@/presentation/components/Auth/registeForm';
+import { SocialButton } from '@/presentation/components/Auth/socialButton';
 
 export default function Register() {
   return (

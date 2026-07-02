@@ -1,4 +1,4 @@
-import { ManagePostForm } from '@/components/Admin/managePostForm';
+import { ManagePostForm } from '@/presentation/components/Admin/managePostForm';
 import clsx from 'clsx';
 import { Metadata } from 'next';
 

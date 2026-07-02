@@ -1,8 +1,8 @@
 import { ImageStorageStrategy } from '@/interfaces/image-storage.interface';
-import { UploadResult } from '@/types/upload-result';
+import { UploadResult } from '@/shared/types/upload-result';
 import path from 'path';
 import fs from 'fs/promises';
-import { logColor } from '@/util/log-color';
+import { logColor } from '@/shared/util/log-color';
 
 export class LocalStorageStrategy implements ImageStorageStrategy {
   uploadDir = path.resolve(process.cwd(), 'public', 'uploads');

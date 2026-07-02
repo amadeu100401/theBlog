@@ -2,7 +2,7 @@ import { drizzle } from 'drizzle-orm/node-postgres';
 import { PostsTable } from './schemas';
 import { Pool } from 'pg';
 import 'dotenv/config';
-import { logColor } from '@/util/log-color';
+import { logColor } from '@/shared/util/log-color';
 
 const postgresDBPath = process.env.DATABASE_URL;
 

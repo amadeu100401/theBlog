@@ -1,6 +1,6 @@
 import { CreatePostDTO } from '@/application/DTOs/post/dtos';
 import { PostFactory } from '@/domain/entities/posts/post.factory';
-import { DrizzlePostRepository } from '@/infrastructure/db/repositories/post/drizzle/drizzle-post-repository';
+import { DrizzlePostRepository } from '@/infrastructure/repositories/post/drizzle-post-repository';
 export class CreatePostUseCase {
   constructor(
     private readonly postFactory: PostFactory,
@@ -11,7 +11,7 @@ export class CreatePostUseCase {
     //TODO: buscar o usurio logado para passar para a entidade de post
 
     const user = {
-      id: '6db4f744-a188-43e7-9bee-48e5b834bb07',
+      id: data.token,
       name: 'Amadeu Martim',
     };
 

@@ -3,9 +3,9 @@
 import { User } from '@/domain/entities/user/user.entity';
 import { UserInsertModel, UserSelectModel } from '../drizzle/schemas';
 import { UserModel } from '@/domain/entities/user/user.model';
-import { Email } from '@/domain/value-objects/Email.value-object';
-import { Password } from '@/domain/value-objects/Password-hash.value-object';
-import { ImageUrl } from '@/domain/value-objects/Image-url.value-objects';
+import { Email } from '@/domain/value-objects/Email';
+import { Password } from '@/domain/value-objects/Password-hash';
+import { ImageUrl } from '@/domain/value-objects/Image-url';
 
 export class UserMapper {
   static toPersistence(user: UserModel): UserInsertModel {

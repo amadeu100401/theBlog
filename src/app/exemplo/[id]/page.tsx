@@ -1,5 +1,5 @@
-import { revalidadeExemploAction } from '@/actions/cache/revalidate-exemple';
-import { SpinLoader } from '@/components/SpinLoader';
+import { revalidadeExemploAction } from '@/presentation/actions/cache/revalidate-exemple';
+import { SpinLoader } from '@/presentation/components/SpinLoader';
 import { Suspense } from 'react';
 
 async function PageContet({ params }: { params: Promise<{ id: string }> }) {

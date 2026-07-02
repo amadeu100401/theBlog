@@ -1,6 +1,6 @@
-import { ManagePostForm } from '@/components/Admin/managePostForm';
-import { SpinLoader } from '@/components/SpinLoader';
-import { findPostByIdAdmin } from '@/infrastructure/db/database/sql/post/queries/admin';
+import { ManagePostForm } from '@/presentation/components/Admin/managePostForm';
+import { SpinLoader } from '@/presentation/components/SpinLoader';
+import { findPostByIdAdmin } from '@/application/queries/posts/admin';
 import { Metadata } from 'next';
 import { notFound } from 'next/navigation';
 import { Suspense } from 'react';

@@ -2,8 +2,8 @@ import { v4 as uuid } from 'uuid';
 import { UserModel } from './user.model';
 import { User } from './user.entity';
 import { UsernameService } from '@/domain/services/userServices/UsernameService';
-import { Email } from '@/domain/value-objects/Email.value-object';
-import { Password } from '@/domain/value-objects/Password-hash.value-object';
+import { Email } from '@/domain/value-objects/Email';
+import { Password } from '@/domain/value-objects/Password-hash';
 
 interface CreateUserProps {
   name: string;

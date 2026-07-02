@@ -1,6 +1,6 @@
 import { ImageStorageStrategy } from '@/interfaces/image-storage.interface';
 import { supabasePublicClient } from '@/infrastructure/db/database/external/Supabase/client';
-import { UploadResult } from '@/types/upload-result';
+import { UploadResult } from '@/shared/types/upload-result';
 import { SupabaseClient } from '@supabase/supabase-js';
 
 export class SupabaseStorageStrategy implements ImageStorageStrategy {

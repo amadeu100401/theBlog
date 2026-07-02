@@ -1,5 +1,3 @@
-Initial commit
-
 ```
 blog
 ├─ .prettierrc.json
@@ -37,18 +35,6 @@ blog
 ├─ README.md
 ├─ ROTAS.md
 ├─ src
-│  ├─ actions
-│  │  ├─ auth
-│  │  │  └─ user
-│  │  │     └─ create-user-action.ts
-│  │  ├─ cache
-│  │  │  └─ revalidate-exemple.ts
-│  │  ├─ images
-│  │  │  └─ upload-image-action.ts
-│  │  └─ post
-│  │     ├─ create-post-action.ts
-│  │     ├─ delete-post-action.ts
-│  │     └─ update-post-action.ts
 │  ├─ app
 │  │  ├─ (auth)
 │  │  │  ├─ forgot-password
@@ -85,113 +71,44 @@ blog
 │  │  │  │  └─ dtos.ts
 │  │  │  └─ user
 │  │  │     └─ dtos.ts
+│  │  ├─ queries
+│  │  │  ├─ posts
+│  │  │  │  ├─ admin.ts
+│  │  │  │  └─ public.ts
+│  │  │  └─ user
+│  │  │     └─ user-queries.ts
 │  │  └─ UseCase
+│  │     ├─ post
+│  │     │  ├─ create-post.use-case.ts
+│  │     │  ├─ delete-post.use-case.ts
+│  │     │  └─ update-post.use-case.ts
 │  │     └─ user
 │  │        └─ create-user.use-case.ts
-│  ├─ components
-│  │  ├─ Admin
-│  │  │  ├─ deletePostButton
-│  │  │  │  └─ index.tsx
-│  │  │  ├─ imageManager
-│  │  │  │  └─ index.tsx
-│  │  │  ├─ managePostForm
-│  │  │  │  ├─ defaultDiv.tsx
-│  │  │  │  └─ index.tsx
-│  │  │  ├─ menuAdmin
-│  │  │  │  └─ index.tsx
-│  │  │  └─ postListAdmin
-│  │  │     └─ index.tsx
-│  │  ├─ Auth
-│  │  │  ├─ authHeading
-│  │  │  │  └─ index.tsx
-│  │  │  ├─ passwordStrength
-│  │  │  │  └─ index.tsx
-│  │  │  ├─ registeForm
-│  │  │  │  └─ index.tsx
-│  │  │  └─ socialButton
-│  │  │     └─ index.tsx
-│  │  ├─ Container
-│  │  │  └─ index.tsx
-│  │  ├─ DefaultButton
-│  │  │  └─ index.tsx
-│  │  ├─ Dialog
-│  │  │  └─ index.tsx
-│  │  ├─ ErrorMessage
-│  │  │  └─ index.tsx
-│  │  ├─ Footer
-│  │  │  └─ inde.tsx
-│  │  ├─ Header
-│  │  │  └─ index.tsx
-│  │  ├─ ImageDefault
-│  │  ├─ InputCheckbox
-│  │  │  └─ index.tsx
-│  │  ├─ InputText
-│  │  │  └─ index.tsx
-│  │  ├─ LinkWrapper
-│  │  │  └─ index.tsx
-│  │  ├─ MarkdownEditor
-│  │  │  └─ index.tsx
-│  │  ├─ PostCoverImage
-│  │  │  └─ index.tsx
-│  │  ├─ PostDate
-│  │  │  └─ index.tsx
-│  │  ├─ PostFeatured
-│  │  │  └─ index.tsx
-│  │  ├─ PostHeading
-│  │  │  └─ index.tsx
-│  │  ├─ PostLists
-│  │  │  └─ index.tsx
-│  │  ├─ PostSummary
-│  │  │  └─ index.tsx
-│  │  ├─ SafeMarkdown
-│  │  │  └─ index.tsx
-│  │  ├─ SinglePost
-│  │  │  └─ index.tsx
-│  │  ├─ SpinLoader
-│  │  │  └─ index.tsx
-│  │  └─ ui
-│  │     ├─ navigation-menu.tsx
-│  │     └─ sonner.tsx
 │  ├─ domain
 │  │  ├─ entities
 │  │  │  ├─ posts
-│  │  │  │  └─ post-model.ts
+│  │  │  │  ├─ post.entity.ts
+│  │  │  │  ├─ post.factory.ts
+│  │  │  │  └─ post.model.ts
 │  │  │  └─ user
 │  │  │     ├─ user.entity.ts
-│  │  │     └─ user.factory.ts
-│  │  └─ repositories
-│  │     ├─ post-repository.interface.ts
-│  │     └─ user-repository.interface.ts
-│  ├─ DTOs
-│  │  └─ user
-│  │     └─ dtos.ts
+│  │  │     ├─ user.factory.ts
+│  │  │     └─ user.model.ts
+│  │  ├─ errors
+│  │  ├─ events
+│  │  ├─ repositories
+│  │  │  ├─ post-repository.interface.ts
+│  │  │  └─ user-repository.interface.ts
+│  │  ├─ services
+│  │  │  ├─ postServices
+│  │  │  │  └─ SlugService.ts
+│  │  │  └─ userServices
+│  │  │     └─ UsernameService.ts
+│  │  └─ value-objects
+│  │     ├─ Email.value-object.ts
+│  │     ├─ Image-url.value-objects.ts
+│  │     └─ Password-hash.value-object.ts
 │  ├─ infrastructure
-│  │  └─ db
-│  │     ├─ drizzle
-│  │     │  ├─ index.ts
-│  │     │  ├─ migrations
-│  │     │  │  ├─ 0000_mature_madame_web.sql
-│  │     │  │  └─ meta
-│  │     │  │     ├─ 0000_snapshot.json
-│  │     │  │     └─ _journal.json
-│  │     │  ├─ schemas.ts
-│  │     │  └─ seed.ts
-│  │     ├─ mappers
-│  │     │  └─ user.mapper.ts
-│  │     ├─ repositories
-│  │     │  ├─ post
-│  │     │  │  ├─ drizzle
-│  │     │  │  │  └─ drizzle-post-repository.ts
-│  │     │  │  ├─ index.ts
-│  │     │  │  └─ json-post-repository.ts
-│  │     │  └─ user
-│  │     │     ├─ drizzle-user-repository.ts
-│  │     │     └─ index.ts
-│  │     └─ seed
-│  │        └─ posts.json
-│  ├─ interfaces
-│  │  └─ image-storage.interface.ts
-│  ├─ lib
 │  │  ├─ auth
 │  │  │  └─ auth-manual.ts
 │  │  ├─ cache
@@ -200,35 +117,139 @@ blog
 │  │  │  └─ utils
 │  │  │     ├─ cache-revalidates.ts
 │  │  │     └─ cahce-tag-builder.ts
-│  │  ├─ data
-│  │  │  ├─ external
-│  │  │  │  └─ Supabase
-│  │  │  │     ├─ admin.ts
-│  │  │  │     └─ client.ts
-│  │  │  └─ sql
-│  │  │     ├─ post
-│  │  │     │  └─ queries
-│  │  │     │     ├─ admin.ts
-│  │  │     │     └─ public.ts
-│  │  │     └─ user
-│  │  │        └─ user-queries.ts
-│  │  ├─ utils.ts
-│  │  └─ validates
-│  │     ├─ post-validations.ts
-│  │     └─ user-validations.ts
-│  ├─ types
-│  │  ├─ action-result.ts
-│  │  └─ upload-result.ts
-│  └─ util
-│     ├─ async-delay.ts
-│     ├─ format-datetime.ts
-│     ├─ get-zod-error-messages.ts
-│     ├─ http-context.ts
-│     ├─ is-url-or-relative-path.ts
-│     ├─ log-color.ts
-│     ├─ make-random-strings.ts
-│     ├─ make-slug-from-text.ts
-│     └─ validate-image.ts
+│  │  ├─ db
+│  │  │  ├─ database
+│  │  │  │  └─ external
+│  │  │  │     └─ Supabase
+│  │  │  │        ├─ admin.ts
+│  │  │  │        └─ client.ts
+│  │  │  ├─ drizzle
+│  │  │  │  ├─ index.ts
+│  │  │  │  ├─ migrations
+│  │  │  │  │  ├─ 0000_brainy_wendigo.sql
+│  │  │  │  │  └─ meta
+│  │  │  │  │     ├─ 0000_snapshot.json
+│  │  │  │  │     └─ _journal.json
+│  │  │  │  ├─ schemas.ts
+│  │  │  │  └─ seed.ts
+│  │  │  ├─ mappers
+│  │  │  │  ├─ post.mapper.ts
+│  │  │  │  └─ user.mapper.ts
+│  │  │  └─ seed
+│  │  │     └─ posts.json
+│  │  ├─ dependencyInjection
+│  │  │  ├─ container.ts
+│  │  │  └─ post.container.ts
+│  │  ├─ images
+│  │  │  ├─ image-storage-factory.ts
+│  │  │  ├─ local-storage.strategy.ts
+│  │  │  └─ supabase-storage.strategy.ts
+│  │  └─ repositories
+│  │     ├─ post
+│  │     │  ├─ drizzle
+│  │     │  │  └─ drizzle-post-repository.ts
+│  │     │  └─ json-post-repository.ts
+│  │     └─ user
+│  │        └─ drizzle-user-repository.ts
+│  ├─ interfaces
+│  │  └─ image-storage.interface.ts
+│  ├─ lib
+│  │  └─ utils.ts
+│  ├─ presentation
+│  │  ├─ actions
+│  │  │  ├─ cache
+│  │  │  │  └─ revalidate-exemple.ts
+│  │  │  ├─ images
+│  │  │  │  └─ upload-image-action.ts
+│  │  │  ├─ post
+│  │  │  │  ├─ create-post.action.ts
+│  │  │  │  ├─ delete-post.action.ts
+│  │  │  │  └─ update-post.action.ts
+│  │  │  └─ user
+│  │  │     └─ create-user.action.ts
+│  │  └─ components
+│  │     ├─ Admin
+│  │     │  ├─ deletePostButton
+│  │     │  │  └─ index.tsx
+│  │     │  ├─ imageManager
+│  │     │  │  └─ index.tsx
+│  │     │  ├─ managePostForm
+│  │     │  │  ├─ defaultDiv.tsx
+│  │     │  │  └─ index.tsx
+│  │     │  ├─ menuAdmin
+│  │     │  │  └─ index.tsx
+│  │     │  └─ postListAdmin
+│  │     │     └─ index.tsx
+│  │     ├─ Auth
+│  │     │  ├─ authHeading
+│  │     │  │  └─ index.tsx
+│  │     │  ├─ loginForm
+│  │     │  │  └─ index.tsx
+│  │     │  ├─ passwordStrength
+│  │     │  │  └─ index.tsx
+│  │     │  ├─ registeForm
+│  │     │  │  └─ index.tsx
+│  │     │  └─ socialButton
+│  │     │     └─ index.tsx
+│  │     ├─ Container
+│  │     │  └─ index.tsx
+│  │     ├─ DefaultButton
+│  │     │  └─ index.tsx
+│  │     ├─ Dialog
+│  │     │  └─ index.tsx
+│  │     ├─ ErrorMessage
+│  │     │  └─ index.tsx
+│  │     ├─ Footer
+│  │     │  └─ inde.tsx
+│  │     ├─ Header
+│  │     │  └─ index.tsx
+│  │     ├─ ImageDefault
+│  │     ├─ InputCheckbox
+│  │     │  └─ index.tsx
+│  │     ├─ InputText
+│  │     │  └─ index.tsx
+│  │     ├─ LinkWrapper
+│  │     │  └─ index.tsx
+│  │     ├─ MarkdownEditor
+│  │     │  └─ index.tsx
+│  │     ├─ PostCoverImage
+│  │     │  └─ index.tsx
+│  │     ├─ PostDate
+│  │     │  └─ index.tsx
+│  │     ├─ PostFeatured
+│  │     │  └─ index.tsx
+│  │     ├─ PostHeading
+│  │     │  └─ index.tsx
+│  │     ├─ PostLists
+│  │     │  └─ index.tsx
+│  │     ├─ PostSummary
+│  │     │  └─ index.tsx
+│  │     ├─ SafeMarkdown
+│  │     │  └─ index.tsx
+│  │     ├─ SinglePost
+│  │     │  └─ index.tsx
+│  │     ├─ SpinLoader
+│  │     │  └─ index.tsx
+│  │     └─ ui
+│  │        ├─ navigation-menu.tsx
+│  │        └─ sonner.tsx
+│  └─ shared
+│     ├─ constants
+│     ├─ types
+│     │  ├─ action-result.ts
+│     │  └─ upload-result.ts
+│     ├─ util
+│     │  ├─ async-delay.ts
+│     │  ├─ format-datetime.ts
+│     │  ├─ get-zod-error-messages.ts
+│     │  ├─ http-context.ts
+│     │  ├─ is-url-or-relative-path.ts
+│     │  ├─ log-color.ts
+│     │  ├─ make-random-strings.ts
+│     │  └─ validate-image.ts
+│     └─ validators
+│        ├─ post-validations.ts
+│        └─ user-validations.ts
 └─ tsconfig.json
 
 ```

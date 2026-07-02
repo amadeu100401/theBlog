@@ -1,11 +1,11 @@
 import type { Metadata } from 'next';
 import './globals.css';
-import { Container } from '../components/Container';
-import { Header } from '../components/Header';
-import { Footer } from '@/components/Footer/inde';
+import { Container } from '../presentation/components/Container';
+import { Header } from '../presentation/components/Header';
+import { Footer } from '@/presentation/components/Footer/inde';
 import { Geist } from 'next/font/google';
 import { cn } from '@/lib/utils';
-import { Toaster } from '@/components/ui/sonner';
+import { Toaster } from '@/presentation/components/ui/sonner';
 
 const geist = Geist({ subsets: ['latin'], variable: '--font-sans' });
 
