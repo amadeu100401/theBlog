@@ -1,5 +1,5 @@
 import clsx from 'clsx';
-import { LinkWrapper } from '../LinkWrapper';
+import { LinkWrapper } from '../../LinkWrapper';
 
 type PostHeadingProps = {
   children: React.ReactNode;

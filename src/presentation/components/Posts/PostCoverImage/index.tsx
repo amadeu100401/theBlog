@@ -1,6 +1,6 @@
 import clsx from 'clsx';
-import { LinkWrapper } from '../LinkWrapper';
 import Image from 'next/image';
+import { LinkWrapper } from '../../LinkWrapper';
 
 type PostCoverImageProps = {
   imageProps: React.ComponentProps<typeof Image>;
