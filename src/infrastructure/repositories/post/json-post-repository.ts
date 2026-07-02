@@ -1,7 +1,9 @@
 import { PostModel } from '@/domain/entities/posts/post.model';
-import { PostRepository } from '../../../../domain/repositories/post-repository.interface';
 import { resolve } from 'path';
 import { readFile } from 'fs/promises';
+import { PostRepository } from '@/domain/repositories/post-repository.interface';
+import { PostSelectModel } from '@/infrastructure/db/drizzle/schemas';
+import { PostMapper } from '@/infrastructure/db/mappers/post.mapper';
 
 const ROOT_DIR = process.cwd();
 
@@ -15,10 +17,7 @@ const JSON_POST_FILES_PATH = resolve(
 );
 
 export class JsonPostRepository implements PostRepository {
-  updatePost(
-    id: string,
-    newPost: Omit<PostModel, 'id' | 'slug' | 'createdAt'>,
-  ): Promise<PostModel> {
+  updatePost(postModel: PostModel): Promise<void> {
     throw new Error('Method not implemented.');
   }
   insertPost(entity: PostModel): Promise<PostModel> {
@@ -50,13 +49,26 @@ export class JsonPostRepository implements PostRepository {
     return posts.filter(post => post.published === true);
   }
 
-  async findById(id: string): Promise<PostModel> {
+  async findById(id: string): Promise<PostSelectModel> {
     const posts = await this.findAllPublishedPublic();
     const post = posts.find(post => post.id === id);
 
-    if (!post) throw new Error('Post não encontrado');
+    if (!post || post === undefined) throw new Error('Post não encontrado');
 
-    return post;
+    return {
+      id: post.id,
+      slug: post.slug,
+      title: post.title,
+      author: post.author,
+      authorId: post.authorId,
+      excerpt: post.excerpt,
+      content: post.content,
+      coverImageUrl: post.coverImageUrl,
+      published: post.published,
+
+      createdAt: new Date(post.createdAt),
+      updatedAt: new Date(post.updatedAt),
+    };
   }
 
   private async readFromDisk(): Promise<PostModel[]> {

@@ -1,9 +1,9 @@
 import { UpdatePostDTO } from '@/application/DTOs/post/dtos';
+import { PostRepository } from '@/domain/repositories/post-repository.interface';
 import { PostMapper } from '@/infrastructure/db/mappers/post.mapper';
-import { DrizzlePostRepository } from '@/infrastructure/db/repositories/post/drizzle/drizzle-post-repository';
 
 export class UpdatePostUseCase {
-  constructor(private readonly postRepository: DrizzlePostRepository) {}
+  constructor(private readonly postRepository: PostRepository) {}
   async execute(data: UpdatePostDTO) {
     const post = await this.postRepository.findById(data.postId);
 

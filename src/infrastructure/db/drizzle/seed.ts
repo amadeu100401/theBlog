@@ -4,8 +4,8 @@ import { PostsTable, UserTable } from './schemas';
 import path from 'path';
 import fs from 'fs';
 import { execSync } from 'child_process';
-import { JsonPostRepository } from '@/infrastructure/db/repositories/post/json-post-repository';
 import { sql } from 'drizzle-orm';
+import { JsonPostRepository } from '@/infrastructure/repositories/post/json-post-repository';
 
 (async () => {
   const jsonRepository = new JsonPostRepository();

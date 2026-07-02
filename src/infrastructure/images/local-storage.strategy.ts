@@ -1,4 +1,4 @@
-import { ImageStorageStrategy } from '@/interfaces/image-storage.interface';
+import { ImageStorageStrategy } from '@/domain/contracts/image-storage.interface';
 import { UploadResult } from '@/shared/types/upload-result';
 import path from 'path';
 import fs from 'fs/promises';

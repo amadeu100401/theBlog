@@ -1,7 +1,7 @@
-import { DrizzlePostRepository } from '@/infrastructure/db/repositories/post/drizzle/drizzle-post-repository';
+import { PostRepository } from '@/domain/repositories/post-repository.interface';
 
 export class DeletePostUseCase {
-  constructor(private readonly postRepository: DrizzlePostRepository) {}
+  constructor(private readonly postRepository: PostRepository) {}
   public async execute(id: string) {
     const post = await this.postRepository.findById(id);
 

@@ -1,4 +1,4 @@
-import { ImageStorageStrategy } from '@/interfaces/image-storage.interface';
+import { ImageStorageStrategy } from '@/domain/contracts/image-storage.interface';
 import { SupabaseStorageStrategy } from './supabase-storage.strategy';
 import { LocalStorageStrategy } from './local-storage.strategy';
 
