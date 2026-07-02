@@ -1,5 +1,5 @@
 import { Post } from '@/domain/entities/posts/post.entity';
-import { PostInsertModel, PostSelectModel } from '../drizzle/schemas';
+import { PostInsertModel, PostSelectModel } from '../drizzle/schemas/post';
 import { PostModel } from '@/domain/entities/posts/post.model';
 
 export class PostMapper {

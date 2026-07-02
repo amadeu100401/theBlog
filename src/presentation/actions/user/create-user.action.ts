@@ -1,7 +1,7 @@
 'use server';
 
 import { makePublicUser, PublicUser } from '@/application/DTOs/user/dtos';
-import { createSession } from '@/infrastructure/auth/auth-manual';
+import { createSession } from '@/infrastructure/auth/session';
 import { UserCreateSchema } from '@/shared/validators/user-validations';
 import { getZodErrorMessages } from '@/shared/util/get-zod-error-messages';
 import { redirect } from 'next/navigation';

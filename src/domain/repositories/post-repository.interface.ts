@@ -1,5 +1,5 @@
 import { PostModel } from '@/domain/entities/posts/post.model';
-import { PostSelectModel } from '@/infrastructure/db/drizzle/schemas';
+import { PostSelectModel } from '@/infrastructure/db/drizzle/schemas/post';
 
 export interface PostRepository {
   findAll(): Promise<PostModel[]>;

@@ -1,7 +1,7 @@
 // infra/database/mappers/user.mapper.ts
 
 import { User } from '@/domain/entities/user/user.entity';
-import { UserInsertModel, UserSelectModel } from '../drizzle/schemas';
+import { UserInsertModel, UserSelectModel } from '../drizzle/schemas/post';
 import { UserModel } from '@/domain/entities/user/user.model';
 import { Email } from '@/domain/value-objects/Email';
 import { Password } from '@/domain/value-objects/Password-hash';

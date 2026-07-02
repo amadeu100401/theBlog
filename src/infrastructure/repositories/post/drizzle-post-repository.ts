@@ -3,7 +3,7 @@ import { drizzleDb } from '@/infrastructure/db/drizzle';
 import {
   PostSelectModel,
   PostsTable,
-} from '@/infrastructure/db/drizzle/schemas';
+} from '@/infrastructure/db/drizzle/schemas/post';
 import { and, desc } from 'drizzle-orm';
 import { eq } from 'drizzle-orm';
 import { PostMapper } from '@/infrastructure/db/mappers/post.mapper';

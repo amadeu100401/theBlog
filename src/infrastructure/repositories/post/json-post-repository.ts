@@ -2,7 +2,7 @@ import { PostModel } from '@/domain/entities/posts/post.model';
 import { resolve } from 'path';
 import { readFile } from 'fs/promises';
 import { PostRepository } from '@/domain/repositories/post-repository.interface';
-import { PostSelectModel } from '@/infrastructure/db/drizzle/schemas';
+import { PostSelectModel } from '@/infrastructure/db/drizzle/schemas/post';
 import { PostMapper } from '@/infrastructure/db/mappers/post.mapper';
 
 const ROOT_DIR = process.cwd();

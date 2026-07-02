@@ -1,6 +1,6 @@
 import { migrate } from 'drizzle-orm/node-postgres/migrator';
 import { drizzleDb } from '.';
-import { PostsTable, UserTable } from './schemas';
+import { PostsTable, UserTable } from './schemas/post';
 import path from 'path';
 import fs from 'fs';
 import { execSync } from 'child_process';

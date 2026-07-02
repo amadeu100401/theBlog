@@ -1,5 +1,5 @@
 import { drizzle } from 'drizzle-orm/node-postgres';
-import { PostsTable } from './schemas';
+import { PostsTable } from './schemas/post';
 import { Pool } from 'pg';
 import 'dotenv/config';
 import { logColor } from '@/shared/util/log-color';

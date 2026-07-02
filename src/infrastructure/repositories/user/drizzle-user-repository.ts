@@ -1,5 +1,5 @@
 import { drizzleDb } from '@/infrastructure/db/drizzle';
-import { UserTable } from '@/infrastructure/db/drizzle/schemas';
+import { UserTable } from '@/infrastructure/db/drizzle/schemas/post';
 import { UserRepository } from '@/domain/repositories/user-repository.interface';
 import { UserModel } from '@/domain/entities/user/user.model';
 import { logColor } from '@/shared/util/log-color';
