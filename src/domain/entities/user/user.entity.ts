@@ -1,6 +1,7 @@
 import { Email } from '@/domain/value-objects/Email.value-object';
 import { UserModel, UserRole } from './user.model';
 import { AvatarUrl } from '@/domain/value-objects/Avatar-url.value-objects';
+import { Password } from '@/domain/value-objects/Password-hash.value-object';
 
 export class User implements UserModel {
   constructor(private props: UserModel) {
@@ -19,7 +20,7 @@ export class User implements UserModel {
   get email(): Email {
     return this.props.email;
   }
-  get passwordHash(): string {
+  get passwordHash(): Password {
     return this.props.passwordHash;
   }
   get role(): UserRole {
@@ -78,7 +79,7 @@ export class User implements UserModel {
     this.props.updatedAt = this.getNow();
   }
 
-  public changePassword(newHash: string) {
+  public changePassword(newHash: Password) {
     if (newHash === null || newHash === undefined) {
       throw new Error('Erro ao atualizar a senha do usuário');
     }

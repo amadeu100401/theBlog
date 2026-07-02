@@ -1,5 +1,6 @@
 import { AvatarUrl } from '@/domain/value-objects/Avatar-url.value-objects';
 import { Email } from '@/domain/value-objects/Email.value-object';
+import { Password } from '@/domain/value-objects/Password-hash.value-object';
 import { userRoleEnum } from '@/infrastructure/db/drizzle/schemas';
 
 export type UserRole = (typeof userRoleEnum.enumValues)[number];
@@ -13,7 +14,7 @@ export interface UserModel {
 
   email: Email;
 
-  passwordHash: string;
+  passwordHash: Password;
 
   role: UserRole;
 

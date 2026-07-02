@@ -3,11 +3,12 @@ import { UserModel } from './user.model';
 import { User } from './user.entity';
 import { UsernameService } from '@/domain/services/userServices/UsernameService';
 import { Email } from '@/domain/value-objects/Email.value-object';
+import { Password } from '@/domain/value-objects/Password-hash.value-object';
 
 interface CreateUserProps {
   name: string;
   email: Email;
-  passwordHash: string;
+  password: Password;
 }
 
 export class UserFactory {
@@ -24,7 +25,7 @@ export class UserFactory {
       username: generatedUsername,
       email: props.email,
 
-      passwordHash: props.passwordHash,
+      passwordHash: props.password,
 
       role: 'reader',
 

@@ -19,6 +19,6 @@ export class UsernameService {
 
     username = username.replace(/\.+/g, '.').replace(/(^\.|\.$)/g, '');
 
-    return username;
+    return `${username}-${new Date().toISOString()}`;
   }
 }

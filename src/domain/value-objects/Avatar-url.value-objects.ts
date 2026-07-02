@@ -1,19 +1,18 @@
 export class AvatarUrl {
   private readonly value: string;
 
-  constructor(url: string) {
-    if (!this.validate(url)) {
-      throw new Error('A url deve ser válida');
-    }
-
+  private constructor(url: string) {
     this.value = url;
   }
 
-  private validate(url: string): boolean {
+  public static createLocal(url: string): AvatarUrl {
     const isRelativePathRegex =
       /^\/(?:[A-Za-z0-9-._~!$&'()*+,;=:@]|%[0-9a-fA-F]{2})*(?:\/(?:[A-Za-z0-9-._~!$&'()*+,;=:@]|%[0-9a-fA-F]{2})*)*$/;
+    if (!isRelativePathRegex.test(url)) {
+      throw new Error('A url deve ser válida');
+    }
 
-    return isRelativePathRegex.test(url);
+    return new AvatarUrl(url);
   }
 
   public getValue(): string {
