@@ -56,11 +56,6 @@ export function MenuAdmin() {
         )}
       </button>
 
-      <a className={linkClasses} href='/' target='_blank'>
-        <HouseIcon />
-        Home
-      </a>
-
       <Link className={linkClasses} href='/admin/post'>
         <FileTextIcon />
         Posts
