@@ -1,9 +1,9 @@
 import { drizzleDb } from '@/infrastructure/db/drizzle';
-import { UserTable } from '@/infrastructure/db/drizzle/schemas/post';
 import { UserRepository } from '@/domain/repositories/user-repository.interface';
 import { UserModel } from '@/domain/entities/user/user.model';
 import { logColor } from '@/shared/util/log-color';
 import { UserMapper } from '@/infrastructure/db/mappers/user.mapper';
+import { UserTable } from '@/infrastructure/db/drizzle/schemas/user';
 
 export class DrizzleUserRepository implements UserRepository {
   findUserById(id: string): Promise<UserModel> {

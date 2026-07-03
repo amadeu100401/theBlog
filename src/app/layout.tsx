@@ -1,11 +1,12 @@
 import type { Metadata } from 'next';
 import './globals.css';
 import { Container } from '../presentation/components/Container';
-import { Header } from '../presentation/components/Header';
+import { Header } from '../presentation/components/BlogTitle';
 import { Footer } from '@/presentation/components/Footer/inde';
 import { Geist } from 'next/font/google';
 import { cn } from '@/lib/utils';
 import { Toaster } from '@/presentation/components/ui/sonner';
+import { SiteHeader } from '@/presentation/components/Header';
 
 const geist = Geist({ subsets: ['latin'], variable: '--font-sans' });
 
@@ -23,20 +24,19 @@ export default function RootLayout({
     // Tema claro e escuro
     <html lang='pt-BR' className={cn('light', 'font-sans', geist.variable)}>
       <body>
+        <SiteHeader />
         <Container>
           <Header />
-
           {children}
-
           <Footer />
-          <Toaster
-            position='top-center'
-            swipeDirections={['left', 'right']}
-            toastOptions={{
-              duration: 5000,
-            }}
-          />
         </Container>
+        <Toaster
+          position='top-center'
+          swipeDirections={['left', 'right']}
+          toastOptions={{
+            duration: 5000,
+          }}
+        />
       </body>
     </html>
   );
