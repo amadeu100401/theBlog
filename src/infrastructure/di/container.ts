@@ -14,8 +14,8 @@ export const container = {
   registerUserUseCase: userModule.createUserUseCase,
 
   //Auth
-  tokenService: authModule.tokenService,
   doLoginUseCase: authModule.doLogin,
+  getSessionUseCase: authModule.getSession,
 } as const;
 
 export type Container = typeof container;

@@ -1,5 +1,5 @@
 import { TokenPayload, TokenService } from '@/domain/services/token/Token';
-import { SignJWT, jwtVerify } from 'jose';
+import { EncryptJWT, jwtDecrypt } from 'jose';
 
 export class JoseTokenService implements TokenService {
   private getSecretKey(): Uint8Array {
@@ -14,18 +14,18 @@ export class JoseTokenService implements TokenService {
   async generate(payload: TokenPayload): Promise<string> {
     const secretKey = this.getSecretKey();
 
-    return await new SignJWT({ ...payload })
-      .setProtectedHeader({ alg: 'HS256' })
+    return await new EncryptJWT({ ...payload })
+      .setProtectedHeader({ alg: 'dir', enc: 'A256GCM' })
       .setIssuedAt()
       .setExpirationTime('7d')
-      .sign(secretKey);
+      .encrypt(secretKey);
   }
 
   async verifiy(token: string): Promise<TokenPayload | null> {
     try {
       const secretKey = this.getSecretKey();
 
-      const { payload } = await jwtVerify(token, secretKey);
+      const { payload } = await jwtDecrypt(token, secretKey);
 
       return {
         sub: payload.sub as string,

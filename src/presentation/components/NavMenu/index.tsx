@@ -16,8 +16,12 @@ import { SearchInput } from '../SearchHeader';
 export type userSession = {
   name: string;
   email: string;
-  avatarUrl: string;
+  avatarUrl: string | undefined | null;
 } | null;
+
+interface SiteHeaderProps {
+  initialUser: userSession;
+}
 
 const nav = [
   { to: '/', label: 'Início', icon: LayoutGridIcon },
@@ -26,10 +30,10 @@ const nav = [
   { to: '/', label: 'Sobre', icon: PenSquareIcon },
 ] as const;
 
-export function SiteHeader() {
+export function SiteHeader({ initialUser }: SiteHeaderProps) {
   const [scrolled, setScrolled] = useState(false);
   const [mobileOpen, setMobileOpen] = useState(false);
-  const [user] = useState<userSession>(null); //TODO: Pegar da session atual
+  const [user] = useState<userSession>(initialUser); //TODO: Pegar da session atual
   // const [user] = useState<userSession>({
   //   name: 'Amadeu Martim',
   //   email: 'amadeumartim@gmail.com',

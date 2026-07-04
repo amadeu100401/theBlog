@@ -4,5 +4,5 @@ export type LoginResponse = {
     name: string;
     email: string;
   };
-  toke: string;
+  token: string;
 };

@@ -44,7 +44,7 @@ export async function CreateUserAction(
     }
 
     isSuccess = result.success;
-    userIdToLog = result.userId;
+    userIdToLog = result.token;
   } catch (error: unknown) {
     if (error instanceof Error) {
       return {

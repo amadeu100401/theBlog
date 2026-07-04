@@ -49,7 +49,7 @@ export function AccountMenu({ user }: AccountMenuProps) {
             {initials}
           </span> */}
           <Avatar>
-            <AvatarImage src={user?.avatarUrl} alt='shadcn' />
+            <AvatarImage src={user?.avatarUrl ?? undefined} alt='shadcn' />
             <AvatarFallback>{initials}</AvatarFallback>
           </Avatar>
           <span className='hidden sm:inline'>{user?.name.split(' ')[0]}</span>

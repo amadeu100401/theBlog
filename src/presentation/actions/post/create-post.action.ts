@@ -12,6 +12,7 @@ import { redirect } from 'next/navigation';
 import { cookies } from 'next/headers';
 import { logColor } from '@/shared/util/log-color';
 import { container } from '@/infrastructure/di/container';
+import { Auth } from '@/shared/constants/system_const';
 
 type CreatePostActionState = {
   formState: PublicPost;
@@ -25,7 +26,7 @@ export async function CreatePostAction(
 ): Promise<CreatePostActionState> {
   // TODO: verificar se o usuário tá logado
   const cookieToken = await cookies();
-  const token = cookieToken.get('session_token')?.value;
+  const token = cookieToken.get(Auth.AUTH_TOKEN)?.value;
 
   if (!token) {
     const message = 'Usuário não autenticado';

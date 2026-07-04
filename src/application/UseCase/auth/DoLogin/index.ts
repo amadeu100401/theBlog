@@ -43,7 +43,7 @@ export class DoLogin {
         name: user?.name as string,
         email: user?.email.getValue() as string,
       },
-      toke: token,
+      token: token,
     };
   }
 

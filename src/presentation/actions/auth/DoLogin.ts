@@ -1,8 +1,10 @@
 'use server';
 
-import { LoginRequestBuilder } from '@/application/UseCase/auth/login/request';
+import { LoginRequestBuilder } from '@/application/UseCase/auth/DoLogin/request';
 import { container } from '@/infrastructure/di/container';
+import { Auth } from '@/shared/constants/system_const';
 import { DoLoginSchema } from '@/shared/validators/login-valodations';
+import { cookies } from 'next/headers';
 import { redirect } from 'next/navigation';
 import { NextResponse } from 'next/server';
 
@@ -38,9 +40,8 @@ export async function doLoginAction(prevState: unknown, formData: FormData) {
       LoginRequestBuilder(parsedBody.email, parsedBody.password),
     );
 
-    const response = NextResponse.json({ user: result.user });
-
-    response.cookies.set('auth_token', result.toke, {
+    const cookieStore = await cookies();
+    cookieStore.set(Auth.AUTH_TOKEN, result.token, {
       httpOnly: true,
       secure: process.env.NODE_ENV === 'production',
       sameSite: 'strict',
