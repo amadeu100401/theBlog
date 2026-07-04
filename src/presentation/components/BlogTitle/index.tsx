@@ -4,7 +4,7 @@ import Link from 'next/link';
 export function Header() {
   return (
     <header>
-      <div className={clsx('py-8', 'sm:py-10', 'md:py-11', 'lg:py-12')}>
+      <div className={clsx('pb-8', 'sm:pb-10', 'md:pb-11', 'lg:pb-12')}>
         <h1
           className={clsx(
             'text-4xl/normal font-extrabold',

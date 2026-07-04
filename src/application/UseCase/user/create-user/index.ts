@@ -1,13 +1,13 @@
 import { UserFactory } from '@/domain/entities/user/user.factory';
 import { Email } from '@/domain/value-objects/Email';
 import { Password } from '@/domain/value-objects/Password-hash';
-import { DrizzleUserRepository } from '@/infrastructure/repositories/user/drizzle-user-repository';
 import { CreateUserDTO } from './dto';
+import { UserRepository } from '@/domain/repositories/user-repository.interface';
 
 export class CreateUserUseCase {
   constructor(
     private readonly userFactory: UserFactory,
-    private readonly userRepository: DrizzleUserRepository,
+    private readonly userRepository: UserRepository,
   ) {}
 
   async execute(data: CreateUserDTO) {

@@ -1,7 +1,7 @@
 import { Post } from './post.entity';
 import { PostModel } from './post.model';
 import { v4 as uuid } from 'uuid';
-import { SlugService } from '@/domain/services/postServices/SlugService';
+import { SlugService } from '@/domain/services/post/SlugService';
 
 interface CreatePostProps {
   title: string;

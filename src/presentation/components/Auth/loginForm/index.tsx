@@ -11,22 +11,38 @@ import {
   MailIcon,
 } from 'lucide-react';
 import Link from 'next/link';
+import { useActionState, useEffect } from 'react';
+import { doLoginAction } from '@/presentation/actions/auth/DoLogin';
+import { toast } from 'sonner';
+import { FieldError } from '../FieldError';
 
 export function LoginForm() {
+  const [state, formAction, isPending] = useActionState(doLoginAction, null);
+
+  useEffect(() => {
+    if (state && state.success === false && state.message) {
+      toast.dismiss();
+      toast.error(state?.message);
+    }
+  }, [state]);
+
   const textInputClasses = clsx('bg-white h-11 rounded-xl');
   return (
-    <form action='' className='w-full mb-8'>
+    <form action={formAction} className='w-full mb-8'>
       <div className='flex w-full flex-col gap-6'>
-        <InputText
-          labelText='Email completo'
-          name='email'
-          placeholder='voce@exemplo.com'
-          type='email'
-          // disabled={isPending}
-          icon={MailIcon}
-          className={textInputClasses}
-          // onChange={e => setEmail(e.target.value)}
-        />
+        <div className=' flex flex-col gap-1'>
+          <InputText
+            labelText='Email completo'
+            name='email'
+            placeholder='voce@exemplo.com'
+            type='email'
+            disabled={isPending}
+            icon={MailIcon}
+            className={textInputClasses}
+            hasError={!!state?.errors?.email}
+          />
+          <FieldError errors={state?.errors?.email} />
+        </div>
 
         <div className='flex flex-col gap-1.5'>
           <div className='flex flex-row justify-between items-center'>
@@ -43,9 +59,11 @@ export function LoginForm() {
           </div>
           <InputText
             type='password'
+            name='password'
             placeholder='Sua senha'
             icon={LockIcon}
             className={textInputClasses}
+            disabled={isPending}
           />
         </div>
 
@@ -64,6 +82,7 @@ export function LoginForm() {
 
           <ButtonComponent
             styleType={'custom'}
+            type='button'
             className={clsx(
               'flex flex-row items-center p-0 gap-1.5 cursor-pointer',
               'text-xs font-medium text-slate-500 transition hover:text-slate-900',
@@ -86,6 +105,7 @@ export function LoginForm() {
             'cursor-pointer hover:bg-slate-900',
             'disabled:cursor-not-allowed disabled:bg-slate-300',
           )}
+          type='submit'
           rightIcon={
             <ArrowRightIcon
               className={clsx(
@@ -93,7 +113,7 @@ export function LoginForm() {
               )}
             />
           }
-          disabled={!true}
+          disabled={isPending}
         >
           Acessar conta
         </ButtonComponent>

@@ -1,6 +1,6 @@
 import { SinglePost } from '@/presentation/components/SinglePost';
 import { SpinLoader } from '@/presentation/components/SpinLoader';
-import { findPublicPostBySlugCached } from '@/application/queries/posts/public';
+import { findPublicPostBySlugCached } from '@/application/Queries/posts/public';
 import { Metadata } from 'next';
 import { notFound } from 'next/navigation';
 import { Suspense } from 'react';

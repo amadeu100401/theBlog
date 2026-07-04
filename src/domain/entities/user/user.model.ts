@@ -1,7 +1,7 @@
 import { ImageUrl } from '@/domain/value-objects/Image-url';
 import { Email } from '@/domain/value-objects/Email';
 import { Password } from '@/domain/value-objects/Password-hash';
-import { userRoleEnum } from '@/infrastructure/db/drizzle/schemas/post';
+import { userRoleEnum } from '@/infrastructure/db/drizzle/schemas/user';
 
 export type UserRole = (typeof userRoleEnum.enumValues)[number];
 

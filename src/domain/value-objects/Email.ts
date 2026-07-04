@@ -21,4 +21,8 @@ export class Email {
   public equals(other: Email): boolean {
     return this.value === other.getValue();
   }
+
+  public isValid() {
+    return this.validate(this.getValue());
+  }
 }

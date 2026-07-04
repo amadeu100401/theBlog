@@ -1,4 +1,4 @@
-import { findPublicPostBySlugCached } from '@/application/queries/posts/public';
+import { findPublicPostBySlugCached } from '@/application/Queries/posts/public';
 import Image from 'next/image';
 import { notFound } from 'next/navigation';
 import { PostDate } from '../Posts/PostDate';

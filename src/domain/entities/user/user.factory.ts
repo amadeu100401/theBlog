@@ -1,7 +1,7 @@
 import { v4 as uuid } from 'uuid';
 import { UserModel } from './user.model';
 import { User } from './user.entity';
-import { UsernameService } from '@/domain/services/userServices/UsernameService';
+import { UsernameService } from '@/domain/services/user/UsernameService';
 import { Email } from '@/domain/value-objects/Email';
 import { Password } from '@/domain/value-objects/Password-hash';
 

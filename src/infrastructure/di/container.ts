@@ -1,5 +1,6 @@
 import { postModule } from './Post';
 import { userModule } from './User';
+import { authModule } from './Auth';
 
 export const container = {
   //Modulo de posts
@@ -11,6 +12,10 @@ export const container = {
   //Module de usuarios
   userRepository: userModule.userRepository,
   registerUserUseCase: userModule.createUserUseCase,
+
+  //Auth
+  tokenService: authModule.tokenService,
+  doLoginUseCase: authModule.doLogin,
 } as const;
 
 export type Container = typeof container;

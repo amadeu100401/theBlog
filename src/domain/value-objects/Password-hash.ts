@@ -37,4 +37,10 @@ export class Password {
   public getHash(): string {
     return this.value;
   }
+
+  public isNullOrEmpty() {
+    return (
+      this.value === null || this.value === undefined || this.value.length === 0
+    );
+  }
 }
