@@ -6,11 +6,9 @@ import {
   FileTextIcon,
   LayoutGridIcon,
   PenSquareIcon,
-  SearchIcon,
 } from 'lucide-react';
 import Link from 'next/link';
 import { useEffect, useState } from 'react';
-import { ButtonComponent } from '../DefaultButton';
 import { AccountMenu } from '../AccountMenu';
 import { AuthButtons } from '../AuthButtons';
 import { SearchInput } from '../SearchHeader';

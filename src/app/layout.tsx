@@ -6,7 +6,7 @@ import { Footer } from '@/presentation/components/Footer/inde';
 import { Geist } from 'next/font/google';
 import { cn } from '@/lib/utils';
 import { Toaster } from '@/presentation/components/ui/sonner';
-import { SiteHeader } from '@/presentation/components/Header';
+import { SiteHeader } from '@/presentation/components/NavMenu';
 
 const geist = Geist({ subsets: ['latin'], variable: '--font-sans' });
 

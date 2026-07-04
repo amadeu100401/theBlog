@@ -7,7 +7,7 @@ import {
   DropdownMenuSeparator,
   DropdownMenuTrigger,
 } from '@/components/ui/dropdown-menu';
-import { userSession as UserSession } from '../Header';
+import { userSession as UserSession } from '../NavMenu';
 import clsx from 'clsx';
 import {
   ChevronDownIcon,
@@ -18,6 +18,7 @@ import {
   UserIcon,
 } from 'lucide-react';
 import Link from 'next/link';
+import { Avatar, AvatarFallback, AvatarImage } from '@/components/ui/avatar';
 
 type AccountMenuProps = {
   user: UserSession;
@@ -44,22 +45,30 @@ export function AccountMenu({ user }: AccountMenuProps) {
           role='button'
           tabIndex={0}
         >
-          <span className='grid h-7 w-7 place-items-center rounded-full bg-slate-900 text-xs font-semibold text-white'>
+          {/* <span className='grid h-7 w-7 place-items-center rounded-full bg-slate-900 text-xs font-semibold text-white'>
             {initials}
-          </span>
+          </span> */}
+          <Avatar>
+            <AvatarImage src={user?.avatarUrl} alt='shadcn' />
+            <AvatarFallback>{initials}</AvatarFallback>
+          </Avatar>
           <span className='hidden sm:inline'>{user?.name.split(' ')[0]}</span>
           <ChevronDownIcon className='h-3.5 w-3.5 text-slate-400' />
         </div>
       </DropdownMenuTrigger>
       <DropdownMenuContent align='end' className='w-64'>
         <DropdownMenuGroup>
-          <DropdownMenuLabel className={'flex flex-col gap-0.5'}>
-            <span className='text-sm font-semibold text-slate-900'>
-              {user?.name}
-            </span>
-            <span className='text-xs font-semibold text-slate-500'>
-              {user?.email}
-            </span>
+          <DropdownMenuLabel
+            className={'flex flex-row justify-between gap-0.5'}
+          >
+            <div className='flex flex-col gap-0.5'>
+              <span className='text-sm font-semibold text-slate-900'>
+                {user?.name}
+              </span>
+              <span className='text-xs font-semibold text-slate-500'>
+                {user?.email}
+              </span>
+            </div>
           </DropdownMenuLabel>
         </DropdownMenuGroup>
         <DropdownMenuSeparator />

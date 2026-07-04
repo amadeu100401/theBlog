@@ -1,7 +1,7 @@
 'use server';
 
 import { revalidateCache } from '@/infrastructure/cache/utils/cache-revalidates';
-import { container } from '@/infrastructure/di';
+import { container } from '@/infrastructure/di/Index';
 
 export async function deletePostAction(id: string) {
   // TODO: confirmar login do usuario
