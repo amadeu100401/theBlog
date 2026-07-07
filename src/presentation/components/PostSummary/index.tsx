@@ -1,5 +1,5 @@
-import { PostHeading } from '../PostHeading';
-import { PostDate } from '../PostDate';
+import { PostDate } from '../Posts/PostDate';
+import { PostHeading } from '../Posts/PostHeading';
 
 type PostFeaturedProps = {
   createdAt: string;

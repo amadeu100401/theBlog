@@ -1,3 +1,5 @@
+'use client';
+
 import {
   DropdownMenu,
   DropdownMenuContent,
@@ -7,7 +9,6 @@ import {
   DropdownMenuSeparator,
   DropdownMenuTrigger,
 } from '@/components/ui/dropdown-menu';
-import { userSession as UserSession } from '../NavMenu';
 import clsx from 'clsx';
 import {
   ChevronDownIcon,
@@ -20,14 +21,20 @@ import {
 import Link from 'next/link';
 import { Avatar, AvatarFallback, AvatarImage } from '@/components/ui/avatar';
 
+export type userSession = {
+  name: string;
+  email: string;
+  avatarUrl: string | undefined | null;
+} | null;
+
 type AccountMenuProps = {
-  user: UserSession;
+  user: userSession;
 };
 
 export function AccountMenu({ user }: AccountMenuProps) {
   const initials = user?.name
     .split(' ')
-    .map(s => s[0])
+    .map((s: string) => s[0])
     .slice(0, 2)
     .join('')
     .toUpperCase();

@@ -1,11 +1,12 @@
 import { migrate } from 'drizzle-orm/node-postgres/migrator';
 import { drizzleDb } from '.';
-import { PostsTable, UserTable } from './schemas/post';
+import { PostsTable } from './schemas/post';
 import path from 'path';
 import fs from 'fs';
 import { execSync } from 'child_process';
 import { sql } from 'drizzle-orm';
 import { JsonPostRepository } from '@/infrastructure/repositories/post/json-post-repository';
+import { UserTable } from './schemas/user';
 
 (async () => {
   const jsonRepository = new JsonPostRepository();

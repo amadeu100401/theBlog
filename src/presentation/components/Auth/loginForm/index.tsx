@@ -12,17 +12,21 @@ import {
 } from 'lucide-react';
 import Link from 'next/link';
 import { useActionState, useEffect } from 'react';
-import { doLoginAction } from '@/presentation/actions/auth/DoLogin';
+import { DoLoginAction } from '@/presentation/actions/auth/DoLogin';
 import { toast } from 'sonner';
 import { FieldError } from '../FieldError';
 
 export function LoginForm() {
-  const [state, formAction, isPending] = useActionState(doLoginAction, null);
+  const [state, formAction, isPending] = useActionState(DoLoginAction, null);
 
   useEffect(() => {
     if (state && state.success === false && state.message) {
       toast.dismiss();
       toast.error(state?.message);
+    }
+
+    if (state && state.success === true) {
+      window.location.href = '/';
     }
   }, [state]);
 

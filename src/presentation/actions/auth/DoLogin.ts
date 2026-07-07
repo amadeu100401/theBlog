@@ -4,9 +4,10 @@ import { LoginRequestBuilder } from '@/application/UseCase/auth/DoLogin/request'
 import { container } from '@/infrastructure/di/container';
 import { Auth } from '@/shared/constants/system_const';
 import { DoLoginSchema } from '@/shared/validators/login-valodations';
+import { revalidatePath } from 'next/cache';
+import { isRedirectError } from 'next/dist/client/components/redirect-error';
 import { cookies } from 'next/headers';
 import { redirect } from 'next/navigation';
-import { NextResponse } from 'next/server';
 
 export type ActionState = {
   success: boolean;
@@ -18,9 +19,7 @@ export type ActionState = {
   user?: { name: string; email: string };
 } | null;
 
-export async function doLoginAction(prevState: unknown, formData: FormData) {
-  let loginSucesso = false;
-
+export async function DoLoginAction(prevState: unknown, formData: FormData) {
   try {
     const rawData = Object.fromEntries(formData.entries());
     const parsed = DoLoginSchema.safeParse(rawData);
@@ -49,17 +48,18 @@ export async function doLoginAction(prevState: unknown, formData: FormData) {
       path: '/',
     });
 
-    loginSucesso = true;
+    revalidatePath('/', 'layout');
+    redirect('/');
   } catch (error) {
+    if (isRedirectError(error)) {
+      throw error;
+    }
+
     if (error instanceof Error) {
       return {
         success: false,
         message: error.message || 'Erro de autenticação.',
       };
     }
-  }
-
-  if (loginSucesso) {
-    redirect('/');
   }
 }

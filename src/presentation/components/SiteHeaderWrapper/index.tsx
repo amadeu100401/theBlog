@@ -1,10 +1,9 @@
-import { GetSession } from '@/presentation/actions/auth/GetSession';
 import { SiteHeader } from '../NavMenu';
 
-export async function SiteHeaderWrapper() {
-  const userSession = await GetSession();
+export const dynamic = 'force-dynamic';
 
-  return <SiteHeader initialUser={userSession} />;
+export async function SiteHeaderWrapper() {
+  return <SiteHeader />;
 }
 
 export function SiteHeaderSkeleton() {
