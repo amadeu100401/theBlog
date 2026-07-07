@@ -13,13 +13,13 @@ import clsx from 'clsx';
 import {
   ChevronDownIcon,
   FileTextIcon,
-  LogOutIcon,
   PenSquareIcon,
   SettingsIcon,
   UserIcon,
 } from 'lucide-react';
 import Link from 'next/link';
 import { Avatar, AvatarFallback, AvatarImage } from '@/components/ui/avatar';
+import { LogoutButton } from './logoutButton';
 
 export type userSession = {
   name: string;
@@ -115,9 +115,7 @@ export function AccountMenu({ user }: AccountMenuProps) {
         </DropdownMenuItem>
         <DropdownMenuSeparator />
         <DropdownMenuItem className='p-0 cursor-pointer text-red-600 focus:text-red-600 '>
-          <div className='px-3 gap-2 flex w-full items-center m-1.5'>
-            <LogOutIcon className='h-4 w-4' /> Sair
-          </div>
+          <LogoutButton />
         </DropdownMenuItem>
       </DropdownMenuContent>
     </DropdownMenu>
