@@ -1,7 +1,8 @@
 import { TokenService } from '@/domain/services/token/Token';
 import { SessionResponse } from './response';
 import { UserRepository } from '@/domain/repositories/user-repository.interface';
-import { logColor } from '@/shared/util/log-color';
+import { cookies } from 'next/headers';
+import { Auth } from '@/shared/constants/system_const';
 
 export class GetSessionUseCase {
   constructor(
@@ -9,7 +10,17 @@ export class GetSessionUseCase {
     private readonly userRepository: UserRepository,
   ) {}
 
-  public async execute(token: string): Promise<SessionResponse> {
+  public async execute(): Promise<SessionResponse> {
+    const tokenCookie = (await cookies()).get(Auth.AUTH_TOKEN);
+    const token = tokenCookie?.value;
+
+    if (!token) {
+      return {
+        status: false,
+        error: 'Não foi possível obter dados da sessão',
+      };
+    }
+
     const payload = await this.tokenService.verifiy(token);
 
     if (!payload) {
