@@ -14,10 +14,16 @@ export class JoseTokenService implements TokenService {
   async generate(payload: TokenPayload): Promise<string> {
     const secretKey = this.getSecretKey();
 
+    // return await new EncryptJWT({ ...payload })
+    //   .setProtectedHeader({ alg: 'dir', enc: 'A256GCM' })
+    //   .setIssuedAt()
+    //   .setExpirationTime('7d')
+    //   .encrypt(secretKey);
+
     return await new EncryptJWT({ ...payload })
       .setProtectedHeader({ alg: 'dir', enc: 'A256GCM' })
       .setIssuedAt()
-      .setExpirationTime('7d')
+      .setExpirationTime('1d')
       .encrypt(secretKey);
   }
 
