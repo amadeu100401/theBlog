@@ -66,7 +66,7 @@ export function InputText({
   return (
     <div className='flex flex-col gap-2'>
       {showLabel && (
-        <label className='text-sm font-normal' htmlFor={id}>
+        <label className='text-sm font-semibold' htmlFor={id}>
           {labelText}
         </label>
       )}

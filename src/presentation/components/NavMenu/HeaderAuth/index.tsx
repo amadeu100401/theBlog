@@ -1,17 +1,15 @@
-import { AuthButtons } from '../../AuthButtons';
+import { AuthButtons } from '../AuthButtons';
 import { AccountMenu } from '../../AccountMenu';
-import { container } from '@/infrastructure/di/container';
+import { GetSessionAction } from '@/presentation/actions/auth/GetSession';
 
 export async function HeaderAuth() {
-  const useCase = container.getSessionUseCase;
+  const result = await GetSessionAction(null, null);
 
-  const result = await useCase.execute();
-
-  if (!result || !result.status) {
+  if (!result || !result.success) {
     return <AuthButtons />;
   }
 
-  const user = result.session;
+  const user = result.user;
 
   if (!user) {
     return <AuthButtons />;

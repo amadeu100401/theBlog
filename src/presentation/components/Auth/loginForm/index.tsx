@@ -31,6 +31,7 @@ export function LoginForm() {
   }, [state]);
 
   const textInputClasses = clsx('bg-white h-11 rounded-xl');
+
   return (
     <form action={formAction} className='w-full mb-8'>
       <div className='flex w-full flex-col gap-6'>
@@ -50,9 +51,9 @@ export function LoginForm() {
 
         <div className='flex flex-col gap-1.5'>
           <div className='flex flex-row justify-between items-center'>
-            <label className='text-sm font-normal'>Senha</label>
+            <label className='text-sm font-semibold'>Senha</label>
             <Link
-              href='/recuperar-senha'
+              href='/forgot-password'
               className={clsx(
                 'text-xs font-medium text-slate-500 hover:text-slate-700 underline-offset-4',
                 'hover:underline transition',

@@ -1,3 +1,5 @@
+import { ForgotPasswordForm } from '@/presentation/components/Auth/forgotPasswordForm';
+
 export default async function ForgotPasswordPage() {
-  return <div className='py-16 text-6xl'>AdminLoginPage</div>;
+  return <ForgotPasswordForm />;
 }

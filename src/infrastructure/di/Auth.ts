@@ -3,8 +3,12 @@ import { userRepository } from './User';
 import { JoseTokenService } from '../service/jose-token';
 import { TokenService } from '@/domain/services/token/Token';
 import { GetSessionUseCase } from '@/application/UseCase/auth/GetSession';
+import { ForgetPasswordUseCase } from '@/application/UseCase/auth/ForgetPassword';
+import { EmailServices } from '@/domain/services/email/Email';
+import { EmailService } from '../email/services/resend-email.service';
 
 export const tokenService: TokenService = new JoseTokenService();
+export const forgetPasswordService: EmailServices = new EmailService();
 
 export const authModule = {
   get doLogin() {
@@ -12,5 +16,8 @@ export const authModule = {
   },
   get getSession() {
     return new GetSessionUseCase(tokenService, userRepository);
+  },
+  get forgetPassword() {
+    return new ForgetPasswordUseCase(userRepository, forgetPasswordService);
   },
 };

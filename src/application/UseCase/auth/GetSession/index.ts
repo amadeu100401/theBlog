@@ -1,8 +1,6 @@
 import { TokenService } from '@/domain/services/token/Token';
 import { SessionResponse } from './response';
 import { UserRepository } from '@/domain/repositories/user-repository.interface';
-import { cookies } from 'next/headers';
-import { Auth } from '@/shared/constants/system_const';
 
 export class GetSessionUseCase {
   constructor(
@@ -10,10 +8,7 @@ export class GetSessionUseCase {
     private readonly userRepository: UserRepository,
   ) {}
 
-  public async execute(): Promise<SessionResponse> {
-    const tokenCookie = (await cookies()).get(Auth.AUTH_TOKEN);
-    const token = tokenCookie?.value;
-
+  public async execute(token: string): Promise<SessionResponse> {
     if (!token) {
       return {
         status: false,
