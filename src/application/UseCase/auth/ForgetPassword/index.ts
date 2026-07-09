@@ -21,7 +21,6 @@ export class ForgetPasswordUseCase {
 
     const content = ResetEmailTemplate({
       name: user.name,
-      //resetLink: 'www.google.com.br',
       resetLink: resetLink,
     });
 

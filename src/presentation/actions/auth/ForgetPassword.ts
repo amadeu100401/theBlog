@@ -2,7 +2,6 @@
 
 import { ForgetPasswordRequestBuilder } from '@/application/UseCase/auth/ForgetPassword/request';
 import { container } from '@/infrastructure/di/container';
-import { logColor } from '@/shared/util/log-color';
 import { ForgetPasswordSchema } from '@/shared/validators/forgetPassword-validatons';
 
 export type ActionState = {
@@ -36,6 +35,7 @@ export async function ForgetPasswordAction(
 
     return {
       success: true,
+      email: parsed.data.email,
     };
   } catch {
     return {

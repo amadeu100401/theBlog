@@ -19,7 +19,7 @@ export async function SiteHeader() {
           <span className='grid h-8 w-8 place-items-center rounded-lg bg-slate-900 text-white shadow-sm ring-1 ring-slate-900/10 transition-transform group-hover:scale-105'>
             <BookOpenIcon className='h-4 w-4' />
           </span>
-          <span className='text-base font-semibold tracking-tight text-slate-900'>
+          <span className='text-base font-semibold tracking-tight text-slate-900 '>
             The Blog
           </span>
         </Link>

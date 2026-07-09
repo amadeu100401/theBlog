@@ -1,15 +1,9 @@
 import clsx from 'clsx';
-import {
-  BookOpenIcon,
-  FileTextIcon,
-  LayoutGridIcon,
-  PenSquareIcon,
-} from 'lucide-react';
+import { FileTextIcon, LayoutGridIcon, PenSquareIcon } from 'lucide-react';
 import Link from 'next/link';
 
 const nav = [
   { to: '/', label: 'Início', icon: LayoutGridIcon },
-  // { to: '/', label: 'Blog', icon: BookOpenIcon },
   { to: '/', label: 'Categorias', icon: FileTextIcon },
   { to: '/', label: 'Sobre', icon: PenSquareIcon },
 ] as const;

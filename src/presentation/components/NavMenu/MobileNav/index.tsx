@@ -2,7 +2,16 @@
 'use client';
 
 import { useState } from 'react';
-import { Search, Menu, X, User, FileText } from 'lucide-react';
+import {
+  Search,
+  Menu,
+  X,
+  User,
+  FileText,
+  LayoutGridIcon,
+  FileTextIcon,
+  PenSquareIcon,
+} from 'lucide-react';
 import Link from 'next/link';
 import { userSession } from '../../AccountMenu';
 import clsx from 'clsx';
@@ -18,8 +27,9 @@ export function MobileNav({ user }: MobileNavProps) {
   const [searchOpen, setSearchOpen] = useState(false);
 
   const nav = [
-    { to: '/', label: 'Início', icon: FileText },
-    { to: '/posts', label: 'Blogs', icon: FileText },
+    { to: '/', label: 'Início', icon: LayoutGridIcon },
+    { to: '/', label: 'Categorias', icon: FileTextIcon },
+    { to: '/', label: 'Sobre', icon: PenSquareIcon },
   ];
 
   return (

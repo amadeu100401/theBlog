@@ -1,12 +1,18 @@
+'use client';
+
 import { ForgetPasswordAction } from '@/presentation/actions/auth/ForgetPassword';
 import { ButtonComponent } from '@/presentation/components/DefaultButton';
 import { InputText } from '@/presentation/components/InputText';
 import clsx from 'clsx';
 import { ArrowRightIcon, KeyRoundIcon, MailIcon } from 'lucide-react';
 import Link from 'next/link';
-import { useActionState } from 'react';
+import { useActionState, useEffect } from 'react';
 
-export function NoSendedEmailForm() {
+type NoSendedEmailFormProps = {
+  onValueChenge: (userEmail: string) => void;
+};
+
+export function NoSendedEmailForm({ onValueChenge }: NoSendedEmailFormProps) {
   const [state, formAction, isPending] = useActionState(
     ForgetPasswordAction,
     null,
@@ -14,13 +20,19 @@ export function NoSendedEmailForm() {
 
   const textInputClasses = clsx('bg-white h-11 rounded-xl');
 
+  useEffect(() => {
+    if (state !== null && state.success) {
+      onValueChenge(state.email!);
+    }
+  }, [onValueChenge, state]);
+
   return (
     <>
       <header className='mb-8'>
         <div className='mb-4 grid h-11 w-11 place-items-center rounded-xl bg-slate-900 text-white shadow-sm'>
           <KeyRoundIcon className='h-5 w-5' />
         </div>
-        <h1>Recuperar Senha</h1>
+        <h1 className='text-2xl font-medium'>Recuperar Senha</h1>
         <p className='mt-2 text-sm text-slate-500'>
           Informe o e-mail da sua conta. Se ele estiver cadastrado, enviaremos
           um link seguro para você criar uma nova senha.
