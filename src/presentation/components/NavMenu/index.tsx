@@ -5,13 +5,14 @@ import { HeaderAuth } from './HeaderAuth';
 import { DesktopNav } from './DesktopNav';
 import { HeaderShell } from './HeaderShell';
 import Link from 'next/link';
+import { MobileNav } from './MobileNav';
 
 export async function SiteHeader() {
   return (
     <HeaderShell>
       <div
         className={clsx(
-          'mx-auto flex h-16 w-full max-w-7xl items-center justify-between gap-4 sm:px-6 lg:px-8',
+          'px-4 mx-auto flex h-16 w-full max-w-7xl items-center justify-between gap-4 sm:px-6 lg:px-8',
         )}
       >
         <Link href={'/'} className='group flex items-center gap-2'>
@@ -23,13 +24,21 @@ export async function SiteHeader() {
           </span>
         </Link>
 
-        <DesktopNav />
+        <div className='hidden md:flex flex-1 justify-center'>
+          <DesktopNav />
+        </div>
 
         {/* Right cluster */}
-        <div className='flex items-center gap-2'>
-          <SearchInput />
+        <div className='flex items-center gap-2 sm:gap-4'>
+          {/* A busca fica oculta em telas muito pequenas para dar espaço e surge em 'sm' */}
+          <div className='hidden sm:block'>
+            <SearchInput />
+          </div>
 
           <HeaderAuth />
+
+          {/* Menu Hamburguer (Aparece apenas abaixo de 'md') */}
+          <MobileNav />
         </div>
       </div>
     </HeaderShell>

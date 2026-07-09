@@ -4,7 +4,7 @@ import { SocialButton } from '@/presentation/components/Auth/socialButton';
 
 export default function Register() {
   return (
-    <main className='flex min-h-screen justify-center'>
+    <main className='flex min-h-screen justify-center pt-10'>
       <div className='w-full max-w-md'>
         <AuthHeading type='create' />
 

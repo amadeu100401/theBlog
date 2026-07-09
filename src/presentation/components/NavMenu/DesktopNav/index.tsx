@@ -9,7 +9,7 @@ import Link from 'next/link';
 
 const nav = [
   { to: '/', label: 'Início', icon: LayoutGridIcon },
-  { to: '/', label: 'Blog', icon: BookOpenIcon },
+  // { to: '/', label: 'Blog', icon: BookOpenIcon },
   { to: '/', label: 'Categorias', icon: FileTextIcon },
   { to: '/', label: 'Sobre', icon: PenSquareIcon },
 ] as const;
