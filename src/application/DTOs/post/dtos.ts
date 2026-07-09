@@ -23,7 +23,7 @@ export const makePublicPost = (post: PostModel): PublicPost => {
 };
 
 export interface CreatePostDTO {
-  token: string;
+  userEmail: string;
   title: string;
   excerpt: string;
   content: string;

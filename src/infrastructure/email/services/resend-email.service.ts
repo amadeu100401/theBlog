@@ -11,8 +11,6 @@ export class EmailService implements EmailServices {
     }
 
     try {
-      logColor('Tentativa de envio - ', Date.now().toString());
-
       const response = await resendClient.emails.send({
         from: 'onboarding@resend.dev',
         to: 'amadeu.m4rtim.dev@gmail.com',
@@ -24,8 +22,6 @@ export class EmailService implements EmailServices {
       if (response.error) {
         throw response.error;
       }
-
-      logColor('Tentativa de envio concluída - ', Date.now().toString());
     } catch (error) {
       if (error instanceof Error) {
         logColor(

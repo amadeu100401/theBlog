@@ -25,13 +25,22 @@ export async function CreatePostAction(
   formData: FormData,
 ): Promise<CreatePostActionState> {
   // TODO: verificar se o usuário tá logado
-  const cookieToken = await cookies();
-  const token = cookieToken.get(Auth.AUTH_TOKEN)?.value;
+  const getSessionUseCase = container.getSessionUseCase;
 
-  if (!token) {
-    const message = 'Usuário não autenticado';
-    return throwError(prevState.formState, message);
+  const cookieToken = await cookies();
+  const token = cookieToken.get(Auth.AUTH_TOKEN)?.value as string;
+
+  if (!token.trimEnd()) {
+    return throwError(prevState.formState);
   }
+
+  const result = await getSessionUseCase.execute(token);
+
+  if (!result || result.status === false) {
+    return throwError(prevState.formState, 'Usuário não logado');
+  }
+
+  const user = result.session;
 
   const rawFormObj = Object.fromEntries(formData.entries());
   const zodParsedObj = PostCreateSchema.safeParse(rawFormObj);
@@ -48,14 +57,16 @@ export async function CreatePostAction(
   const validPostData = zodParsedObj.data;
   const newPost: CreatePostDTO = {
     ...validPostData,
-    token: token,
+    userEmail: user.email,
   };
 
   let isSuccess = false;
   let post;
 
+  const createPostUseCase = container.createPostUseCase;
+
   try {
-    const result = await container.createPostUseCase.execute(newPost);
+    const result = await createPostUseCase.execute(newPost);
     if (result.success) {
       isSuccess = true;
       post = result.post;

@@ -1,18 +1,24 @@
+import clsx from 'clsx';
 import Link from 'next/link';
-import { LinkWrapper } from '../LinkWrapper';
-
 export function Footer() {
   return (
-    <footer>
-      <h1 className='pb-16 text-center'>
-        <p className='py-8'>
-          {/* <span>Copyright &copy; {new Date().getFullYear()} - </span> */}
-          <span>Copyright &copy; 2026 - </span>
-          <Link href='/' about='Home page'>
-            The Blog
-          </Link>
-        </p>
-      </h1>
+    <footer className='flex flex-col justify-center items-center bg-slate-100'>
+      <div>
+        <h1 className='m-6 text-center'>
+          <p>
+            <span>Copyright &copy; 2026 - </span>
+            <Link
+              href='/'
+              about='Home page'
+              className={clsx(
+                'font-semibold underline-offset-4 hover:underline',
+              )}
+            >
+              The Blog
+            </Link>
+          </p>
+        </h1>
+      </div>
     </footer>
   );
 }

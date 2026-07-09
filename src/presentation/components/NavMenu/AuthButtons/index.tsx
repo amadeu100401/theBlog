@@ -8,7 +8,7 @@ export function AuthButtons() {
       <Link href={'/login'}>
         <Button
           variant={'ghost'}
-          className='h-9 text-slate-700 hover:bg-slate-100 hover:text-slate-900 hover:cursor-pointer'
+          className='h-9 text-slate-700 hover:bg-slate-100/40 hover:text-slate-900 hover:font-medium hover:cursor-pointer underline-offset-4 hover:underline hover:shadow'
         >
           <LogInIcon className='h-4 w-4' />
           Entrar

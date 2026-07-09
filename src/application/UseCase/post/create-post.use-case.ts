@@ -1,19 +1,18 @@
 import { CreatePostDTO } from '@/application/DTOs/post/dtos';
 import { PostFactory } from '@/domain/entities/posts/post.factory';
+import { UserRepository } from '@/domain/repositories/user-repository.interface';
 import { DrizzlePostRepository } from '@/infrastructure/repositories/post/drizzle-post-repository';
 export class CreatePostUseCase {
   constructor(
     private readonly postFactory: PostFactory,
+    private readonly userRepository: UserRepository,
     private readonly postRepository: DrizzlePostRepository,
   ) {}
 
   async execute(data: CreatePostDTO) {
     //TODO: buscar o usurio logado para passar para a entidade de post
 
-    const user = {
-      id: data.token,
-      name: 'Amadeu Martim',
-    };
+    const user = await this.userRepository.findUserByEmail(data.userEmail);
 
     if (!user) {
       return {

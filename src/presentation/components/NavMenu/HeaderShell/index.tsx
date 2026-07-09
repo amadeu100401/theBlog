@@ -24,8 +24,8 @@ export function HeaderShell({ children }: PropsWithChildren) {
       className={clsx(
         'sticky top-0 z-50 w-full transition-all duration-500',
         scrolled
-          ? 'border-b border-slate-200/80 bg-white/95 backdrop-blur-xl shadow-sm'
-          : 'border-b border-slate-200/50 bg-white/90 backdrop-blur-md',
+          ? 'border-b border-slate-200/40 bg-slate-100/60 backdrop-blur-xl shadow-sm'
+          : 'border-b border-slate-500/10 bg-slate-100/700 backdrop-blur-sm',
       )}
     >
       {children}

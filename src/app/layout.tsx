@@ -26,14 +26,11 @@ export default async function RootLayout({
   return (
     // Tema claro e escuro
     <html lang='pt-BR' className={cn('light', 'font-sans', geist.variable)}>
-      <body>
+      <body className=''>
         <Suspense fallback={<SiteHeaderSkeleton />}>
           <SiteHeaderWrapper />
         </Suspense>
-        <Container>
-          {children}
-          <Footer />
-        </Container>
+        <Container>{children}</Container>
         <Toaster
           position='top-center'
           swipeDirections={['left', 'right']}
@@ -41,6 +38,7 @@ export default async function RootLayout({
             duration: 5000,
           }}
         />
+        <Footer />
       </body>
     </html>
   );
