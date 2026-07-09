@@ -8,7 +8,7 @@ export class PostMapper {
       id: post.id,
       slug: post.slug,
       title: post.title,
-      author: 'Teste Author',
+      author: post.author,
       excerpt: post.excerpt,
       content: post.content,
       coverImageUrl: post.coverImageUrl,

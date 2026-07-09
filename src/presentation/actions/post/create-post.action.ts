@@ -37,7 +37,7 @@ export async function CreatePostAction(
   const result = await getSessionUseCase.execute(token);
 
   if (!result || result.status === false) {
-    return throwError(prevState.formState, 'Usuário não logado');
+    return throwError(prevState.formState, 'Usuário não autenticado');
   }
 
   const user = result.session;
@@ -55,6 +55,9 @@ export async function CreatePostAction(
   }
 
   const validPostData = zodParsedObj.data;
+
+  logColor(JSON.stringify(validPostData));
+
   const newPost: CreatePostDTO = {
     ...validPostData,
     userEmail: user.email,

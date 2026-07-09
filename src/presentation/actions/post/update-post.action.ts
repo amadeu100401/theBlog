@@ -26,7 +26,7 @@ export async function UpdatePostAction(
     BuildGenericResultError(prevState.formState);
   }
 
-  const id = formData.get('id')?.toString();
+  const id = formData.get('id')?.toString() as string;
 
   if (!id || typeof id !== 'string' || id === undefined) {
     BuildGenericResultError(prevState.formState);
@@ -43,7 +43,7 @@ export async function UpdatePostAction(
   const validPostData = zodFormated.data;
   //TODO: Criar o UpdatePostModel
   const safePost: UpdatePostDTO = {
-    postId: validPostData.id,
+    postId: id,
     title: validPostData.title,
     slug: validPostData.slug,
     content: validPostData.content,

@@ -2,6 +2,7 @@ import { CreatePostDTO } from '@/application/DTOs/post/dtos';
 import { PostFactory } from '@/domain/entities/posts/post.factory';
 import { UserRepository } from '@/domain/repositories/user-repository.interface';
 import { DrizzlePostRepository } from '@/infrastructure/repositories/post/drizzle-post-repository';
+import { logColor } from '@/shared/util/log-color';
 export class CreatePostUseCase {
   constructor(
     private readonly postFactory: PostFactory,
@@ -10,8 +11,6 @@ export class CreatePostUseCase {
   ) {}
 
   async execute(data: CreatePostDTO) {
-    //TODO: buscar o usurio logado para passar para a entidade de post
-
     const user = await this.userRepository.findUserByEmail(data.userEmail);
 
     if (!user) {
@@ -30,9 +29,13 @@ export class CreatePostUseCase {
       published: data.published,
     });
 
+    logColor('Entidade', JSON.stringify(entity));
+
     entity.setAuthorId(user.id);
 
     const newPost = await this.postRepository.insertPost(entity);
+
+    logColor('Post Criado:', JSON.stringify(newPost));
 
     return {
       success: true,

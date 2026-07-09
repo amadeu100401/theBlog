@@ -52,7 +52,7 @@ export class DrizzlePostRepository implements PostRepository {
       where: (post, { eq }) => eq(post?.id, id),
     });
 
-    if (!post) throw new Error('Post não encontroado para slug');
+    if (!post) throw new Error('Post não encontroado para o id');
 
     return post;
   }

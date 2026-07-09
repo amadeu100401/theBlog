@@ -27,8 +27,7 @@ type ManagePostFormCreateProps = {
 };
 
 type ManagePostFormProps =
-  | ManagePostFormUpdateProps
-  | ManagePostFormCreateProps;
+  ManagePostFormUpdateProps | ManagePostFormCreateProps;
 
 export function ManagePostForm(props: ManagePostFormProps) {
   const { mode } = props;
@@ -117,14 +116,14 @@ export function ManagePostForm(props: ManagePostFormProps) {
           disabled={isPending}
           className={inputClasses}
         />
-        <InputText
+        {/* <InputText
           labelText='Autor'
           name='author'
           defaultValue={formState.author}
           placeholder='Digite o nome do autor'
           disabled={isPending}
           className={inputClasses}
-        />
+        /> */}
         <InputText
           labelText='Excerto'
           name='excerpt'

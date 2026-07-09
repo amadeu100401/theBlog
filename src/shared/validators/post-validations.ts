@@ -13,11 +13,11 @@ const PostBaseSchema = z.object({
     .trim()
     .min(3, 'Contúdo é obrigatório')
     .transform(val => sanitizeHtml(val)),
-  author: z
-    .string()
-    .trim()
-    .min(4, 'Autor precisa ter um mínimo de 4 caractéries')
-    .max(100, 'Nome do autor não deve passar de 100 caracteries'),
+  // author: z
+  //   .string()
+  //   .trim()
+  //   .min(4, 'Autor precisa ter um mínimo de 4 caractéries')
+  //   .max(100, 'Nome do autor não deve passar de 100 caracteries'),
   excerpt: z
     .string()
     .trim()
@@ -32,6 +32,5 @@ const PostBaseSchema = z.object({
 export const PostCreateSchema = PostBaseSchema;
 
 export const PostUpdateSchema = PostBaseSchema.extend({
-  id: z.string().trim().uuid('ID inválid'),
   slug: z.string().trim(),
 });
