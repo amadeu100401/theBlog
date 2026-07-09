@@ -1,8 +1,11 @@
+import { ForgetPasswordAction } from '@/presentation/actions/auth/ForgetPassword';
 import { ButtonComponent } from '@/presentation/components/DefaultButton';
 import { Step } from '@/presentation/components/Step';
 import clsx from 'clsx';
 import { CircleCheckBigIcon, RefreshCcwIcon } from 'lucide-react';
 import { useEffect, useState } from 'react';
+import { toast } from 'sonner';
+import { MaxRetryButton } from './maxRetryButton/idndex';
 
 type SendedEmailProps = {
   userEmail: string;
@@ -19,6 +22,10 @@ export function SendedEmail({ userEmail, onValueChange }: SendedEmailProps) {
   const [cooldown, setCooldown] = useState(cooldownStartTime);
   const [totalAttempts, setTotalAttempts] = useState(0);
 
+  const isOutOfAttempts = totalAttempts >= maxAttemptsCount;
+
+  const isButtonDisabled = cooldown > 0 || isOutOfAttempts;
+
   const maskedEmail = () => {
     const userName = userEmail.split('@')[0];
     const domain = userEmail.split('@')[1];
@@ -29,10 +36,21 @@ export function SendedEmail({ userEmail, onValueChange }: SendedEmailProps) {
   };
 
   const handleResentEmail = () => {
-    if (totalAttempts <= 0) return;
+    if (isOutOfAttempts) {
+      toast.dismiss();
+      toast.error('Número máximo de tentativas');
+      return;
+    }
 
+    setStatus('submitting');
     setCooldown(cooldownStartTime);
     setTotalAttempts(totalAttempts + 1);
+
+    const formData = new FormData();
+
+    formData.append('email', userEmail);
+
+    ForgetPasswordAction(userEmail, formData);
   };
 
   useEffect(() => {
@@ -57,6 +75,23 @@ export function SendedEmail({ userEmail, onValueChange }: SendedEmailProps) {
       content: 'Use uma senha forte que você ainda não tenha usado antes.',
     },
   ];
+
+  const resentButton = (
+    <ButtonComponent
+      styleType='ghost'
+      className={clsx(
+        'inline-flex items-center justify-center gap-2 rounded-xl border border-slate-200',
+        ' bg-white px-4 py-2.5 text-sm font-medium text-slate-700 shadow-sm transition',
+        ' hover:border-slate-300 hover:bg-slate-50 disabled:cursor-not-allowed disabled:opacity-60',
+        'font-semibold',
+      )}
+      disabled={isButtonDisabled}
+      onClick={handleResentEmail}
+    >
+      <RefreshCcwIcon className='h-4 w-4' />
+      {cooldown > 0 ? `Reenviar em ${cooldown}s` : 'Reenviar link'}
+    </ButtonComponent>
+  );
 
   return (
     <header className='mb-8'>
@@ -90,20 +125,7 @@ export function SendedEmail({ userEmail, onValueChange }: SendedEmailProps) {
       </div>
 
       <div className='flex justify-between mb-5'>
-        <ButtonComponent
-          styleType='ghost'
-          className={clsx(
-            'inline-flex items-center justify-center gap-2 rounded-xl border border-slate-200',
-            ' bg-white px-4 py-2.5 text-sm font-medium text-slate-700 shadow-sm transition',
-            ' hover:border-slate-300 hover:bg-slate-50 disabled:cursor-not-allowed disabled:opacity-60',
-            'font-semibold',
-          )}
-          disabled={cooldown > 0}
-          onClick={handleResentEmail}
-        >
-          <RefreshCcwIcon className='h-4 w-4' />
-          {cooldown > 0 ? `Reenviar em ${cooldown}s` : 'Reenviar link'}
-        </ButtonComponent>
+        {!isOutOfAttempts ? resentButton : <MaxRetryButton />}
 
         <div className='flex items-center'>
           <ButtonComponent

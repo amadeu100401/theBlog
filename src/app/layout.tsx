@@ -10,6 +10,7 @@ import {
   SiteHeaderSkeleton,
   SiteHeaderWrapper,
 } from '@/presentation/components/SiteHeaderWrapper';
+import { TooltipProvider } from '@/components/ui/tooltip';
 
 const geist = Geist({ subsets: ['latin'], variable: '--font-sans' });
 
@@ -39,6 +40,7 @@ export default async function RootLayout({
           }}
         />
         <Footer />
+        <TooltipProvider>{children}</TooltipProvider>
       </body>
     </html>
   );
