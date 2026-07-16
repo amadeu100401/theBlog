@@ -14,7 +14,7 @@ const UserBaseSchema = z.object({
   password: z
     .string()
     .trim()
-    .min(12, 'A senha deve ter ao menos 12 cracateres')
+    .min(8, 'A senha deve ter ao menos 8 cracateres')
     .max(64, 'A senha não deve passar de 64 caracteres')
     .regex(
       /^(?=.*[A-Z])(?=.*\d)(?=.*[!@#$%^&*()_+\-=\[\]{};':",./<>?|\\`~])[A-Za-z0-9\s!@#$%^&*()_+\-=\[\]{};':",./<>?|\\`~]+$/,

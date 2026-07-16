@@ -6,6 +6,7 @@ import { UserCreateSchema } from '@/shared/validators/user-validations';
 import { getZodErrorMessages } from '@/shared/util/get-zod-error-messages';
 import { redirect } from 'next/navigation';
 import { container } from '@/infrastructure/di/container';
+import { logColor } from '@/shared/util/log-color';
 
 type CreateUserActionState = {
   formState: PublicUser;
@@ -17,15 +18,19 @@ export async function CreateUserAction(
   prevState: CreateUserActionState,
   formData: FormData,
 ): Promise<CreateUserActionState> {
-  const parsed = UserCreateSchema.safeParse(
-    Object.fromEntries(formData.entries()),
-  );
+  const rawData = Object.fromEntries(formData.entries());
+  logColor(JSON.stringify(rawData));
+  const parsed = UserCreateSchema.safeParse(rawData);
 
   if (!parsed.success) {
+    logColor(
+      'AQUI 1',
+      JSON.stringify(getZodErrorMessages(parsed.error.format())),
+    );
     return {
       success: false,
       errors: getZodErrorMessages(parsed.error.format()),
-      formState: makePublicUser(Object.fromEntries(formData.entries())),
+      formState: makePublicUser(rawData),
     };
   }
 

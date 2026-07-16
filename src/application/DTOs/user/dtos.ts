@@ -8,9 +8,20 @@ export interface PublicUser {
 }
 
 export const makePublicUser = (user?: Partial<UserModel>): PublicUser => {
+  let emailValue = '';
+
+  if (user?.email) {
+    if (typeof user.email.getValue === 'function') {
+      emailValue = user.email.getValue();
+    } else if (typeof user.email === 'object' && 'value' in user.email) {
+      emailValue = (user.email as unknown as { value?: string }).value || '';
+    } else if (typeof user.email === 'string') {
+      emailValue = user.email;
+    }
+  }
   return {
     name: user?.name || '',
-    email: user?.email ? user.email.getValue() : '',
+    email: emailValue,
     username: user?.username || '',
     role: !user?.role || user?.role === undefined ? 'author' : user?.role,
     bio: user?.bio || '',
