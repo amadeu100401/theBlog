@@ -1,5 +1,5 @@
 import { clsx } from 'clsx';
-import { Slot } from '@radix-ui/react-slot'; // 🌟 Importação do Slot
+import { Slot } from '@radix-ui/react-slot';
 
 type ButtonVariants = 'default' | 'danger' | 'custom' | 'ghost';
 type ButtonSize = 'sm' | 'md' | 'lg';
@@ -18,6 +18,7 @@ export function ButtonComponent({
   styleType: buttonType = 'default',
   size = 'md',
   asChild = false,
+  children,
   ...props
 }: ButtonComponentProps) {
   const commonStyle = clsx(
@@ -30,19 +31,13 @@ export function ButtonComponent({
   );
 
   const style: Record<ButtonVariants, string> = {
-    default: clsx(
-      'bg-blue-500 text-blue-100 hover:bg-blue-600 transition',
-      commonStyle,
-    ),
+    default: clsx('bg-blue-500 text-blue-100 hover:bg-blue-600', commonStyle),
     ghost: clsx(
-      'bg-transparent text-slate-700 hover:bg-slate-100 transition',
+      'bg-transparent text-slate-700 hover:bg-slate-100',
       commonStyle,
     ),
-    danger: clsx(
-      'bg-red-600 hover:bg-red-800 text-red-100 transition',
-      commonStyle,
-    ),
-    custom: clsx(''),
+    danger: clsx('bg-red-600 hover:bg-red-800 text-red-100', commonStyle),
+    custom: '',
   };
 
   const buttonSizes: Record<ButtonSize, string> = {
@@ -79,7 +74,15 @@ export function ButtonComponent({
       {...props}
       className={buttonType === 'custom' ? props.className : buttonClasses}
     >
-      {props.children}
+      {leftIcon && (
+        <span className='inline-flex shrink-0 items-center'>{leftIcon}</span>
+      )}
+
+      {children}
+
+      {rightIcon && (
+        <span className='inline-flex shrink-0 items-center'>{rightIcon}</span>
+      )}
     </Component>
   );
 }

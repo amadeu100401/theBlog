@@ -1,15 +1,16 @@
 'use client';
 
-import { InputText } from '@/presentation/components/InputText';
-import { ArrowRightIcon, LockIcon, MailIcon, UserIcon } from 'lucide-react';
-import { PasswordStrength } from '../passwordStrength';
 import { useActionState, useMemo, useState } from 'react';
-import { ButtonComponent } from '@/presentation/components/DefaultButton';
-import clsx from 'clsx';
-import { InputCheckbox } from '@/presentation/components/InputCheckbox';
+import { ArrowRightIcon, LockIcon, MailIcon, UserIcon } from 'lucide-react';
 import Link from 'next/link';
-import { CreateUserAction } from '@/presentation/actions/user/create-user.action';
+import clsx from 'clsx';
+
+import { PasswordStrength } from '../passwordStrength';
 import { makePublicUser } from '@/application/DTOs/user/dtos';
+import { InputText } from '@/presentation/components/InputText';
+import { InputCheckbox } from '@/presentation/components/InputCheckbox';
+import { ButtonComponent } from '@/presentation/components/DefaultButton';
+import { CreateUserAction } from '@/presentation/actions/user/create-user.action';
 
 export type PasswordRule = { label: string; test: (v: string) => boolean };
 

@@ -6,6 +6,7 @@ import { CircleCheckBigIcon, RefreshCcwIcon } from 'lucide-react';
 import { useEffect, useState } from 'react';
 import { toast } from 'sonner';
 import { MaxRetryButton } from './maxRetryButton/idndex';
+import { maskedEmail } from '@/shared/util/mask-email';
 
 type SendedEmailProps = {
   userEmail: string;
@@ -26,14 +27,15 @@ export function SendedEmail({ userEmail, onValueChange }: SendedEmailProps) {
 
   const isButtonDisabled = cooldown > 0 || isOutOfAttempts;
 
-  const maskedEmail = () => {
-    const userName = userEmail.split('@')[0];
-    const domain = userEmail.split('@')[1];
+  // TODO: Remover codigo
+  // const maskedEmail = () => {
+  //   const userName = userEmail.split('@')[0];
+  //   const domain = userEmail.split('@')[1];
 
-    return (
-      userName.slice(0, 2) + '*'.repeat(userName.length - 2) + '@' + domain
-    );
-  };
+  //   return (
+  //     userName.slice(0, 2) + '*'.repeat(userName.length - 2) + '@' + domain
+  //   );
+  // };
 
   const handleResentEmail = () => {
     if (isOutOfAttempts) {
@@ -106,8 +108,8 @@ export function SendedEmail({ userEmail, onValueChange }: SendedEmailProps) {
       <h1 className='text-2xl font-medium'>Verifique seu e-mail</h1>
       <p className='mt-2 text-sm text-slate-500 text-justify'>
         Se houver conta vinculada ao email {}
-        <span className='text-black font-medium'>{maskedEmail()}</span>, você
-        receberá um link de recuperação. Ele expira em{' '}
+        <span className='text-black font-medium'>{maskedEmail(userEmail)}</span>
+        , você receberá um link de recuperação. Ele expira em{' '}
         <span className='text-black font-medium'>15 minutos</span>.
       </p>
 

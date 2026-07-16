@@ -31,7 +31,9 @@ export default async function RootLayout({
         <Suspense fallback={<SiteHeaderSkeleton />}>
           <SiteHeaderWrapper />
         </Suspense>
-        <Container>{children}</Container>
+        <TooltipProvider>
+          <Container>{children}</Container>
+        </TooltipProvider>
         <Toaster
           position='top-center'
           swipeDirections={['left', 'right']}
@@ -40,7 +42,6 @@ export default async function RootLayout({
           }}
         />
         <Footer />
-        <TooltipProvider>{children}</TooltipProvider>
       </body>
     </html>
   );
