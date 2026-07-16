@@ -19,14 +19,9 @@ export async function CreateUserAction(
   formData: FormData,
 ): Promise<CreateUserActionState> {
   const rawData = Object.fromEntries(formData.entries());
-  logColor(JSON.stringify(rawData));
   const parsed = UserCreateSchema.safeParse(rawData);
 
   if (!parsed.success) {
-    logColor(
-      'AQUI 1',
-      JSON.stringify(getZodErrorMessages(parsed.error.format())),
-    );
     return {
       success: false,
       errors: getZodErrorMessages(parsed.error.format()),
