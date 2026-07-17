@@ -1,6 +1,7 @@
 import { AboutGuidingValues } from './aboutGuidingValues';
 import { AboutPurposeBlock } from './aboutPurposeBlock';
 import { AboutStatus } from './aboutStatus';
+import { AboutTimeLine } from './aboutTimeLine';
 import { AboutTitle } from './aboutTitle';
 
 export function AboutContent() {
@@ -10,6 +11,7 @@ export function AboutContent() {
       <AboutStatus />
       <AboutPurposeBlock />
       <AboutGuidingValues />
+      <AboutTimeLine />
     </main>
   );
 }

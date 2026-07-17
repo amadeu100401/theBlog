@@ -27,7 +27,7 @@ export default async function RootLayout({
   return (
     // Tema claro e escuro
     <html lang='pt-BR' className={cn('light', 'font-sans', geist.variable)}>
-      <body className=''>
+      <body className='bg-slate-100'>
         <Suspense fallback={<SiteHeaderSkeleton />}>
           <SiteHeaderWrapper />
         </Suspense>
