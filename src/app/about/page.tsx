@@ -1,3 +1,4 @@
+import { AboutContent } from '@/presentation/components/About/inde';
 import { Metadata } from 'next';
 
 export const metadata: Metadata = {
@@ -5,5 +6,9 @@ export const metadata: Metadata = {
 };
 
 export default function AboutPage() {
-  return <h1>Olá mundo</h1>;
+  return (
+    <main className='min-h-20 mb-16 py-8'>
+      <AboutContent />
+    </main>
+  );
 }

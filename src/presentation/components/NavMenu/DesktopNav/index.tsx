@@ -4,8 +4,8 @@ import Link from 'next/link';
 
 const nav = [
   { to: '/', label: 'Início', icon: LayoutGridIcon },
-  { to: '/', label: 'Categorias', icon: FileTextIcon },
-  { to: '/', label: 'Sobre', icon: PenSquareIcon },
+  //{ to: '/', label: 'Categorias', icon: FileTextIcon },
+  { to: '/about', label: 'Sobre', icon: PenSquareIcon },
 ] as const;
 
 export function DesktopNav() {
