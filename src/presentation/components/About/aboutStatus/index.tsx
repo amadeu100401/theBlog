@@ -25,7 +25,7 @@ export function AboutStatus() {
     },
   ];
   return (
-    <section className={clsx('my-10')}>
+    <section className={clsx('py-2')}>
       <div className={clsx('grid gap-6 sm:grid-cols-2 lg:grid-cols-4')}>
         {statusList.map((status, index) => (
           <div
