@@ -1,3 +1,4 @@
+import { AboutGuidingValues } from './aboutGuidingValues';
 import { AboutPurposeBlock } from './aboutPurposeBlock';
 import { AboutStatus } from './aboutStatus';
 import { AboutTitle } from './aboutTitle';
@@ -8,6 +9,7 @@ export function AboutContent() {
       <AboutTitle />
       <AboutStatus />
       <AboutPurposeBlock />
+      <AboutGuidingValues />
     </main>
   );
 }
