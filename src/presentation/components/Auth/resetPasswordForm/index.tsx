@@ -9,11 +9,11 @@ import clsx from 'clsx';
 import { ButtonComponent } from '../../DefaultButton';
 
 type ResetPasswordProps = {
-  token: string;
-  outOfTime: boolean;
+  email: string;
+  isTimeout: boolean;
 };
 
-export function ResetPassword({ token, outOfTime }: ResetPasswordProps) {
+export function ResetPassword({ email, isTimeout }: ResetPasswordProps) {
   const [password, setPassword] = useState('');
   const [checkPassword, setCheckPassword] = useState('');
   const [isPasswordTouched, setIsPasswordTouched] = useState(false);
@@ -36,14 +36,15 @@ export function ResetPassword({ token, outOfTime }: ResetPasswordProps) {
 
   const allRulesPassed = strength === passwordRules.length;
   const passwordsMatch = password === checkPassword;
-  const canSendRequest = allRulesPassed && passwordsMatch && !outOfTime;
 
   const passwordHasError = isPasswordTouched && !allRulesPassed;
   const checkPasswordHasError =
     isCheckTouched && (!passwordsMatch || !allRulesPassed);
 
+  const isDisable = !allRulesPassed || !passwordsMatch || isTimeout;
+
   return (
-    <form className='w-full mb-8'>
+    <form className='w-full mb-8 mt-8'>
       <div className='flex w-full flex-col gap-6'>
         <InputText
           labelText='Senha'
@@ -59,7 +60,6 @@ export function ResetPassword({ token, outOfTime }: ResetPasswordProps) {
             'bg-white h-11 rounded-xl',
             passwordHasError && 'border border-red-400 focus:ring-red-400',
           )}
-          disabled={canSendRequest}
         />
       </div>
 
@@ -86,7 +86,6 @@ export function ResetPassword({ token, outOfTime }: ResetPasswordProps) {
             'bg-white h-11 rounded-xl',
             checkPasswordHasError && 'border border-red-400 focus:ring-red-400',
           )}
-          disabled={canSendRequest}
         />
       </div>
 
@@ -105,7 +104,7 @@ export function ResetPassword({ token, outOfTime }: ResetPasswordProps) {
           rightIcon={
             <ArrowRightIcon className='transition-transform group-hover:translate-x-0.5' />
           }
-          disabled={canSendRequest}
+          disabled={isDisable}
         >
           Redefinir senha
         </ButtonComponent>

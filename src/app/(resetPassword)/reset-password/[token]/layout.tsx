@@ -13,11 +13,5 @@ type ResetPasswordLayoutProps = {
 export default function ResetPasswordLayout({
   children,
 }: Readonly<ResetPasswordLayoutProps>) {
-  return (
-    <html lang='pt-BR' suppressHydrationWarning className={geistSans.variable}>
-      <body className='antialiased bg-gray-100' suppressHydrationWarning>
-        <main>{children}</main>
-      </body>
-    </html>
-  );
+  return <div className='min-h-screen bg-gray-100 antialiased'>{children}</div>;
 }

@@ -1,7 +1,7 @@
 import type { Metadata } from 'next';
 import './globals.css';
 import { Container } from '../presentation/components/Container';
-import { Footer } from '@/presentation/components/Footer/inde';
+import { Footer } from '@/presentation/components/Footer';
 import { Geist } from 'next/font/google';
 import { cn } from '@/lib/utils';
 import { Toaster } from '@/presentation/components/ui/sonner';
