@@ -3,6 +3,7 @@ import { AboutPurposeBlock } from './aboutPurposeBlock';
 import { AboutStatus } from './aboutStatus';
 import { AboutTimeLine } from './aboutTimeLine';
 import { AboutTitle } from './aboutTitle';
+import { AboutWhyTrust } from './aboutWhyTrust';
 
 export function AboutContent() {
   return (
@@ -12,6 +13,7 @@ export function AboutContent() {
       <AboutPurposeBlock />
       <AboutGuidingValues />
       <AboutTimeLine />
+      <AboutWhyTrust />
     </main>
   );
 }
