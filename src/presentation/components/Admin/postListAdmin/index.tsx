@@ -1,8 +1,8 @@
-import { findAllPostsAdmin } from '@/application/Queries/posts/admin';
 import { LinkWrapper } from '../../LinkWrapper';
 import clsx from 'clsx';
 import { DeletePostButton } from '../deletePostButton';
 import { ErrorMessage } from '@/presentation/components/ErrorMessage';
+import { findAllPostsAdmin } from '@/application/queries/posts/admin';
 
 export default async function PostListAdmin() {
   const posts = await findAllPostsAdmin();
