@@ -6,9 +6,12 @@ import { GetSessionUseCase } from '@/application/UseCase/auth/GetSession';
 import { ForgetPasswordUseCase } from '@/application/UseCase/auth/ForgetPassword';
 import { EmailServices } from '@/domain/services/email/Email';
 import { EmailService } from '../email/services/resend-email.service';
+import { CacheProvider } from '@/domain/contracts/cache-provider';
+import { ValkeyCacheProvider } from '../cache/redis/valkey-provider';
 
 export const tokenService: TokenService = new JoseTokenService();
 export const forgetPasswordService: EmailServices = new EmailService();
+export const cacheProviderService: CacheProvider = new ValkeyCacheProvider();
 
 export const authModule = {
   get doLogin() {
@@ -22,6 +25,7 @@ export const authModule = {
       tokenService,
       userRepository,
       forgetPasswordService,
+      cacheProviderService,
     );
   },
 };

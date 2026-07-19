@@ -25,6 +25,7 @@
     "dotenv": "^17.4.2",
     "drizzle-orm": "^0.45.2",
     "file-type-checker": "^1.1.7",
+    "ioredis": "^5.11.1",
     "jose": "^6.2.3",
     "lucide-react": "^1.17.0",
     "next": "16.2.6",

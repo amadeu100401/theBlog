@@ -1,13 +1,13 @@
-import { EmailButton, EmailLayout, EmailText, EmailTitle } from './components';
+import { EmailLayout, EmailText, EmailTitle } from './components';
 
 type ResetEmailTemplateProps = {
   name: string;
-  resetLink?: string;
+  resetCode?: string;
 };
 
 export function ResetEmailTemplate({
   name,
-  resetLink = 'https://www.google.com.br',
+  resetCode,
 }: ResetEmailTemplateProps) {
   return (
     <EmailLayout preview={'Recuperação de senha'}>
@@ -17,11 +17,43 @@ export function ResetEmailTemplate({
         Olá <strong>{name}</strong>!
       </EmailText>
 
-      <EmailText>Recebemos uma solicitação para redefinir sua senha.</EmailText>
+      <EmailText>
+        Recebemos uma solicitação para redefinir sua senha. Use o código de
+        verificação abaixo para continuar no sistema:
+      </EmailText>
+      <div
+        style={{
+          backgroundColor: '#f1f5f9',
+          borderRadius: '12px',
+          padding: '16px 24px',
+          margin: '24px 0',
+          textAlign: 'center',
+          border: '1px solid #e2e8f0',
+        }}
+      >
+        <span
+          style={{
+            fontSize: '32px',
+            fontWeight: '700',
+            letterSpacing: '6px',
+            color: '#0f172a',
+            fontFamily: 'monospace',
+          }}
+        >
+          {resetCode}
+        </span>
+      </div>
 
-      <EmailButton href={resetLink}>Redefinir senha</EmailButton>
+      <EmailText>
+        Insira esses 4 números na tela de validação do sistema para liberar a
+        criação da sua nova senha.
+      </EmailText>
 
-      <EmailText>Este link expira em 30 minutos.</EmailText>
+      <EmailText>
+        Este código é de uso único e expira em 10 minutos por motivos de
+        segurança. Se não foi você quem solicitou, pode ignorar este e-mail com
+        segurança.
+      </EmailText>
     </EmailLayout>
   );
 }
