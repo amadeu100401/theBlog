@@ -17,6 +17,7 @@ export const container = {
   doLoginUseCase: authModule.doLogin,
   getUserByTokenUseCase: authModule.getUserByToken,
   sendForgetPasswordEmailUseCase: authModule.forgetPassword,
+  verifyResentPasswordCodeUSeCase: authModule.varifyResentPasswordCode,
 } as const;
 
 export type Container = typeof container;

@@ -8,6 +8,7 @@ import { toast } from 'sonner';
 import { MaxRetryButton } from './maxRetryButton/idndex';
 import { maskedEmail } from '@/shared/util/mask-email';
 import { logColor } from '@/shared/util/log-color';
+import { CodeInputForm } from '../CodeForm';
 
 type SendedEmailProps = {
   userEmail: string;
@@ -46,9 +47,7 @@ export function SendedEmail({ userEmail, onValueChange }: SendedEmailProps) {
       const formData = new FormData();
       formData.append('email', userEmail);
 
-      console.log(formData);
-
-      await ForgetPasswordAction('', formData);
+      await ForgetPasswordAction(null, formData);
 
       logColor(
         'Send reset email Form:',
@@ -69,21 +68,6 @@ export function SendedEmail({ userEmail, onValueChange }: SendedEmailProps) {
     return () => clearTimeout(id);
   }, [cooldown]);
 
-  const tips = [
-    {
-      title: 'Abra seu e-mail',
-      content: 'Procure por uma mensagem nossa. Não esqueça da caixa de spam.',
-    },
-    {
-      title: 'Clique no link seguro',
-      content: 'O link é único e expira após 15 minutos por segurança.',
-    },
-    {
-      title: 'Defina uma nova senha',
-      content: 'Use uma senha forte que você ainda não tenha usado antes.',
-    },
-  ];
-
   const resentButton = (
     <ButtonComponent
       styleType='ghost'
@@ -97,65 +81,51 @@ export function SendedEmail({ userEmail, onValueChange }: SendedEmailProps) {
       onClick={handleResentEmail}
     >
       <RefreshCcwIcon className='h-4 w-4' />
-      {cooldown > 0 ? `Reenviar em ${cooldown}s` : 'Reenviar link'}
+      {cooldown > 0 ? `Reenviar em ${cooldown}s` : 'Reenviar código'}
     </ButtonComponent>
   );
 
   return (
-    <header className='mb-8'>
-      <div
-        className={clsx(
-          'mb-4 grid h-11 w-11 place-items-center rounded-xl bg-emerald-500',
-          'text-white shadow-md',
-        )}
-      >
-        <CircleCheckBigIcon className='h-5 w-5' />
+    <div className='mb-8'>
+      <div className='flex gap-3'>
+        <div
+          className={clsx(
+            'mb-4 grid h-11 w-11 place-items-center rounded-xl bg-emerald-500',
+            'text-white shadow-md',
+          )}
+        >
+          <CircleCheckBigIcon className='h-5 w-5' />
+        </div>
+        <h1 className='text-4xl font-medium'>Identificação</h1>
       </div>
-      <h1 className='text-2xl font-medium'>Verifique seu e-mail</h1>
-      <p className='mt-2 text-sm text-slate-500 text-justify'>
-        Se houver conta vinculada ao email {}
-        <span className='text-black font-medium'>{maskedEmail(userEmail)}</span>
-        , você receberá um link de recuperação. Ele expira em{' '}
-        <span className='text-black font-medium'>15 minutos</span>.
-      </p>
 
-      <div className='my-10 rounded-2xl bg-white shadow-md border'>
-        <div className='flex flex-col p-4 py-6 gap-4'>
-          {tips.map((tip, index) => (
-            <Step
-              key={index}
-              number={index + 1}
-              title={tip.title}
-              desc={tip.content}
-            />
-          ))}
+      <div>
+        {' '}
+        <CodeInputForm email={userEmail} />
+        <div className='flex justify-between mb-5'>
+          {!isOutOfAttempts ? resentButton : <MaxRetryButton />}
+
+          <div className='flex items-center'>
+            <ButtonComponent
+              onClick={onValueChange}
+              styleType='custom'
+              className={clsx(
+                'text-xs text-slate-500 font-semibold',
+                ' underline-offset-4 hover:underline hover:text-slate-950 hover:cursor-pointer',
+              )}
+            >
+              Usar outro e-mail
+            </ButtonComponent>
+          </div>
+        </div>
+        <div className='mt-6 border border-slate-200 p-4 rounded-xl'>
+          <p className='text-justify text-xs leading-relaxed text-slate-600'>
+            <span className='font-medium text-slate-900'>Não recebeu?</span>{' '}
+            Verifique a caixa de spam, confirme se o endereço está correto e
+            aguarde alguns minutos antes de tentar novamente.
+          </p>
         </div>
       </div>
-
-      <div className='flex justify-between mb-5'>
-        {!isOutOfAttempts ? resentButton : <MaxRetryButton />}
-
-        <div className='flex items-center'>
-          <ButtonComponent
-            onClick={onValueChange}
-            styleType='custom'
-            className={clsx(
-              'text-xs text-slate-500 font-semibold',
-              ' underline-offset-4 hover:underline hover:text-slate-950 hover:cursor-pointer',
-            )}
-          >
-            Usar outro e-mail
-          </ButtonComponent>
-        </div>
-      </div>
-
-      <div className='mt-6 border border-slate-200 p-4 rounded-xl'>
-        <p className='text-justify text-xs leading-relaxed text-slate-600'>
-          <span className='font-medium text-slate-900'>Não recebeu?</span>{' '}
-          Verifique a caixa de spam, confirme se o endereço está correto e
-          aguarde alguns minutos antes de tentar novamente.
-        </p>
-      </div>
-    </header>
+    </div>
   );
 }

@@ -16,14 +16,18 @@ export async function ResetPasswordContainer({ searchParams }: ContainerProps) {
   let isFailed = false;
   let isTokenExpired = false;
 
-  if (result === null || !result.success) {
+  if (result === null) {
     isFailed = true;
     notFound();
   }
 
   isTokenExpired = result.tokenExpired;
 
-  const user = result?.user;
+  if (isTokenExpired) {
+    isFailed = true;
+  }
+
+  const user = result.user;
 
   const email = user?.email;
 

@@ -8,7 +8,7 @@ export function RootErrorPage({ message }: RootErrorPageProps) {
   const messageIsNull =
     message === null || message === undefined || message.trim() === '';
 
-  const h2Classes = clsx('');
+  const h2Classes = clsx('text-sm font-normal');
 
   const defaultMessage = <h2 className={h2Classes}>Ocorreu um erro ao</h2>;
 

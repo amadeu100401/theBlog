@@ -32,10 +32,12 @@ export function NoSendedEmailForm({ onValueChenge }: NoSendedEmailFormProps) {
   return (
     <>
       <header className='mb-8'>
-        <div className='mb-4 grid h-11 w-11 place-items-center rounded-xl bg-slate-900 text-white shadow-sm'>
-          <KeyRoundIcon className='h-5 w-5' />
+        <div className='flex gap-4'>
+          <div className='mb-4 grid h-11 w-11 place-items-center rounded-xl bg-slate-900 text-white shadow-sm'>
+            <KeyRoundIcon className='h-5 w-5' />
+          </div>
+          <h1 className='text-2xl font-medium'>Recuperar Senha</h1>
         </div>
-        <h1 className='text-2xl font-medium'>Recuperar Senha</h1>
         <p className='mt-2 text-sm text-slate-500'>
           Informe o e-mail da sua conta. Se ele estiver cadastrado, enviaremos
           um link seguro para você criar uma nova senha.
