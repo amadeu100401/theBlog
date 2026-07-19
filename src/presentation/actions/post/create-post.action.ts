@@ -25,7 +25,7 @@ export async function CreatePostAction(
   formData: FormData,
 ): Promise<CreatePostActionState> {
   // TODO: verificar se o usuário tá logado
-  const getSessionUseCase = container.getSessionUseCase;
+  const getSessionUseCase = container.getUserByTokenUseCase;
 
   const cookieToken = await cookies();
   const token = cookieToken.get(Auth.AUTH_TOKEN)?.value as string;

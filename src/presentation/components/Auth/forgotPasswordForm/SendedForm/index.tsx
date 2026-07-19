@@ -7,6 +7,7 @@ import { useEffect, useState } from 'react';
 import { toast } from 'sonner';
 import { MaxRetryButton } from './maxRetryButton/idndex';
 import { maskedEmail } from '@/shared/util/mask-email';
+import { logColor } from '@/shared/util/log-color';
 
 type SendedEmailProps = {
   userEmail: string;
@@ -27,33 +28,38 @@ export function SendedEmail({ userEmail, onValueChange }: SendedEmailProps) {
 
   const isButtonDisabled = cooldown > 0 || isOutOfAttempts;
 
-  // TODO: Remover codigo
-  // const maskedEmail = () => {
-  //   const userName = userEmail.split('@')[0];
-  //   const domain = userEmail.split('@')[1];
+  async function handleResentEmail() {
+    const nextAttempts = totalAttempts + 1;
 
-  //   return (
-  //     userName.slice(0, 2) + '*'.repeat(userName.length - 2) + '@' + domain
-  //   );
-  // };
-
-  const handleResentEmail = () => {
-    if (isOutOfAttempts) {
+    if (nextAttempts > maxAttemptsCount) {
       toast.dismiss();
-      toast.error('Número máximo de tentativas');
+      toast.error('Número máximo de tentativas atingido');
+      setTotalAttempts(maxAttemptsCount);
       return;
     }
 
     setStatus('submitting');
     setCooldown(cooldownStartTime);
-    setTotalAttempts(totalAttempts + 1);
+    setTotalAttempts(nextAttempts);
 
-    const formData = new FormData();
+    try {
+      const formData = new FormData();
+      formData.append('email', userEmail);
 
-    formData.append('email', userEmail);
+      console.log(formData);
 
-    ForgetPasswordAction(userEmail, formData);
-  };
+      await ForgetPasswordAction('', formData);
+
+      logColor(
+        'Send reset email Form:',
+        JSON.stringify(Object.fromEntries(formData)),
+      );
+    } catch (error) {
+      toast.error('Falha ao reenviar o e-mail.');
+    } finally {
+      setStatus('sent');
+    }
+  }
 
   useEffect(() => {
     if (cooldown <= 0) return;

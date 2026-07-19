@@ -2,20 +2,22 @@
 
 import { ForgetPasswordRequestBuilder } from '@/application/UseCase/auth/ForgetPassword/request';
 import { container } from '@/infrastructure/di/container';
+import { logColor } from '@/shared/util/log-color';
 import { ForgetPasswordSchema } from '@/shared/validators/forgetPassword-validatons';
 
 export type ActionState = {
   success: boolean;
-  email: string;
+  email?: string;
   errors?: {
-    email?: string[];
+    email?: string[] | undefined;
   };
+  message?: string;
 } | null;
 
 export async function ForgetPasswordAction(
-  prevState: unknown,
+  prevState: ActionState,
   formData: FormData,
-) {
+): Promise<ActionState> {
   try {
     const rawData = Object.fromEntries(formData.entries());
     const parsed = ForgetPasswordSchema.safeParse(rawData);
@@ -36,10 +38,22 @@ export async function ForgetPasswordAction(
     return {
       success: true,
       email: parsed.data.email,
+      message:
+        'Se o e-mail estiver cadastrado, você receberá um link de recuperação em instantes.',
     };
-  } catch {
+  } catch (error: unknown) {
+    if (error instanceof Error) {
+      logColor('Erro: ', error.message);
+      return {
+        success: false,
+        message: 'Ocorreu um erro no servidor. Tente novamente.',
+      };
+    }
+
+    logColor('Erro desconhecido');
     return {
       success: false,
+      message: 'Ocorreu um erro no servidor. Tente novamente.',
     };
   }
 }

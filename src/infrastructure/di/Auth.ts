@@ -14,10 +14,14 @@ export const authModule = {
   get doLogin() {
     return new DoLogin(userRepository, tokenService);
   },
-  get getSession() {
+  get getUserByToken() {
     return new GetSessionUseCase(tokenService, userRepository);
   },
   get forgetPassword() {
-    return new ForgetPasswordUseCase(userRepository, forgetPasswordService);
+    return new ForgetPasswordUseCase(
+      tokenService,
+      userRepository,
+      forgetPasswordService,
+    );
   },
 };

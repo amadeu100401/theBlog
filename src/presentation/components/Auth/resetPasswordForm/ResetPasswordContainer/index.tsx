@@ -1,15 +1,31 @@
 import { KeyRoundIcon } from 'lucide-react';
 import { ResetPasswordContent } from '../ResetPasswordContent';
+import { GetUserInfoResetPasswordAction } from '@/presentation/actions/auth/GetUserInfo';
+import { notFound } from 'next/navigation';
 interface ContainerProps {
-  params: Promise<{ token: string }>;
+  searchParams: Promise<{ token?: string }>;
 }
 
-export async function ResetPasswordContainer({ params }: ContainerProps) {
-  const { token } = await params;
+export async function ResetPasswordContainer({ searchParams }: ContainerProps) {
+  const { token } = await searchParams;
 
-  const email = 'amadeumartim@gmail.com';
+  if (!token) notFound();
 
-  const isTokenExpired = false;
+  const result = await GetUserInfoResetPasswordAction(token);
+
+  let isFailed = false;
+  let isTokenExpired = false;
+
+  if (result === null || !result.success) {
+    isFailed = true;
+    notFound();
+  }
+
+  isTokenExpired = result.tokenExpired;
+
+  const user = result?.user;
+
+  const email = user?.email;
 
   return (
     <main className='flex flex-col min-h-screen pt-10'>
@@ -19,7 +35,11 @@ export async function ResetPasswordContainer({ params }: ContainerProps) {
       <h1 className='text-3xl font-semibold tracking-tight text-slate-900'>
         Criar nova senha
       </h1>
-      <ResetPasswordContent isTokenExpired={isTokenExpired} email={email} />
+      <ResetPasswordContent
+        isFail={isFailed}
+        isTokenExpired={isTokenExpired}
+        email={email}
+      />
     </main>
   );
 }

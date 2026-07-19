@@ -10,6 +10,8 @@ export class EmailService implements EmailServices {
       return;
     }
 
+    logColor('Email data:', JSON.stringify(data));
+
     try {
       const response = await resendClient.emails.send({
         from: 'onboarding@resend.dev',
@@ -20,6 +22,7 @@ export class EmailService implements EmailServices {
       });
 
       if (response.error) {
+        logColor(JSON.stringify(response.error));
         throw response.error;
       }
     } catch (error) {

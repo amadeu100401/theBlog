@@ -17,7 +17,7 @@ export async function GetSessionAction(
   try {
     const token = (await cookies()).get(Auth.AUTH_TOKEN)?.value as string;
 
-    const useCase = container.getSessionUseCase;
+    const useCase = container.getUserByTokenUseCase;
 
     const result = await useCase.execute(token);
 

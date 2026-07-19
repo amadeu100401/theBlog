@@ -9,5 +9,11 @@ export type SessionResponse =
     }
   | {
       status: false;
-      error: 'Não foi possível obter dados da sessão';
+      error: ErrorType;
     };
+
+export enum ErrorType {
+  ERROR_GET_SESSION = 'Não foi possível obter dados da sessão',
+  TOKEN_EXPIRED = 'Token expirado',
+  ERROR_GET_USER = 'Não foi possível obter dados do usário',
+}

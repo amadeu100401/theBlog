@@ -1,5 +1,5 @@
 import { TokenService } from '@/domain/services/token/Token';
-import { SessionResponse } from './response';
+import { ErrorType, SessionResponse } from './response';
 import { UserRepository } from '@/domain/repositories/user-repository.interface';
 
 export class GetSessionUseCase {
@@ -12,16 +12,25 @@ export class GetSessionUseCase {
     if (!token) {
       return {
         status: false,
-        error: 'Não foi possível obter dados da sessão',
+        error: ErrorType.ERROR_GET_SESSION,
       };
     }
 
-    const payload = await this.tokenService.verifiy(token);
+    const result = await this.tokenService.verifiy(token);
+
+    const payload = result?.payload;
 
     if (!payload) {
       return {
         status: false,
-        error: 'Não foi possível obter dados da sessão',
+        error: ErrorType.TOKEN_EXPIRED,
+      };
+    }
+
+    if (result.isExpired) {
+      return {
+        status: false,
+        error: ErrorType.TOKEN_EXPIRED,
       };
     }
 
@@ -30,7 +39,7 @@ export class GetSessionUseCase {
     if (!user) {
       return {
         status: false,
-        error: 'Não foi possível obter dados da sessão',
+        error: ErrorType.ERROR_GET_USER,
       };
     }
 

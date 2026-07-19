@@ -81,6 +81,7 @@ export function InputText({
           {...props}
           className={inputFieldClasses}
           type={computedInputType}
+          suppressHydrationWarning={true}
         />
         {isPasswordType && (
           <ButtonComponent

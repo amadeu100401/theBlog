@@ -1,6 +1,9 @@
 'use client';
 
-import { ForgetPasswordAction } from '@/presentation/actions/auth/ForgetPassword';
+import {
+  ActionState,
+  ForgetPasswordAction,
+} from '@/presentation/actions/auth/ForgetPassword';
 import { ButtonComponent } from '@/presentation/components/DefaultButton';
 import { InputText } from '@/presentation/components/InputText';
 import clsx from 'clsx';
@@ -13,7 +16,7 @@ type NoSendedEmailFormProps = {
 };
 
 export function NoSendedEmailForm({ onValueChenge }: NoSendedEmailFormProps) {
-  const [state, formAction, isPending] = useActionState(
+  const [state, formAction, isPending] = useActionState<ActionState, FormData>(
     ForgetPasswordAction,
     null,
   );
@@ -21,8 +24,8 @@ export function NoSendedEmailForm({ onValueChenge }: NoSendedEmailFormProps) {
   const textInputClasses = clsx('bg-white h-11 rounded-xl');
 
   useEffect(() => {
-    if (state !== null && state.success) {
-      onValueChenge(state.email!);
+    if (state?.success && state.email) {
+      onValueChenge(state.email);
     }
   }, [onValueChenge, state]);
 
@@ -37,61 +40,60 @@ export function NoSendedEmailForm({ onValueChenge }: NoSendedEmailFormProps) {
           Informe o e-mail da sua conta. Se ele estiver cadastrado, enviaremos
           um link seguro para você criar uma nova senha.
         </p>
-
-        <form action={formAction} className='space-y-5' noValidate>
-          <div className={clsx('flex flex-col mt-8 gap-6')}>
-            <div>
-              <InputText
-                name='email'
-                type='email'
-                required
-                labelText='Email'
-                placeholder='seuemail@exemplo.com'
-                className={textInputClasses}
-                icon={MailIcon}
-              />
-            </div>
-
-            <div>
-              <ButtonComponent
-                styleType='custom'
-                className={clsx(
-                  'flex justify-center items-center group',
-                  'flex-1 h-11 w-full gap-2 px-4 py-2 overflow-hidden',
-                  '[&_svg]:w-5 [&_svg]:h-5 rounded-xl',
-                  'text-white font-medium transition',
-                  'boder border-slate-200 bg-slate-950 shadow-sm',
-                  'cursor-pointer hover:bg-slate-900',
-                  'disabled:cursor-not-allowed disabled:bg-slate-300',
-                )}
-                type='submit'
-                rightIcon={
-                  <ArrowRightIcon
-                    className={clsx(
-                      'transition-transform group-hover:translate-x-0.5',
-                    )}
-                  />
-                }
-                disabled={isPending}
-              >
-                Acessar conta
-              </ButtonComponent>
-            </div>
-
-            <div className='text-sm font-light'>
-              <p className='text-center text-xs text-slate-600'>
-                Lembrou da senha?{' '}
-                <Link
-                  href={'/login'}
-                  className='font-medium text-slate-900 underline-offset-4 hover:underline'
-                >
-                  Entrar
-                </Link>
-              </p>
-            </div>
-          </div>
-        </form>
       </header>
+      <form action={formAction} className='space-y-5' noValidate>
+        <div className={clsx('flex flex-col mt-8 gap-6')}>
+          <div>
+            <InputText
+              name='email'
+              type='email'
+              required
+              labelText='Email'
+              placeholder='seuemail@exemplo.com'
+              className={textInputClasses}
+              icon={MailIcon}
+            />
+          </div>
+
+          <div>
+            <ButtonComponent
+              styleType='custom'
+              className={clsx(
+                'flex justify-center items-center group',
+                'flex-1 h-11 w-full gap-2 px-4 py-2 overflow-hidden',
+                '[&_svg]:w-5 [&_svg]:h-5 rounded-xl',
+                'text-white font-medium transition',
+                'border border-slate-200 bg-slate-950 shadow-sm', // Corrigido 'boder' para 'border'
+                'cursor-pointer hover:bg-slate-900',
+                'disabled:cursor-not-allowed disabled:bg-slate-300',
+              )}
+              type='submit'
+              rightIcon={
+                <ArrowRightIcon
+                  className={clsx(
+                    'transition-transform group-hover:translate-x-0.5',
+                  )}
+                />
+              }
+              disabled={isPending}
+            >
+              {isPending ? 'Enviando...' : 'Acessar conta'}
+            </ButtonComponent>
+          </div>
+
+          <div className='text-sm font-light'>
+            <p className='text-center text-xs text-slate-600'>
+              Lembrou da senha?{' '}
+              <Link
+                href={'/login'}
+                className='font-medium text-slate-900 underline-offset-4 hover:underline'
+              >
+                Entrar
+              </Link>
+            </p>
+          </div>
+        </div>
+      </form>
     </>
   );
 }

@@ -15,7 +15,7 @@ export const container = {
 
   //Auth
   doLoginUseCase: authModule.doLogin,
-  getSessionUseCase: authModule.getSession,
+  getUserByTokenUseCase: authModule.getUserByToken,
   sendForgetPasswordEmailUseCase: authModule.forgetPassword,
 } as const;
 
