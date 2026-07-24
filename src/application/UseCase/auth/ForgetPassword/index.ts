@@ -36,9 +36,9 @@ export class ForgetPasswordUseCase {
       resetCode: code,
     });
 
-    await this.cacheProvider.set(cacheKey, code, 600);
-
     const htmlString = await render(content);
+
+    await this.cacheProvider.set(cacheKey, code, 600);
 
     const emailRequest = {
       to: user.email.getValue(),
@@ -46,6 +46,6 @@ export class ForgetPasswordUseCase {
       html: htmlString,
     };
 
-    this.emailService.sendEmail(emailRequest);
+    await this.emailService.sendEmail(emailRequest);
   }
 }

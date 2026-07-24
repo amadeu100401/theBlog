@@ -3,8 +3,7 @@
 import { maskedEmail } from '@/shared/util/mask-email';
 import { ResetPassword } from '..';
 import { RootErrorPage } from '../ResetPasswordFail';
-import clsx from 'clsx';
-import { ArrowLeftIcon, HomeIcon, RefreshCwIcon } from 'lucide-react';
+import { HomeIcon, RefreshCwIcon } from 'lucide-react';
 import Link from 'next/link';
 
 interface ResetPasswordContentProps {

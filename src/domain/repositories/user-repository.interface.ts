@@ -6,4 +6,6 @@ export interface UserRepository {
   findUserByEmail(email: string): Promise<UserModel | null>;
 
   insertNewUser(entity: UserModel): Promise<UserModel>;
+
+  updatePassword(id: string, newPasswordHash: string): Promise<boolean>;
 }

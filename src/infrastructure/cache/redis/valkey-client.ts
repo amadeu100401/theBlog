@@ -1,3 +1,4 @@
+import 'server-only';
 import Redis from 'ioredis';
 
 const globalForValkey = global as unknown as { valkey: Redis };

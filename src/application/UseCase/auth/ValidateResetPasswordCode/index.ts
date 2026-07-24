@@ -35,8 +35,6 @@ export class VerifyCodeUseCase {
       };
     }
 
-    logColor('Codigo em cache: ', cachedRequest);
-
     if (code === cachedRequest) {
       const token = await this.tokenService.generate({
         email: user.email.getValue(),

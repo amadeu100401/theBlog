@@ -3,10 +3,12 @@
 import { ArrowRightIcon, LockIcon } from 'lucide-react';
 import { InputText } from '../../InputText';
 import { PasswordStrength } from '../passwordStrength';
-import { useMemo, useState } from 'react';
+import { useActionState, useEffect, useMemo, useState } from 'react';
 import { PasswordRule } from '../registeForm';
-import clsx from 'clsx';
 import { ButtonComponent } from '../../DefaultButton';
+import { ResetPasswordAction } from '@/presentation/actions/auth/ResetPassword';
+import { toast } from 'sonner';
+import clsx from 'clsx';
 
 type ResetPasswordProps = {
   email: string;
@@ -35,17 +37,36 @@ export function ResetPassword({ email, isTimeout }: ResetPasswordProps) {
   );
 
   const allRulesPassed = strength === passwordRules.length;
+
   const passwordsMatch = password === checkPassword;
 
   const passwordHasError = isPasswordTouched && !allRulesPassed;
+
   const checkPasswordHasError =
     isCheckTouched && (!passwordsMatch || !allRulesPassed);
 
-  const isDisable = !allRulesPassed || !passwordsMatch || isTimeout;
+  const [state, action, isPending] = useActionState(
+    ResetPasswordAction,
+    undefined,
+  );
+
+  const isDisable =
+    !allRulesPassed || !passwordsMatch || isTimeout || isPending;
+
+  useEffect(() => {
+    if (state === undefined) return;
+
+    if (!state.status) {
+      toast.dismiss();
+      toast.error(state.message);
+    }
+  }, [state]);
 
   return (
-    <form className='w-full mb-8 mt-8'>
+    <form action={action} className='w-full mb-8 mt-8'>
       <div className='flex w-full flex-col gap-6'>
+        <input type='hidden' name='email' value={email} />
+
         <InputText
           labelText='Senha'
           name='password'

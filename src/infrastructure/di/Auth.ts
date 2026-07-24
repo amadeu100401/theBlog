@@ -9,6 +9,7 @@ import { EmailService } from '../email/services/resend-email.service';
 import { CacheProvider } from '@/domain/contracts/cache-provider';
 import { ValkeyCacheProvider } from '../cache/redis/valkey-provider';
 import { VerifyCodeUseCase } from '@/application/UseCase/auth/ValidateResetPasswordCode';
+import { ResetPassword } from '@/application/UseCase/auth/ResetPassword';
 
 export const tokenService: TokenService = new JoseTokenService();
 export const forgetPasswordService: EmailServices = new EmailService();
@@ -35,5 +36,8 @@ export const authModule = {
       userRepository,
       cacheProviderService,
     );
+  },
+  get ResetPassword() {
+    return new ResetPassword(userRepository);
   },
 };
